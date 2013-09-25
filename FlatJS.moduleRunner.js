@@ -1,0 +1,191 @@
+var FlatJS = FlatJS || {};
+
+/**
+ * The first, and currently only, module in the FlatJS pack is
+ * the ModuleRunner. Simply runs through your DOM tree for any
+ * elements matching the defined attribute - defaults to data-js-module -
+ * takes that value, finds methods matching the values in a given namespace
+ * - window by default - and executes them. By default, the runner will
+ * instantiate a new type of whatever method is found, and attach the
+ * returning result to the DOM node object in an array called jsModules.
+ *
+ * so this should add "bogus" to the below node:
+ * 
+ * <script>
+ *   var ex = {
+ *     functionExample: function(node) {
+ *       node.className += ' bogus';
+ *     }
+ *   }
+ * </script>
+ * <div data-js-module="ex.function-example"></div>
+ * <script>
+ *   var moduleRunner = new FlatJS.ModuleRunner({
+ *     init:    true
+ *   });
+ * </script>
+ * 
+ * @namespace 
+ * @public
+ * @function
+ */
+FlatJS.ModuleRunner = (function() {
+
+  /**
+   * Function to be treated as prototype class, returned at bottom of closure.
+   *
+   * @method
+   * @private
+   * @param  {Object} opts Extendable options
+   */
+  function moduleRunner(opts) {
+    opts = opts || {};
+
+    var context = opts.context || window,
+        node    = opts.node    || document,
+        init    = opts.init    || false,
+        attr    = opts.attr    || 'data-js-module',
+        findFn  = opts.findFn  || function(fn){fn()},
+        callFn  = opts.callFn  || false;
+
+    /**
+     * Inits the module runner on all children nodes - exposed as public so devs can run
+     * the loader on <divs> after ajax calls, JS manipulation, etc.
+     * 
+     * @param  {Object} _node DOM node to be inspected
+     * @public
+     * @method
+     */
+    this.init = function(_node) {
+      _node = _node || node;
+      var elems      = getAllElementsWithAttribute(attr, _node),
+          elemLength = elems.length;
+
+      for (var i = 0; i < elemLength; i++) {
+        this.moduleInit(elems[i]);
+      }
+    }
+
+    /**
+     * Takes a node as an argument, and looks through that node for all
+     * children elements with the given attribute.
+     * 
+     * @param  {String} attribute DOM attribute to look for within nodes
+     * @param  {Object} _node     DOM Object to traverse through
+     * @method
+     * @private
+     * @static
+     * @return {Array}            An array of all matching elements.
+     */
+    function getAllElementsWithAttribute(attribute, _node) {
+      _node = _node || node;
+      var matchingElements = [],
+          allElements      = _node.getElementsByTagName('*'),
+          elemLength       = allElements.length;
+      
+      for (var i = 0; i < elemLength; i++) {
+        if (allElements[i].getAttribute(attribute) !== null) {
+          matchingElements.push(allElements[i]);
+        }
+      }
+
+      if (_node.getAttribute(attribute) !== null) {
+        matchingElements.push(_node);
+      }
+
+      return matchingElements;
+    }
+
+    /**
+     * Recursive search through an object - or window by default -
+     * looking for a function which matches the string being sought
+     * after. Accounts for object depth w/ string splitting by period,
+     * type checking, array splicing, and recursion.
+     * 
+     * @param  {Object} objNode         DOM object to attach method to after execution
+     * @param  {String / Array} c       Starts as a string, but can be an array representing the object being sought.
+     * @param  {Object} parent          The current namespace / context functions are being sought within.
+     * @return {Object}                 Oughta return an object w/ the result of the executed method.
+     */
+    function findAndCallModuleByString(objNode, c, parent) {
+      if (c.indexOf('.') !== -1) {
+        c = c.split('.');
+      }
+
+      if (typeof c === 'string' && typeof parent[c] === 'function') {
+        return runMethodOnObj(parent[c], objNode);
+      } else if (typeof c !== 'object') {
+        return false;
+      }
+          
+      var obj    = parent[c[0]];
+      var fn     = obj[c[1]];
+      
+      if (typeof obj === 'object' && typeof fn === 'function') {
+        return runMethodOnObj(fn, objNode);
+      } else if (typeof fn === 'object' && c[2]) {
+        c.splice(0, 1);
+        return findAndCallModuleByString(objNode, c, obj);
+      }
+    }
+
+    /**
+     * Private method takes a function, executes it using
+     * the new keyword (assuming the function is a prototype),
+     * and attaches the result to the supplied node's object as
+     * an array. Behavoir of how function is called can be extended
+     * by using the options (see above, callFn).
+     * 
+     * @param  {Function} fn      Function to be called
+     * @param  {Object}   objNode DOM element to place return of function within
+     * @return {Object}           Should return whatever that function returns; assuming it's an object.
+     */
+    function runMethodOnObj(fn, objNode) {
+      if (!objNode.jsModules) {
+        objNode.jsModules = [];
+      }
+
+      if (typeof callFn === 'function') {
+        var obj = callFn(fn, objNode);
+      } else {
+        var obj = new fn(objNode);
+      }
+      
+      objNode.jsModules.push(obj);
+      return obj;
+    }
+
+    /**
+     * Looks at a single node, checks it for any attached JS modules, and
+     * runs them as needed. Exposed publically for use after Ajax requests etc.
+     * 
+     * @param  {Object} objNode DOM Object to be inspected.
+     */
+    this.moduleInit = function(objNode) {
+      var controllers = objNode.getAttribute(attr);
+
+      if (typeof controllers !== 'string') {
+        return;
+      }
+      controllers = controllers.split(' ');
+      conCount    = controllers.length;
+      for (var i=0; i<conCount; i++) {
+        (function() {
+          var c = controllers[i];
+          var camel = c.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase() }).replace(/\s+/g, '');
+
+          findFn(function() {
+            findAndCallModuleByString(objNode, camel, context);
+          }, objNode, c);
+        }())
+      }
+    }
+
+    if (init) {
+      this.init();
+    }
+  }
+
+  return moduleRunner;
+
+}());
