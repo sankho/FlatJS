@@ -31,11 +31,11 @@ var FlatJS = FlatJS || {};
  * code as YUI3 widget.
  * 
     SQSP.moduleRunner = new FlatJS.ModuleRunner({
-      context: GQ,
-      attr:    'data-gqjs-module',
+      context: SQSP,
+      attr:    'data-sqsp-module',
       init:    true,
       findFn:  function(next, objNode, widgetName) {
-        var use   = 'gq-' + widgetName;
+        var use   = 'sqsp-' + widgetName;
         Y.use(use, next);
       },
       callFn:  function(fn, objNode) {
