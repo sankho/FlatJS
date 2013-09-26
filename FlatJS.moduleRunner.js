@@ -25,6 +25,32 @@ var FlatJS = FlatJS || {};
  *   });
  * </script>
  * 
+ * 
+/**
+ * Extraneous YUI Example for my SQSPas; initiates
+ * code as YUI3 widget.
+ * 
+    SQSP.moduleRunner = new FlatJS.ModuleRunner({
+      context: GQ,
+      attr:    'data-gqjs-module',
+      init:    true,
+      findFn:  function(next, objNode, widgetName) {
+        var use   = 'gq-' + widgetName;
+        Y.use(use, next);
+      },
+      callFn:  function(fn, objNode) {
+        return new fn({
+          boundingBox: Y.one(objNode),
+          render:     true
+        });
+      }
+    });
+ *
+ 
+
+/** 
+ * Codez go here.
+ * 
  * @namespace 
  * @public
  * @function
