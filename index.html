@@ -11,6 +11,14 @@
       footer {
         margin-top: 250px;
       }
+
+      .page-header:first-child {
+        margin-top: 50px;
+      }
+
+      .page-header {
+        margin-top: 150px;
+      }
     </style>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -57,7 +65,9 @@
 
           <p>JS is a simple language and part of what makes it great is the developer's freedom in being able to structure their application's abstractions according to what the application needs.</p>
 
-          <p>I don't want an abstraction layer that forces me to write more code to keep up with the abstractions it's imposing on me. Nor do I believe any high level programming apply readily to JS - mainly MV*.</p>
+          <p>I don't want an abstraction layer that forces me to write more code to keep up with the abstractions it's imposing on me. Nor do I believe any high level ideologies apply easily to client side JS - mainly MV*.</p>
+
+          <p>But what I DO want is something which saves me time by taking away trivial, but common JS tasks. Having a reliable way to execute JS code on markup, being able to program with inheritance in mind, and having an app lifecycle for JS that deals with markup - these are things I'll almost definitely need on any client side JS project.</p>
 
           <p>But this is all just my opinion, and in the end is just some code I've used for projects and will continue to do so personally. This website serves as a home for the project.</p>
 
@@ -66,11 +76,19 @@
           </div>
 
           <h3 class="label label-info">FlatJS.ModuleRunner</h3>
-          <blockquote>
-            &lt;div data-js-module="NS.some-module"&gt;
-              
-            &lt;/div&gt;
-          </blockquote>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <blockquote>&lt;div data-js-module="NS.some-module"&gt;<br />
+                &nbsp;&nbsp;shit<br />
+                &lt;/div&gt;<br /><br />
+
+                &lt;script&gt;<br />
+                &nbsp;&nbsp;var NS = { someModule: function(div) { div.innerHTML = 'sheeet'; } };<br />
+                &lt;/script&gt;
+              </blockquote>
+            </div>
+          </div>
 
           <p class="lead">One day.</p>
 
