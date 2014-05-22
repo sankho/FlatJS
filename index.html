@@ -29,6 +29,10 @@
         padding: 9.5px;
       }
 
+      .push-top {
+        margin-top: 50px;
+      }
+
       #sidebar {
         position: fixed;
         top: 0;
@@ -68,44 +72,44 @@
         <section class="col-sm-9 col-xs-12">
 
           <div class="page-header">
-            <h1>So, Another JS Framework?</h1>
+            <h1>Flat JS <small>A simpler JS framework</small></h1>
           </div>
 
-          <p class="lead">A: Kinda.</p>
+          <p class="lead">Or, a client side JS framework for people that don't like client side JS frameworks.</p>
 
-          <p>FlatJS is composed of three small JS modules to aid in the following:</p>
+          <div class="row">
+            <div class="col-xs-4">
+              <div class="page-header">
+                <h3>Why</h3>
+              </div>
+              <p class="small">Modern day JS requires application structure, but I'm not sold on MV* making the most sense for a language built to operate a user interface.</p>
+              <p class="small">But I still needed something that aided in structuring my JS apps, so I created FlatJS.</p>
+            </div>
+            <div class="col-xs-4">
+              <div class="page-header">
+                <h3>Alternatives</h3>
+              </div>
+              <p class="small">Popular JS frameworks impose ideologies which may be appropriate for some applications, but not all.</p>
+              <p class="small">I needed something that would make writing JS apps quicker, and allow me to structure my application based on the app's needs, not dogma.</p>
+            </div>
+            <div class="col-xs-4">
+              <div class="page-header">
+                <h3>Who</h3>
+              </div>
+              <p class="small">FlatJS is intended for anyone who writes client side JS applications.</p>
+              <p class="small">Written and maintained by <a href="http://sankho.github.io/">Sankho Mallik</a>, a web developer living and working in the greater NYC area.</p>
+              <p class="small">Any and all feedback as well as code contributions are welcome!</p>
+            </div>
+          </div>
 
-          <ol>
-            <li>Programmatic execution of JS on DOM elements agnostic of how the DOM elements are generated. - <a href="#" class="label label-info">FlatJS.ModuleRunner</a></li>
-            <li>Giving JS basic OOP like behavoir, including private member functions and inheritance. - <a href="#" class="label label-info">FlatJS.Classy</a></li>
-            <li>Providing an app lifecycle to JS code based on DOM interactions. - <a href="#" class="label label-info">FlatJS.Widget</a> <a href="#" class="label label-warning">req. FlatJS.Classy</a></li>
-          </ol>
-
-          <p>And several optional modules to aid in certain cases:</p>
-
-          <ol>
-            <li>Inter module pubsub messaging - <a href="#" class="label label-info">FlatJS.Dispatch</a> <a href="#" class="label label-warning">req. FlatJS.Widget</a> <a href="#" class="label label-default">extends FlatJS.Widget.prototype</a></li>
-            <li>Window / browser monitoring, resize, scroll, more - <a href="#" class="label label-info">FlatJS.WindowMonitor</a> <a href="#" class="label label-warning">req. FlatJS.Widget</a></li>
-            <li>More as I make em.</li>
-          </ol>
 
           <div class="page-header">
-            <h3>Q: OK, but Why?</h3>
+            <h3>Easy, DOM contextual code execution.</h3>
           </div>
 
-          <p class="lead">A: Because the current crop of JS frameworks aren't simple enough.</p>
-
-          <p>I don't want an abstraction layer that forces me to write more code to keep up with the abstractions it's imposing on me. Nor do I believe any high level ideologies apply easily to client side JS - mainly MV*.</p>
-
-          <p>But what I DO want is something which saves me time by taking away trivial, but common JS tasks. Having a reliable way to execute JS code on markup, being able to program with inheritance in mind, and having an app lifecycle for JS that deals with markup - these are things I'll almost definitely need on any client side JS project.</p>
-
-          <p>JS is a simple language and part of what makes it great is the developer's freedom in being able to structure their application's abstractions according to what the application needs. FlatJS tries to provide a framework that never gets in the way.</p>
-
-          <p>But this is all just my opinion, and in the end is just some code I've used for projects and will continue to do so personally. This website serves as a home for the project.</p>
-
-          <div class="page-header">
-            <h3>Q: Can we see some code?</h3>
-          </div>
+          <p class="lead">Run JS directed by data attributes on your markup.</p>
+          <p>This allows FlatJS to be equally useful if your markup is generated on the server side or if you do client side templating.</p>
+          <p>It also forces you to organize your code with namespaces, but allows you to define the application structure's abstractions however you'd like.</p>
 
           <h3 class="label label-info">FlatJS.ModuleRunner</h3>
 
@@ -173,7 +177,46 @@
             </div>
           </div>
 
-          <p class="lead">One day.</p>
+          <div class="page-header">
+            <h3>OOP behavoir for client side JS</h3>
+          </div>
+
+          <p class="lead">Private member methods + class inheritance. Extending <a href="#">John Resig's work.</a></p>
+
+          <h3 class="label label-info">FlatJS.Classy</h3>
+
+          <div class="page-header">
+            <h3>What's included in FlatJS?</h3>
+          </div>
+          <p class="lead">FlatJS is composed of three base modules to aid in the following:</p>
+
+          <ol>
+            <li>Programmatic execution of JS on DOM elements agnostic of how the DOM elements are generated. - <a href="#" class="label label-info">FlatJS.ModuleRunner</a></li>
+            <li>Giving JS basic OOP like behavoir, including private member functions and inheritance. - <a href="#" class="label label-info">FlatJS.Classy</a></li>
+            <li>Providing an app lifecycle to JS code based on DOM interactions. - <a href="#" class="label label-info">FlatJS.Widget</a> <a href="#" class="label label-warning">req. FlatJS.Classy</a></li>
+          </ol>
+
+          <p>And several optional modules to aid in certain cases:</p>
+
+          <ol>
+            <li>Inter module pubsub messaging - <a href="#" class="label label-info">FlatJS.Dispatch</a> <a href="#" class="label label-warning">req. FlatJS.Widget</a> <a href="#" class="label label-default">extends FlatJS.Widget.prototype</a></li>
+            <li>Window / browser monitoring, resize, scroll, more - <a href="#" class="label label-info">FlatJS.WindowMonitor</a> <a href="#" class="label label-warning">req. FlatJS.Widget</a></li>
+            <li>More as I make em.</li>
+          </ol>
+
+          <div class="page-header">
+            <h3>But really, why?</h3>
+          </div>
+
+          <p class="lead">A: Because the current crop of JS frameworks aren't simple enough.</p>
+
+          <p>I don't want an abstraction layer that forces me to write more code to keep up with the abstractions it's imposing on me. Nor do I believe any high level ideologies apply easily to client side JS - mainly MV*.</p>
+
+          <p>But what I DO want is something which saves me time by taking away trivial, but common JS tasks. Having a reliable way to execute JS code on markup, being able to program with inheritance in mind, and having an app lifecycle for JS that deals with markup - these are things I'll almost definitely need on any client side JS project.</p>
+
+          <p>JS is a simple language and part of what makes it great is the developer's freedom in being able to structure their application's abstractions according to what the application needs. FlatJS tries to provide a framework that never gets in the way.</p>
+
+          <p>But this is all just my opinion, and in the end is just some code I've used for projects and will continue to do so personally. This website serves as a home for the project.</p>
 
         </section>
       </div>
