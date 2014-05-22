@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>FlatJS by sankho</title>
+    <title>FlatJS - A simpler JS framework</title>
 
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootswatch/3.1.1/yeti/bootstrap.min.css">
@@ -82,23 +82,23 @@
               <div class="page-header">
                 <h3>Why</h3>
               </div>
-              <p class="small">Modern day JS requires application structure, but I'm not sold on MV* making the most sense for a language built to operate a user interface.</p>
-              <p class="small">But I still needed something that aided in structuring my JS apps, so I created FlatJS.</p>
+              <p>Modern day JS requires application structure, however I'm not sold on the MV* paradigm making the most sense for a language built to operate a user interface.</p>
+              <p>But, I still needed something that aided in structuring my JS apps, so I created FlatJS.</p>
             </div>
             <div class="col-xs-4">
               <div class="page-header">
                 <h3>Alternatives</h3>
               </div>
-              <p class="small">Popular JS frameworks impose ideologies which may be appropriate for some applications, but not all.</p>
-              <p class="small">I needed something that would make writing JS apps quicker, and allow me to structure my application based on the app's needs, not dogma.</p>
+              <p>Popular JS frameworks impose ideologies which may be appropriate for some applications, but not all. Small example; but some projects need JS functionality and server side markup for SEO.</p>
+              <p>I needed something that would make writing JS apps quicker, and allow me to structure my application based on the app's needs, not on any kind of dogma.</p>
             </div>
             <div class="col-xs-4">
               <div class="page-header">
                 <h3>Who</h3>
               </div>
-              <p class="small">FlatJS is intended for anyone who writes client side JS applications.</p>
-              <p class="small">Written and maintained by <a href="http://sankho.github.io/">Sankho Mallik</a>, a web developer living and working in the greater NYC area.</p>
-              <p class="small">Any and all feedback as well as code contributions are welcome!</p>
+              <p>FlatJS is intended for anyone who writes client side JS applications. It has no dependencies and can work with any other JS libraries and frameworks.</p>
+              <p>Written and maintained by <a href="http://sankho.github.io/">Sankho Mallik</a>, a web developer living and working in NYC.</p>
+              <p>Any and all feedback as well as code contributions are welcome!</p>
             </div>
           </div>
 
@@ -108,15 +108,16 @@
           </div>
 
           <p class="lead">Run JS directed by data attributes on your markup.</p>
-          <p>This allows FlatJS to be equally useful if your markup is generated on the server side or if you do client side templating.</p>
+          <p>This allows FlatJS to be equally useful if your markup is generated on the server side or if you do client side templating, or both. Focus on writing code, not figuring out how or when to execute it.</p>
           <p>It also forces you to organize your code with namespaces, but allows you to define the application structure's abstractions however you'd like.</p>
+          <p>Reference functions as strings in a data attribute as you would in the console, optionally using dashes as camel case. You can reference multiple functions, just put a space between them. They will execute in the order given.</p>
 
           <h3 class="label label-info">FlatJS.ModuleRunner</h3>
 
           <div class="row">
             <div class="col-xs-8">
               <pre class="prettyprint">
-&lt;div data-js-module="NS.example-namespace.example-module"&gt;
+&lt;div id="example-div" data-js-module="NS.example-module"&gt;
   ...
   ...
   ...
@@ -135,15 +136,17 @@
 &lt;script&gt;
   var NS = {
 
-    exampleNamespace: {
+    exampleModule: function(node) {
 
-      exampleModule: function(node) {
-        node.innerHTML = 'Click Me';
+      node.innerHTML = 'Code Injection';
 
-        node.onClick = function() {
-          node.style.color = '#333';
-        }
+      var string = 'if returned this object will be attached to the node';
+
+      this.getString = function() {
+        return string;
       }
+
+      return this;
     }
   }
 &lt;/script&gt;
@@ -153,6 +156,7 @@
               <h3><span class="glyphicon glyphicon-arrow-left"></span> Application Code.</h3>
               <p class="small">Structure JS however you want. The only requirement is that you use a namespace.</p>
               <p class="small">The ModuleRunner by default calls JS functions with the <code>new</code> operator. This can be changed however you want in the options.</p>
+              <p class="small">If your function returns anything, it will be attached to the node it was called on in an array called <code>jsModules</code>. See the next section for an example.</p>
             </div>
           </div>
           <h3 class="label label-info">FlatJS.ModuleRunner</h3>
@@ -167,12 +171,19 @@
   });
 
   NS.runner.init(document);
+
+  var div = document.getElementById('#example-div'),
+      obj = div.jsModules['NS.example-module'];
+
+  console.log(obj.getString()); 
+  // ==> 'if returned this object will be attached to the node'
 &lt;/script&gt;
               </pre>
             </div>
             <div class="col-xs-4">
               <h3><span class="glyphicon glyphicon-arrow-left"></span> Load the script, run your JS.</h3>
               <p class="small">Save the runner to your namespace so you can execute it after ajax calls. Pass any node you want instead of document to target only what you need.</p>
+              <p class="small">As long as you can access the node via DOM functions, you can see what was returned when the function ran. Useful for returning instances of classes.</p>
               <p class="small">Read more about the <a href="#"><span class="label label-info">FlatJS.ModuleRunner</span> module here.</a></p>
             </div>
           </div>
@@ -181,7 +192,7 @@
             <h3>OOP behavoir for client side JS</h3>
           </div>
 
-          <p class="lead">Private member methods + class inheritance. Extending <a href="#">John Resig's work.</a></p>
+          <p class="lead">Class inheritance + private member methods. Extending <a href="#">John Resig's work.</a></p>
 
           <p>JS is a language where technically, you can do everything without a framework, but you'll drive yourself and other developers crazy maintaining your code.</p>
 
