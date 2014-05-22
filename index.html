@@ -28,6 +28,12 @@
         margin-bottom: 20px;
         padding: 9.5px;
       }
+
+      #sidebar {
+        position: fixed;
+        top: 0;
+        right: 0;
+      }
     </style>
 
 
@@ -37,24 +43,32 @@
     <![endif]-->
   </head>
   <body>
+    <div id="sidebar">
+      <div class="container">
+        <div class="row">
+          <header class="col-sm-3 col-xs-12 col-sm-push-9">
+            <div class="page-header">
+              <h1>FlatJS</h1>
+            </div>
+            <p>A simpler JS framework.</p>
+
+            <p class="view"><a href="https://github.com/sankho/FlatJS">View the Project on GitHub <small>sankho/FlatJS</small></a></p>
+
+            <ul>
+              <li><a href="https://github.com/sankho/FlatJS/zipball/master">Download <strong>ZIP File</strong></a></li>
+              <li><a href="https://github.com/sankho/FlatJS/tarball/master">Download <strong>TAR Ball</strong></a></li>
+              <li><a href="https://github.com/sankho/FlatJS">View On <strong>GitHub</strong></a></li>
+            </ul>
+          </header>
+        </div>
+      </div>
+    </div>
     <div class="container">
       <div class="row">
-        <header class="col-sm-3 col-xs-12 col-sm-push-9">
-          <h1>FlatJS</h1>
-          <p>A simpler JS framework.</p>
-
-          <p class="view"><a href="https://github.com/sankho/FlatJS">View the Project on GitHub <small>sankho/FlatJS</small></a></p>
-
-          <ul>
-            <li><a href="https://github.com/sankho/FlatJS/zipball/master">Download <strong>ZIP File</strong></a></li>
-            <li><a href="https://github.com/sankho/FlatJS/tarball/master">Download <strong>TAR Ball</strong></a></li>
-            <li><a href="https://github.com/sankho/FlatJS">View On <strong>GitHub</strong></a></li>
-          </ul>
-        </header>
-        <section class="col-sm-9 col-xs-12 col-sm-pull-3">
+        <section class="col-sm-9 col-xs-12">
 
           <div class="page-header">
-            <h1>Q: So, Another JS Framework?</h1>
+            <h1>So, Another JS Framework?</h1>
           </div>
 
           <p class="lead">A: Kinda.</p>
@@ -62,7 +76,7 @@
           <p>FlatJS is composed of three small JS modules to aid in the following:</p>
 
           <ol>
-            <li>Programmatic execution of JS on DOM elements via data attributes. - <a href="#" class="label label-info">FlatJS.ModuleRunner</a></li>
+            <li>Programmatic execution of JS on DOM elements agnostic of how the DOM elements are generated. - <a href="#" class="label label-info">FlatJS.ModuleRunner</a></li>
             <li>Giving JS basic OOP like behavoir, including private member functions and inheritance. - <a href="#" class="label label-info">FlatJS.Classy</a></li>
             <li>Providing an app lifecycle to JS code based on DOM interactions. - <a href="#" class="label label-info">FlatJS.Widget</a> <a href="#" class="label label-warning">req. FlatJS.Classy</a></li>
           </ol>
@@ -110,6 +124,7 @@
               <p class="small">Maybe the server generates it; maybe you did with JS. Who knows. When you want to run Javascript, just add a reference in the data-js-module attribute.</p>
             </div>
           </div>
+          <h3 class="label label-info">FlatJS.ModuleRunner</h3>
           <div class="row">
             <div class="col-xs-8">
               <pre class="prettyprint">
@@ -118,11 +133,11 @@
 
     exampleNamespace: {
 
-      exampleModule: function(div) {
-        div.innerHTML = 'Click Me';
+      exampleModule: function(node) {
+        node.innerHTML = 'Click Me';
 
-        div.onClick = function() {
-          div.style.color = '#333';
+        node.onClick = function() {
+          node.style.color = '#333';
         }
       }
     }
@@ -132,16 +147,20 @@
             </div>
             <div class="col-xs-4">
               <h3><span class="glyphicon glyphicon-arrow-left"></span> Application Code.</h3>
-              <p>The only requirement is that you use a namespace.</p>
+              <p class="small">Structure JS however you want. The only requirement is that you use a namespace.</p>
+              <p class="small">The ModuleRunner by default calls JS functions with the <code>new</code> operator. This can be changed however you want in the options.</p>
             </div>
           </div>
+          <h3 class="label label-info">FlatJS.ModuleRunner</h3>
           <div class="row">
             <div class="col-xs-8">
               <pre class="prettyprint">
 &lt;script src="/js/FlatJS.ModuleRunner.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
-  var NS.runner = new FlatJS.ModuleRunner();
+  var NS.runner = new FlatJS.ModuleRunner({
+    // see options
+  });
 
   NS.runner.init(document);
 &lt;/script&gt;
@@ -149,7 +168,8 @@
             </div>
             <div class="col-xs-4">
               <h3><span class="glyphicon glyphicon-arrow-left"></span> Load the script, run your JS.</h3>
-              <p>The only requirement is that you use a namespace. Structure JS however you want.</p>
+              <p class="small">Save the runner to your namespace so you can execute it after ajax calls. Pass any node you want instead of document to target only what you need.</p>
+              <p class="small">Read more about the <a href="#"><span class="label label-info">FlatJS.ModuleRunner</span> module here.</a></p>
             </div>
           </div>
 
