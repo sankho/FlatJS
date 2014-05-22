@@ -196,9 +196,119 @@
 
           <p>JS is a language where technically, you can do everything without a framework, but you'll drive yourself and other developers crazy maintaining your code.</p>
 
-          <p>Classy is a simple class implentation which gives you a way to write code resembling more traditional OOP languages on the server, but only such that your code can be a bit more readable. How?</p>
+          <p>Classy is a simple class implentation which gives you a way to write code resembling more traditional OOP languages on the server, if you'd like. While Classy is somewhat opinionated, you don't need to use all it's features.</p>
 
           <h3 class="label label-info">FlatJS.Classy</h3>
+          <div class="row">
+            <div class="col-xs-8">
+              <pre class="prettyprint">
+&lt;script&gt;
+  var NS = {};
+
+  NS.exampleClass = FlatJS.Classy.extend({
+
+    init: function(privateEyesBegin) {
+      this.privateEyesBegin = privateEyesBegin;
+    },
+
+    getChorus: function() {
+      return this.privateEyesBegin + ' Are Watching You';
+    }
+
+  });
+
+  var x = new NS.exampleClass('Private Eyes, ');
+
+  console.log(x.getChorus());
+  // => 'Private Eyes, Are Watching You';
+&lt;/script&gt;
+              </pre>
+            </div>
+            <div class="col-xs-4">
+              <h3><span class="glyphicon glyphicon-arrow-left"></span> Basic Class Behavoir.</h3>
+              <p class="small">Call <code>FlatJS.Classy.extend</code> to start things off and pass it an object.</p>
+              <p class="small">Define an <code>init</code> function on your object as an initializer which will accept arguments passed from your generated constructor.</p>
+            </div>
+          </div>
+          <h3 class="label label-info">FlatJS.Classy</h3>
+          <div class="row">
+            <div class="col-xs-8">
+              <pre class="prettyprint">
+&lt;script&gt;
+
+  var x = NS.exampleChild.extend({
+
+    getChorus: function() {
+      var str = this.getChorus._super.apply(this);
+
+      return str = str + ', They See Your Every Move';
+    }
+
+  });
+
+  var y = new NS.exampleChild('Private Eyes, ');
+
+  console.log(y.getChorus());
+  // => 'Private Eyes, Are Watching You, They See Your Every Move';
+&lt;/script&gt;
+              </pre>
+            </div>
+            <div class="col-xs-4">
+              <h3><span class="glyphicon glyphicon-arrow-left"></span> Class Inheritance.</h3>
+              <p class="small">All <code>FlatJS.Classy</code> objects have an extend function to create children classes.</p>
+              <p class="small">If you choose to override a function, you may access it's parent via the attached ._super function.</p>
+              <p class="small">If you're familiar with the Resig link above, all this shouldn't be new to you.</p>
+            </div>
+          </div>
+          <h3 class="label label-info">FlatJS.Classy</h3>
+          <div class="row">
+            <div class="col-xs-8">
+              <pre class="prettyprint">
+&lt;script src="/js/FlatJS.ModuleRunner.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+  var NS.exampleModule = (function() {
+
+    var STATIC_STRING            = 'Peas, ';
+
+    var exampleModule = FlatJS.Classy.extend({
+
+      init: function(string) {
+        this.endString = string;
+      },
+
+      publicFnGetString: function() {
+        // call method in scope privately
+        this._(privateFnGetString)('Apples ,')
+      }
+    });
+
+    // private member function - notice "this"
+    function privateFnGetString(string) {
+      return STATIC_STRING + string + this.endString;
+    }
+
+    return exampleModule;
+  }());
+
+  var x = new NS.exampleModule('Carrots');
+
+  console.log(x.getString()); 
+  // ==> 'Peas, Apples, and Carrots';
+&lt;/script&gt;
+              </pre>
+            </div>
+            <div class="col-xs-4">
+              <span class="label label-danger">Dogma Alert</span>
+              <h3><span class="glyphicon glyphicon-arrow-left"></span> Private Member Functions.</h3>
+              <p class="small">Javascript by nature doesn't discern between public and private methods when dealing with objects, unless you're willing to resort to var self = this hacks, so I made an apply wrapper in a function called _.</p>
+              <p class="small">This is mostly useless sugar so I've placed a "dogma alert" above to call me on my own bullshit.</p>
+              <p class="small">The key bit of code is in the getString() function, which is public. It calls the privateFnGetString by wrapping it in the _ function, then passing arguments to it while executing it.</p>
+              <p class="small">If you look at the private code executed, you will see it does the work and can access the member object for whatever information is available.</p>
+              <p class="small">Again, this is mostly just to keep your code uniform, but will force you to consider what functions are best to keep public and private, all while keeping "this" consistent.</p>
+              <p class="small">Read more about the <a href="#"><span class="label label-info">FlatJS.Classy</span> module here.</a></p>
+            </div>
+          </div>
 
           <div class="page-header">
             <h3>A reliable client side widget pattern</h3>
