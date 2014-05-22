@@ -6,6 +6,9 @@
     <title>FlatJS by sankho</title>
 
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootswatch/3.1.1/yeti/bootstrap.min.css">
+
+    <script src="http://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
 
     <style>
       footer {
@@ -19,7 +22,14 @@
       .page-header {
         margin-top: 150px;
       }
+
+      pre.prettyprint {
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+        padding: 9.5px;
+      }
     </style>
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
@@ -86,15 +96,60 @@
           <h3 class="label label-info">FlatJS.ModuleRunner</h3>
 
           <div class="row">
-            <div class="col-xs-12">
-              <blockquote>&lt;div data-js-module="NS.some-module"&gt;<br />
-                &nbsp;&nbsp;shit<br />
-                &lt;/div&gt;<br /><br />
+            <div class="col-xs-8">
+              <pre class="prettyprint">
+&lt;div data-js-module="NS.example-namespace.example-module"&gt;
+  ...
+  ...
+  ...
+&lt;/div&gt;
+              </pre>
+            </div>
+            <div class="col-xs-4">
+              <h3><span class="glyphicon glyphicon-arrow-left"></span> Markup.</h3>
+              <p class="small">Maybe the server generates it; maybe you did with JS. Who knows. When you want to run Javascript, just add a reference in the data-js-module attribute.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-8">
+              <pre class="prettyprint">
+&lt;script&gt;
+  var NS = {
 
-                &lt;script&gt;<br />
-                &nbsp;&nbsp;var NS = { someModule: function(div) { div.innerHTML = 'sheeet'; } };<br />
-                &lt;/script&gt;
-              </blockquote>
+    exampleNamespace: {
+
+      exampleModule: function(div) {
+        div.innerHTML = 'Click Me';
+
+        div.onClick = function() {
+          div.style.color = '#333';
+        }
+      }
+    }
+  }
+&lt;/script&gt;
+              </pre>
+            </div>
+            <div class="col-xs-4">
+              <h3><span class="glyphicon glyphicon-arrow-left"></span> Application Code.</h3>
+              <p>The only requirement is that you use a namespace.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-8">
+              <pre class="prettyprint">
+&lt;script src="/js/FlatJS.ModuleRunner.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+  var NS.runner = new FlatJS.ModuleRunner();
+
+  NS.runner.init(document);
+&lt;/script&gt;
+              </pre>
+            </div>
+            <div class="col-xs-4">
+              <h3><span class="glyphicon glyphicon-arrow-left"></span> Load the script, run your JS.</h3>
+              <p>The only requirement is that you use a namespace. Structure JS however you want.</p>
             </div>
           </div>
 
