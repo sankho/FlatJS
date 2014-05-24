@@ -1,59 +1,9 @@
 var FlatJS = FlatJS || {};
 
-/**
- * The first, and currently only, module in the FlatJS pack is
- * the ModuleRunner. Simply runs through your DOM tree for any
- * elements matching the defined attribute - defaults to data-js-module -
- * takes that value, finds methods matching the values in a given namespace
- * - window by default - and executes them. By default, the runner will
- * instantiate a new type of whatever method is found, and attach the
- * returning result to the DOM node object in an array called jsModules.
- *
- * so this should add "bogus" to the below node:
- * 
- * <script>
- *   var ex = {
- *     functionExample: function(node) {
- *       node.className += ' bogus';
- *     }
- *   }
- * </script>
- * <div data-js-module="ex.function-example"></div>
- * <script>
- *   var moduleRunner = new FlatJS.ModuleRunner({
- *     init:    true
- *   });
- * </script>
- * 
- * 
-/**
- * Extraneous YUI Example for my SQSPas; initiates
- * code as YUI3 widget.
- * 
-    SQSP.moduleRunner = new FlatJS.ModuleRunner({
-      context: SQSP,
-      attr:    'data-sqsp-module',
-      init:    true,
-      findFn:  function(next, objNode, widgetName) {
-        var use   = 'sqsp-' + widgetName;
-        Y.use(use, next);
-      },
-      callFn:  function(fn, objNode) {
-        return new fn({
-          boundingBox: Y.one(objNode),
-          render:     true
-        });
-      }
-    });
- *
- 
-
 /** 
  * Codez go here.
  * 
- * @namespace 
- * @public
- * @function
+ * @module ModuleRunner
  */
 FlatJS.ModuleRunner = (function() {
 
@@ -115,7 +65,7 @@ FlatJS.ModuleRunner = (function() {
         }
       }
 
-      if (_node.getAttribute(attribute) !== null) {
+      if (_node !== document && _node.getAttribute && _node.getAttribute(attribute) !== null) {
         matchingElements.push(_node);
       }
 
@@ -131,15 +81,18 @@ FlatJS.ModuleRunner = (function() {
      * @param  {Object} objNode         DOM object to attach method to after execution
      * @param  {String / Array} c       Starts as a string, but can be an array representing the object being sought.
      * @param  {Object} parent          The current namespace / context functions are being sought within.
+     * @param  {String} origName        Stores the name as it comes in for pointer purposes.
      * @return {Object}                 Oughta return an object w/ the result of the executed method.
      */
-    function findAndCallModuleByString(objNode, c, parent) {
+    function findAndCallModuleByString(objNode, c, parent, origName) {
+      origName = origName || c;
+
       if (c.indexOf('.') !== -1) {
         c = c.split('.');
       }
 
       if (typeof c === 'string' && typeof parent[c] === 'function') {
-        return runMethodOnObj(parent[c], objNode);
+        return runMethodOnObj(parent[c], objNode, origName);
       } else if (typeof c !== 'object') {
         return false;
       }
@@ -148,10 +101,10 @@ FlatJS.ModuleRunner = (function() {
       var fn     = obj[c[1]];
       
       if (typeof obj === 'object' && typeof fn === 'function') {
-        return runMethodOnObj(fn, objNode);
+        return runMethodOnObj(fn, objNode, origName);
       } else if (typeof fn === 'object' && c[2]) {
         c.splice(0, 1);
-        return findAndCallModuleByString(objNode, c, obj);
+        return findAndCallModuleByString(objNode, c, obj, origName);
       }
     }
 
@@ -165,10 +118,11 @@ FlatJS.ModuleRunner = (function() {
      * @param  {Function} fn      Function to be called
      * @param  {Object}   objNode DOM element to place return of function within
      * @return {Object}           Should return whatever that function returns; assuming it's an object.
+     * @return {String}   name    String used to identify function w/ namespaces
      */
-    function runMethodOnObj(fn, objNode) {
+    function runMethodOnObj(fn, objNode, name) {
       if (!objNode.jsModules) {
-        objNode.jsModules = [];
+        objNode.jsModules = {};
       }
 
       if (typeof callFn === 'function') {
@@ -177,14 +131,15 @@ FlatJS.ModuleRunner = (function() {
         var obj = new fn(objNode);
       }
       
-      objNode.jsModules.push(obj);
+      objNode.jsModules[name] = obj;
       return obj;
     }
 
     /**
      * Looks at a single node, checks it for any attached JS modules, and
      * runs them as needed. Exposed publically for use after Ajax requests etc.
-     * 
+     *
+     * @public
      * @param  {Object} objNode DOM Object to be inspected.
      */
     this.moduleInit = function(objNode) {
