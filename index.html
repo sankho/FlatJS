@@ -45,7 +45,7 @@
             <h1>Flat JS <small>A simpler JS framework</small></h1>
           </div>
 
-          <p class="lead">Or, a client side JS framework for people that don't like client side JS frameworks.</p>
+          <p class="lead">This is a bundle of scripts used by <a href="#">Sankho Mallik</a> on projects to organize client side JavaScript without imposing application structure.</p>
 
           <div class="row">
             <div class="col-xs-4">
@@ -59,8 +59,9 @@
               <div class="page-header">
                 <h3>Alternatives</h3>
               </div>
-              <p>Popular JS frameworks impose ideologies which may be appropriate for some applications, but not all. Small example; but some projects need JS functionality and server side markup for SEO.</p>
-              <p>I needed something that would make writing JS apps quicker, and allow me to structure my application based on the app's needs, not on any kind of dogma.</p>
+              <p>Popular JS frameworks impose ideologies which may be appropriate for some applications, but not all.</p>
+              <p>Maybe you don't want to write two model layers on the client and server; maybe you want to generate markup from the server and not the client.</p>
+              <p>FlatJS helps make coding quicker, while allowing one to structure their application as they wish.</p>
             </div>
             <div class="col-xs-4">
               <div class="page-header">
@@ -336,7 +337,18 @@
         </footer>
       </div>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+
+    <script src="src/FlatJS.ModuleRunner.js"></script>
+    <script src="src/FlatJS.Classy.js"></script>
+    <script src="src/FlatJS.Widget.js"></script>
     
+    <script>
+      var FJS = {};
+
+      FJS.ModuleRunner = new FlatJS.ModuleRunner({
+        context: FJS
+      });
+    </script>
+
   </body>
 </html>
