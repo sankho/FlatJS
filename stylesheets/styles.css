@@ -1,8 +1,12 @@
+.st {
+  text-decoration: line-through;
+}
+
 footer {
   margin-top: 250px;
 }
 
-.page-header:first-child {
+.page-header.small-top {
   margin-top: 50px;
 }
 
