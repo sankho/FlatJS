@@ -104,7 +104,7 @@
           </div>
 
           <p class="lead">Run JS directed by data attributes on your markup.</p>
-          <p>Reference functions as strings in a data attribute as you would in the console, optionally using dashes as camel case. You can reference multiple functions, just put a space between them. They will execute in the order given, and will pass the node to the function.</p>
+          <p>Reference functions in a data attribute as strings like you would in the console, optionally using dashes as camel case. You can reference multiple functions, just put a space between them. They will execute in the order given, and will pass the node the data-attribute is on to each function.</p>
           <p>You can later use the runner again on AJAX retrieved or JS generated markup to initialize sections of your app with one line of code. Access the returned value of your function within the DOM node making a single point of truth for your application's widgets accessible via the DOM.</p>
           <p>This allows FlatJS to be equally useful if your markup is generated on the server side or if you do client side templating, or both. Focus on writing code, not figuring out how or when to execute it. It also forces you to organize your code with namespaces, but allows you to define the application structure's abstractions however you'd like.</p>
 
