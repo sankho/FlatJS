@@ -316,7 +316,7 @@
 
           <p>Developing apps for web browsers invariably means you'll have JS that can be scoped and targeted to HTML. FlatJS provides a simple pattern representing the lifecyle of these widgets, which include initializing, rendering, binding JS events, syncing and destroying itself when needed. Based on <a href="#">YUI3 Base Widget.</a></p>
 
-          <p>FlatJS Widgets are constructor functions once created, and require one argument on initialization: a single DOM node. By default instatiating a Widget class creates an object and runs a <code>.render()</code> function which by default triggers a four function sequence, firing <code>.initialize(), .renderUI(), .bind(), and .sync()</code> in succession.</p>
+          <p>FlatJS Widgets are constructor functions once created, and require one argument on initialization: a single DOM node. By default instatiating a Widget class creates an object and runs a <code>.render()</code> function which by default triggers a four function sequence, firing <code>.initialize(), .renderUI(), .bindUI(), and .syncUI()</code> in succession.</p>
 
           <p><a class="label label-info">FlatJS.Widget</a> is an extension of <a class="label label-info">FlatJS.Classy</a> and thus shares all of it's behavoir. In fact, you create Widgets by calling <code>FlatJS.Widget.extend()</code> So, all your widgets are extensible as classes would be, and all of the above functions are defined by the object you pass when extending FlatJS.Widget. See below.</p> 
 
