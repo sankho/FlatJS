@@ -314,13 +314,15 @@
 
           <p class="lead">Maybe you call them components. Maybe you call them widgets.</p>
 
-          <p>Either way, writing JS for web browsers invariably means you'll have JS that can be scoped and targeted to HTML, and if you call them modules, or components, or widgets, it doesn't matter.</p>
+          <p>Developing apps for web browsers invariably means you'll have JS that can be scoped and targeted to HTML. FlatJS provides a simple pattern representing the lifecyle of these widgets, which include initializing, rendering, binding JS events, syncing and destroying itself when needed. Based on <a href="#">YUI3 Base Widget.</a></p>
 
-          <p>What matters is that your code represents the lifecyle of these widgets, which include initializing, rendering, binding JS events, syncing and destroying itself when needed. Enter <a href="#" class="label label-info">FlatJS.Widget</a>, based on <a href="#">YUI3 Base Widget</a></p> 
+          <p>FlatJS Widgets are constructor functions once created, and require one argument on initialization: a single DOM node. By default instatiating a Widget class creates an object and runs a <code>.render()</code> function which by default triggers a four function sequence, firing <code>.initialize(), .renderUI(), .bind(), and .sync()</code> in succession.</p>
+
+          <p><a class="label label-info">FlatJS.Widget</a> is an extension of <a class="label label-info">FlatJS.Classy</a> and thus shares all of it's behavoir. In fact, you create Widgets by calling <code>FlatJS.Widget.extend()</code> So, all your widgets are extensible as classes would be, and all of the above functions are defined by the object you pass when extending FlatJS.Widget. See below.</p> 
 
           <h3 class="label label-info">FlatJS.Widget</h3>
 
-          <div class="page-header">
+          <!-- <div class="page-header">
             <h3>What's included in FlatJS?</h3>
           </div>
           <p class="lead">FlatJS is composed of three base modules to aid in the following:</p>
@@ -337,7 +339,7 @@
             <li>Inter module pubsub messaging - <a href="#" class="label label-info">FlatJS.Dispatch</a> <a href="#" class="label label-warning">req. FlatJS.Widget</a> <a href="#" class="label label-default">extends FlatJS.Widget.prototype</a></li>
             <li>Window / browser monitoring, resize, scroll, more - <a href="#" class="label label-info">FlatJS.WindowMonitor</a> <a href="#" class="label label-warning">req. FlatJS.Widget</a></li>
             <li>More as I make em.</li>
-          </ol>
+          </ol> -->
 
           <div class="page-header">
             <h3>But really, why?</h3>
