@@ -6,16 +6,49 @@ FlatJS.Object = (function() {
     init: function(initialObject) {
       this._('initialObject', initialObject);
 
-      this._(setupWatchFunctionality)();
+      FlatJS.Object.extend(this, initialObject);
+    },
 
-      this = FJSObject.extend({}, this, initialObject);
+    set: function(prop, val) {
+      var oldVal  = this[prop];
+      this[prop]  = val;
+
+      if (this._('callbacks') && this._('callbacks')[prop]) {
+        var propCallbacks = this._('callbacks')[prop];
+
+        for (var cba in propCallbacks) {
+          var cb = propCallbacks[cba][0]
+          if (typeof cb == 'function') {
+            cb(prop, oldVal, val);
+          }
+        }
+      }
+    },
+
+    watch: function(prop, handler) {
+      var callbacks            = this._('callbacks') || {};
+      callbacks[prop]          = callbacks[prop] || {};
+      callbacks[prop][handler] = callbacks[prop][handler] || [];
+
+      callbacks[prop][handler].push(handler);
+      this._('callbacks', callbacks);
+    },
+
+    unwatch: function(prop, handler) {
+      var callbacks = this._('callbacks');
+
+      if (callbacks && callbacks[prop]) {
+        if (handler && callbacks[prop][handler]) {
+          delete callbacks[prop][handler];
+        } else if (!handler) {
+          delete callbacks[prop];
+        }
+      }
     }
 
   });
 
-  var FJSObject.extend = function(){
-    "use strict";
-
+  FJSObject.extend = function(){
     var _class2type = {};
 
     var _type = function( obj ) {
@@ -139,61 +172,6 @@ FlatJS.Object = (function() {
     
     return _extend;
   }();
-
-  /*
-   * object.watch polyfill
-   *
-   * 2012-04-03
-   *
-   * By Eli Grey, http://eligrey.com
-   * Public Domain.
-   * NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
-   */
-  function setupWatchFunctionality() {
-    if (!Object.prototype.watch) {
-      Object.defineProperty(Object.prototype, "watch", {
-          enumerable: false
-        , configurable: true
-        , writable: false
-        , value: function (prop, handler) {
-          var
-            oldval = this[prop]
-          , newval = oldval
-          , getter = function () {
-            return newval;
-          }
-          , setter = function (val) {
-            oldval = newval;
-            return newval = handler.call(this, prop, oldval, val);
-          }
-          ;
-          
-          if (delete this[prop]) { // can't watch constants
-            Object.defineProperty(this, prop, {
-                get: getter
-              , set: setter
-              , enumerable: true
-              , configurable: true
-            });
-          }
-        }
-      });
-    }
-     
-    // object.unwatch
-    if (!Object.prototype.unwatch) {
-      Object.defineProperty(Object.prototype, "unwatch", {
-          enumerable: false
-        , configurable: true
-        , writable: false
-        , value: function (prop) {
-          var val = this[prop];
-          delete this[prop]; // remove accessors
-          this[prop] = val;
-        }
-      });
-    }
-  }
 
   return FJSObject;
 
