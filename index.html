@@ -50,14 +50,16 @@
           <p>These are scripts which I can use to start any client side JS project. I wanted something with more structure than vanilla JS / jQuery, but felt closer to Ruby or PHP in terms of OOP programming. I also wanted something which would work with less changes made to traditional server side structure, which is to say less reliance on JS templating or CRUD based REST API's. Not to say these things aren't neat, but you don't always need them, and more importantly, they don't always save time.</p>
 
           <div class="page-header">
-            <h2>FlatJS is composed of 3 central modules:</h2>
+            <h2>FlatJS is composed of a few central modules:</h2>
           </div>
 
           <p><a href="#" class="label label-info">FlatJS.ModuleRunner</a> - Triggers JS execution by scanning for data attribute values in the DOM. Solves a key problem of any JS application: how to target functional JS code on your HTML (regardless of how or where it was templated).</p>
 
           <p><a href="#" class="label label-info">FlatJS.Classy</a> - OOP like class behavoir with inheritance and private member functions. Used for JS functionality that doesn't interact with the DOM.</p>
 
-          <p><a href="#" class="label label-info">FlatJS.Widget</a> - <a href="#" class="label label-warning">extends FlatJS.Classy</a> - A Widget pattern for extensible, DRY code meant to interact with the DOM.</p>
+          <p><a href="#" class="label label-info">FlatJS.Object</a> - <a href="#" class="label label-warning">req FlatJS.Classy</a> - Creates objects that are watchable - a cross browser alternative to the not yet very supported Object.Watch methods. Useful for data modeling and code separation.</p>
+
+          <p><a href="#" class="label label-info">FlatJS.Widget</a> - <a href="#" class="label label-warning">req FlatJS.Classy</a> - A Widget pattern for extensible, DRY code meant to interact with the DOM.</p>
 
           <h4 class="page-header small-top">Optional sub modules are located <a href="#">here.</a></h4>
           <p>Browser window monitoring, pubsub messaging and more as they come.</p>
