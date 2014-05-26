@@ -2,6 +2,18 @@
 <html>
   <head>
     <title>Classy Example</title>
+    <script src="http://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+
+    <style>
+      .code {
+        display: block;
+      }
+
+      .prettyprint {
+        margin-left: 15px;
+        padding: 10px;
+      }
+    </style>
 
     <script>
       var former = console.log;
@@ -18,14 +30,12 @@
         document.getElementById('mylog').innerHTML = html + "<div>" + msg + "</div>";
       }
     </script>
-
-    <style>
-      .code {
-        display: block;
-      }
-    </style>
   </head>
   <body>
+
+    <h1>FlatJS.Classy Example</h1>
+
+    <p>Makes a basic class, and creates a child class which extends the first. Overriding console.log to print code to the below div. Code is in a visible script tag below.</p>
 
     <h3>Console Output: </h3>
     <div id="mylog">
@@ -35,35 +45,44 @@
     <script src="../src/FlatJS.Classy.js"></script>
     
     <h3>Code</h3>
-    <pre><script class="code">var NS = {};
+    <pre class="prettyprint"><script class="code">// application namespace
+var NS = {};
 
+// creates a class by using FlatJS.Classy.extend
 NS.exampleClass = FlatJS.Classy.extend({
 
-  init: function(privateEyesBegin) {
-    this.privateEyesBegin = privateEyesBegin;
+  // acts as a constructor function for the class
+  init: function(introString) {
+    this.intro = introString;
   },
 
   getChorus: function() {
-    return this.privateEyesBegin + ' Are Watching You';
+    return this.intro + ', Are Watching You';
   }
 
 });
 
-var x = new NS.exampleClass('Private Eyes, ');
+var x = new NS.exampleClass('Private Eyes');
 
 console.log('x.getChorus() -->', x.getChorus());
 
+// creates a child class using the first class as a parent
+// gets extend functionality from FlatJS.Classy
 NS.exampleChild = NS.exampleClass.extend({
 
+  // overrides parent getChorus function
   getChorus: function() {
+    // access parent version of function, uses apply to call
     var str = this.getChorus._super.apply(this);
 
+    // adds the rest of the chorus.
     return str = str + ', They See Your Every Move';
   }
 
 });
 
-var y = new NS.exampleChild('Private Eyes, ');
+// calls the child function with the same initial argument
+var y = new NS.exampleChild('Private Eyes');
 
 console.log('y.getChorus() -->', y.getChorus());
     </script>
