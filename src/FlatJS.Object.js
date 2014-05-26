@@ -13,14 +13,31 @@ FlatJS.Object = (function() {
       var oldVal  = this[prop];
       this[prop]  = val;
 
-      if (this._('callbacks') && this._('callbacks')[prop]) {
+      if (this._('callbacks')) {
         var propCallbacks = this._('callbacks')[prop];
 
         for (var cba in propCallbacks) {
-          var cb = propCallbacks[cba][0]
-          if (typeof cb == 'function') {
-            cb(prop, oldVal, val);
+          var cbs = propCallbacks[cba];
+
+          for (var i = 0; i < cbs.length; i++) {
+            var cb = cbs[i];
+            
+            if (typeof cb == 'function') {
+              cb(prop, oldVal, val);
+            }
           }
+        }
+
+        if (this._('callbacks')['all']) {
+          var cbs = this._('callbacks')['all'];
+
+          for (var i = 0; i < cbs.length; i++) {
+            var cb = cbs[i];
+            
+            if (typeof cb == 'function') {
+              cb(prop, oldVal, val);
+            }
+          } 
         }
       }
     },
