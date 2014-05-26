@@ -3,8 +3,6 @@
   <head>
     <title>Classy Example</title>
 
-    <!-- including the jquery + a console shim for example ease -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script>
       var former = console.log;
       console.log = function(){
@@ -16,7 +14,8 @@
             msg += ' ';
           }
         };
-        $("#mylog").append("<div>" + msg + "</div>");
+        var html = document.getElementById('mylog').innerHTML;
+        document.getElementById('mylog').innerHTML = html + "<div>" + msg + "</div>";
       }
     </script>
 
