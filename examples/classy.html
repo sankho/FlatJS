@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Classy Example</title>
+
+    <style>
+      .code {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+
+    <h3>Console Output: </h3>
+    <div id="mylog">
+
+    </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+      var former = console.log;
+      console.log = function(msg){
+        former.call(this, msg);  //maintains existing logging via the console.
+        $("#mylog").append("<div>" + msg + "</div>");
+      }
+
+      window.onerror = function(message, url, linenumber) {
+        console.log("JavaScript error: " + message + " on line " + linenumber + " for " + url);
+      }
+    </script>
+
+    <script src="../src/FlatJS.Classy.js"></script>
+
+    <h3>Code</h3>
+    <pre><script class="code">var NS = {};
+
+NS.exampleClass = FlatJS.Classy.extend({
+
+  init: function(privateEyesBegin) {
+    this.privateEyesBegin = privateEyesBegin;
+  },
+
+  getChorus: function() {
+    return this.privateEyesBegin + ' Are Watching You';
+  }
+
+});
+
+var x = new NS.exampleClass('Private Eyes, ');
+
+console.log(x.getChorus());
+
+NS.exampleChild = NS.exampleClass.extend({
+
+  getChorus: function() {
+    var str = this.getChorus._super.apply(this);
+
+    return str = str + ', They See Your Every Move';
+  }
+
+});
+
+var y = new NS.exampleChild('Private Eyes, ');
+
+console.log(y.getChorus());
+    </script>
+    </pre>
+  </body>
+</html>
