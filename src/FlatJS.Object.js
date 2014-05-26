@@ -19,25 +19,12 @@ FlatJS.Object = (function() {
         for (var cba in propCallbacks) {
           var cbs = propCallbacks[cba];
 
-          for (var i = 0; i < cbs.length; i++) {
-            var cb = cbs[i];
-            
-            if (typeof cb == 'function') {
-              cb(prop, oldVal, val);
-            }
-          }
+          callAllFunctions(cbs, prop, oldVal, val);
         }
 
         if (this._('callbacks')['all']) {
           var cbs = this._('callbacks')['all'];
-
-          for (var i = 0; i < cbs.length; i++) {
-            var cb = cbs[i];
-            
-            if (typeof cb == 'function') {
-              cb(prop, oldVal, val);
-            }
-          } 
+          callAllFunctions(cbs, prop, oldVal, val)
         }
       }
     },
@@ -64,6 +51,16 @@ FlatJS.Object = (function() {
     }
 
   });
+
+  function callAllFunctions(cbs, prop, oldVal, val) {
+    for (var i = 0; i < cbs.length; i++) {
+      var cb = cbs[i];
+      
+      if (typeof cb == 'function') {
+        cb(prop, oldVal, val);
+      }
+    } 
+  }
 
   FJSObject.extend = function(){
     var _class2type = {};
