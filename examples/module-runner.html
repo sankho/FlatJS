@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Classy Example</title>
+
+    <script src="http://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+
+    <style>
+      .code {
+        display: block;
+      }
+
+      .prettyprint {
+        margin-left: 15px;
+        padding: 10px;
+      }
+    </style>
+
+    <script>
+      var former = console.log;
+      console.log = function(){
+        former.apply(this, arguments);  //maintains existing logging via the console.
+        var msg = '';
+        for (var i = 0; i < arguments.length; i++) {
+          msg += arguments[i].toString();
+          if (i < arguments.length - 1) {
+            msg += ' ';
+          }
+        };
+        var html = document.getElementById('mylog').innerHTML;
+        document.getElementById('mylog').innerHTML = html + "<div>" + msg + "</div>";
+      }
+    </script>
+  </head>
+  <body>
+
+    <h1>FlatJS.ModuleRunner Example</h1>
+
+    <p>Overriding console.log to print code to the below div. Code is in a visible script tag below.</p>
+
+    <h3>Div <small>id="example-div" data-js-module="NS.example-module"</small></h3>
+    <div id="example-div" data-js-module="NS.example-module"></div>
+
+    <h3>Console Output: </h3>
+    <div id="mylog">
+
+    </div>
+
+    <script src="../src/FlatJS.ModuleRunner.js"></script>
+    
+    <h3>Code</h3>
+    <pre class="prettyprint"><script class="code">// application namespace
+var NS = {};
+
+// an example module. accepts a single argument as node.
+NS.exampleModule = function(node) { 
+
+  // change the innerHTML as a test.
+  node.innerHTML = 'Code Injection';
+
+  // a private variable
+  var string = 'if returned this object will be attached to the node';
+
+  // adds a "getString" function to the object node created by the instantiated
+  // object when the moduleRunner will call "new NS.exampleModule" 
+  this.getString = function() {
+    return string;
+  }
+
+  // returns the instantiated object
+  return this;
+}
+
+NS.runner = new FlatJS.ModuleRunner({
+  init: false   // see other options in docs
+});
+
+// pass other DOM nodes to NS.runner.init later
+// to quickly run JS after AJAX calls etc.
+NS.runner.init(document);
+
+var div = document.getElementById('example-div'),
+    obj = div.jsModules['NS.exampleModule'];
+// debugger;
+console.log(obj.getString());
+    </script>
+    </pre>
+  </body>
+</html>
