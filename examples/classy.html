@@ -2,16 +2,15 @@
 <html>
   <head>
     <title>Classy Example</title>
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootswatch/3.1.1/yeti/bootstrap.min.css">
+
     <script src="http://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
 
     <style>
       .code {
         display: block;
-      }
-
-      .prettyprint {
-        margin-left: 15px;
-        padding: 10px;
       }
     </style>
 
@@ -33,19 +32,21 @@
   </head>
   <body>
 
-    <h1>FlatJS.Classy Example</h1>
+    <div class="container">
 
-    <p>Makes a basic class, and creates a child class which extends the first. Overriding console.log to print code to the below div. Code is in a visible script tag below.</p>
+      <h1>FlatJS.Classy Example</h1>
 
-    <h3>Console Output: </h3>
-    <div id="mylog">
+      <p>Makes a basic class, and creates a child class which extends the first. Overriding console.log to print code to the below div. Code is in a visible script tag below.</p>
 
-    </div>
+      <h3>Console Output: </h3>
+      <div id="mylog">
 
-    <script src="../src/FlatJS.Classy.js"></script>
-    
-    <h3>Code</h3>
-    <pre class="prettyprint"><script class="code">// application namespace
+      </div>
+
+      <script src="../src/FlatJS.Classy.js"></script>
+      
+      <h3>Code</h3>
+      <pre class="prettyprint"><script class="code">// application namespace
 var NS = {};
 
 // creates a class by using FlatJS.Classy.extend
@@ -85,7 +86,8 @@ NS.exampleChild = NS.exampleClass.extend({
 var y = new NS.exampleChild('Private Eyes');
 
 console.log('y.getChorus() -->', y.getChorus());
-    </script>
-    </pre>
+      </script>
+      </pre>
+    </div>
   </body>
 </html>
