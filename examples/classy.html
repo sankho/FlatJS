@@ -3,6 +3,25 @@
   <head>
     <title>Classy Example</title>
 
+    <!-- including the jquery + a console shim for example ease -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+      var former = console.log;
+      console.log = function(){
+        former.apply(this, arguments);  //maintains existing logging via the console.
+        var msg = '';
+        for (var i = 0; i < arguments.length; i++) {
+          msg += arguments[i].toString();
+          if (i < arguments.length - 1) {
+            msg += ' ';
+          }
+        };
+        $("#mylog").append("<div>" + msg + "</div>");
+      }
+    </script>
+
+    <script src="../src/FlatJS.Classy.js"></script>
+
     <style>
       .code {
         display: block;
@@ -15,22 +34,6 @@
     <div id="mylog">
 
     </div>
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script>
-      var former = console.log;
-      console.log = function(msg){
-        former.call(this, msg);  //maintains existing logging via the console.
-        $("#mylog").append("<div>" + msg + "</div>");
-      }
-
-      window.onerror = function(message, url, linenumber) {
-        console.log("JavaScript error: " + message + " on line " + linenumber + " for " + url);
-      }
-    </script>
-
-    <script src="../src/FlatJS.Classy.js"></script>
-
     <h3>Code</h3>
     <pre><script class="code">var NS = {};
 
@@ -48,7 +51,7 @@ NS.exampleClass = FlatJS.Classy.extend({
 
 var x = new NS.exampleClass('Private Eyes, ');
 
-console.log(x.getChorus());
+console.log('x.getChorus() -->', x.getChorus());
 
 NS.exampleChild = NS.exampleClass.extend({
 
@@ -62,7 +65,7 @@ NS.exampleChild = NS.exampleClass.extend({
 
 var y = new NS.exampleChild('Private Eyes, ');
 
-console.log(y.getChorus());
+console.log('y.getChorus() -->', y.getChorus());
     </script>
     </pre>
   </body>
