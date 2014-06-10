@@ -241,7 +241,7 @@
   var x = NS.exampleChild.extend({
 
     getChorus: function() {
-      var str = this.getChorus._super.apply(this);
+      var str = this._super.apply(this);
 
       return str = str + ', They See Your Every Move';
     }
