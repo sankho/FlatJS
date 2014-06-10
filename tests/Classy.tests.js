@@ -93,10 +93,14 @@ test("FlatJS.Classy OOP tests - private member functions & psuedo private storag
 
   }());
 
-  var exClass = new exClass("boosh");
+  var exObj  = new exClass("boosh");
+  var exObj2 = new exClass("boosy");
 
-  equal(exClass.callPrivateFunction(), "boosh", "exClass can call a private function form a public function")
-  equal(exClass._('string'), "boosh", "psuedo private storage working on object")
+  equal(exObj.callPrivateFunction(), "boosh", "exObj can call a private function from a public function, get private variable set on init")
+  equal(exObj._('string'), "boosh", "psuedo private storage working on object")
+
+  equal(exObj2.callPrivateFunction(), "boosy", "exObj2 can call a private function from a public function, get private variable set on init")
+  equal(exObj2._('string'), "boosy", "psuedo private storage working on object")
   equal(typeof privateFunction, 'undefined', "Private function should be out of this scope");
 
 });
