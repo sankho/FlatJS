@@ -12,13 +12,13 @@ test("FlatJS.Dispatch existence & FlatJS.Classy.prototype extension tests", func
 
 asyncTest("FlatJS.Dispatch pubsub tests", function(assert) {
 
-  var calledTwice = false;
+  var calledOnce = false;
 
   function publishCallback(int1, int2) {
-    if (calledTwice) {
+    if (calledOnce) {
       ok(false, "Callback fired more than once, unsubscribe not working");
     } else {
-      calledTwice = true;
+      calledOnce = true;
       ok(true, "Callback successfully fires after publish call is made");
       equal(int1, 3, "Int1 passed back correctly as argument to callback");
       equal(int2, 4, "Int2 passed back correctly as argument to callback");
@@ -44,7 +44,7 @@ asyncTest("FlatJS.Dispatch pubsub tests", function(assert) {
 
 asyncTest("FlatJS.Dispatch pubsub contextual to 'this' using apply", function(assert) {
 
-  var calledTwice = false;
+  var calledOnce = false;
 
   var obj = {
     int1: 33,
@@ -52,10 +52,10 @@ asyncTest("FlatJS.Dispatch pubsub contextual to 'this' using apply", function(as
   };
 
   function publishCallback(int1, int2) {
-    if (calledTwice) {
+    if (calledOnce) {
       ok(false, "Callback fired more than once, unsubscribe not working");
     } else {
-      calledTwice = true;
+      calledOnce = true;
       ok(true, "Callback successfully fires after publish call is made");
       equal(int1, 3, "Int1 passed back correctly as argument to callback");
       equal(int2, 4, "Int2 passed back correctly as argument to callback");
@@ -89,7 +89,7 @@ asyncTest("FlatJS.Dispatch pubsub contextual to 'this' using apply", function(as
 
 asyncTest("FlatJS.Dispatch pubsub contextual to FlatJS.Classy objects", function(assert) {
 
-  var calledTwice = false;
+  var calledOnce = false;
 
   var objClass = FlatJS.Classy.extend({
     int1: 0,
@@ -103,10 +103,10 @@ asyncTest("FlatJS.Dispatch pubsub contextual to FlatJS.Classy objects", function
   var obj = new objClass(33, 44);
 
   function publishCallback(int1, int2) {
-    if (calledTwice) {
+    if (calledOnce) {
       ok(false, "Callback fired more than once, unsubscribe not working");
     } else {
-      calledTwice = true;
+      calledOnce = true;
       ok(true, "Callback successfully fires after publish call is made");
       equal(int1, 3, "Int1 passed back correctly as argument to callback");
       equal(int2, 4, "Int2 passed back correctly as argument to callback");
