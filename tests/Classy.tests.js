@@ -31,7 +31,7 @@ test("FlatJS.Classy OOP tests - class extension, basic functionality", function(
       this.width  = width;
       this.height = height;
 
-      this._super.init(width * height);
+      this._super(width * height);
     },
 
     width:  0,
@@ -42,7 +42,7 @@ test("FlatJS.Classy OOP tests - class extension, basic functionality", function(
   var Square = Rect.extend({
 
     init: function(side) {
-      this._super.init(side, side);
+      this._super(side, side);
     }
 
   });
@@ -55,13 +55,14 @@ test("FlatJS.Classy OOP tests - class extension, basic functionality", function(
 
   ok(exRect instanceof Rect, "exRect identified as an instance of class Rect")
   ok(exRect instanceof Shape, "exRect identified as an instance of class Shape")
-  ok(exSquare instanceof Rect, "exSquare identified as an instance of class Rect")
-  ok(exSquare instanceof Square, "exSquare identified as an instance of class Square")
-  ok(exSquare instanceof Shape, "exSquare identified as an instance of class Shape")
 
   equal(exRect.width, 5, "Rectangle width should be 5")
   equal(exRect.height, 2, "Rectangle height should be 2")
   equal(exRect.getArea(), 10, "Rectangle area should be 10");
+
+  ok(exSquare instanceof Rect, "exSquare identified as an instance of class Rect")
+  ok(exSquare instanceof Square, "exSquare identified as an instance of class Square")
+  ok(exSquare instanceof Shape, "exSquare identified as an instance of class Shape")
 
   equal(exSquare.width, 5, "Square width should be 5")
   equal(exSquare.height, 5, "Square height should be 5")
