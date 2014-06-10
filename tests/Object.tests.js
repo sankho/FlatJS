@@ -8,9 +8,9 @@ test("FlatJS.Object existence tests", function(assert) {
 
 });
 
-asyncTest("FlatJS.Object setter & watch functionality", function(assert) {
+asyncTest("FlatJS.Object setter, watch, and unwatch functionality", function(assert) {
 
-  var x = new FlatJS.Object();
+  var x      = new FlatJS.Object();
 
   function watchCallback(name, oldVal, val) {
     ok(true, "callback on watch function successful");
@@ -26,4 +26,17 @@ asyncTest("FlatJS.Object setter & watch functionality", function(assert) {
 
   equal(x.g, 3, "x.set() sets a variable on the object, successfully mutes actual object");
 
+  x.unwatch('g', watchCallback);
+
+  // will trigger errors if above unwatch call was unsucessful due to check on oldVal.
+  x.set('g', 3);
+
+  x.watch('g', watchCallback);
+
+  // check to see if all handlers get deleted by key
+  x.unwatch('g');
+
+  // will trigger errors if above unwatch call was unsucessful due to check on oldVal.
+  x.set('g', 3);
 });
+
