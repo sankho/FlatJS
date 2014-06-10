@@ -30,8 +30,8 @@ test("FlatJS.Classy OOP tests - class extension, basic functionality", function(
     init: function(width, height) {
       this.width  = width;
       this.height = height;
-      
-      this._(this.init._super)(width * height);
+
+      this._super.init(width * height);
     },
 
     width:  0,
@@ -42,7 +42,7 @@ test("FlatJS.Classy OOP tests - class extension, basic functionality", function(
   var Square = Rect.extend({
 
     init: function(side) {
-      this._(this.init._super)(side, side);
+      this._super.init(side, side);
     }
 
   });
