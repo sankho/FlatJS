@@ -15,7 +15,7 @@ test("FlatJS.Classy OOP tests - class extension, basic functionality", function(
 
     area: 0,
 
-    setArea: function(area) {
+    init: function(area) {
       this.area = area;
     },
 
@@ -31,7 +31,7 @@ test("FlatJS.Classy OOP tests - class extension, basic functionality", function(
       this.width  = width;
       this.height = height;
       
-      this.setArea(width * height);
+      this._(this.init._super)(width * height);
     },
 
     width:  0,
