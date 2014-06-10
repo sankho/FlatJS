@@ -59,12 +59,12 @@ test("FlatJS.Classy OOP tests - class extension, basic functionality", function(
   ok(exSquare instanceof Square, "exSquare identified as an instance of class Square")
   ok(exSquare instanceof Shape, "exSquare identified as an instance of class Shape")
 
-  ok(exRect.width === 5, "Rectangle width should be 5")
-  ok(exRect.height === 2, "Rectangle height should be 2")
-  ok(exRect.getArea() === 10, "Rectangle area should be 10")
+  equal(exRect.width, 5, "Rectangle width should be 5")
+  equal(exRect.height, 2, "Rectangle height should be 2")
+  equal(exRect.getArea(), 10, "Rectangle area should be 10");
 
-  ok(exSquare.width === 5, "Square width should be 5")
-  ok(exSquare.height === 5, "Square height should be 5")
-  ok(exSquare.getArea() === 25, "Square area should be 25")
+  equal(exSquare.width, 5, "Square width should be 5")
+  equal(exSquare.height, 5, "Square height should be 5")
+  equal(exSquare.getArea(), 25, "Square area should be 25")
 
 });
