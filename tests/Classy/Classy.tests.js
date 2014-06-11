@@ -72,9 +72,13 @@ QUnit.test("FlatJS.Classy OOP tests - class extension, basic functionality", fun
 
 QUnit.test("FlatJS.Classy OOP tests - private member functions & psuedo private storage", function(assert) {
 
-  var exClass = (function() {
-    var exClass = FlatJS.Classy.extend({
+  var exClass = FlatJS.Classy.extend(function() {
 
+    function privateFunction() {
+      return this._('string');
+    }
+
+    return {
       init: function(string) {
         this._('string', string);
       },
@@ -83,18 +87,14 @@ QUnit.test("FlatJS.Classy OOP tests - private member functions & psuedo private 
         return this._(privateFunction)();
       }
 
-    });
-
-    function privateFunction() {
-      return this._('string');
     }
 
-    return exClass;
-
-  }());
+  });
 
   var exObj  = new exClass("boosh");
   var exObj2 = new exClass("boosy");
+
+  QUnit.equal(typeof exObj.callPrivateFunction, 'function', "FlatJS.Classy objects can be extended by passing a function as well");
 
   QUnit.equal(exObj.callPrivateFunction(), "boosh", "exObj can call a private function from a public function, get private variable set on init")
   QUnit.equal(exObj._('string'), "boosh", "psuedo private storage working on object")
