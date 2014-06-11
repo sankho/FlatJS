@@ -4,30 +4,36 @@ var __MVMockData = {
   HTML: ''
 }
 
-QUnit.stop();
-
 $.ajax({
 
   url: 'MV/mock.html',
   success: function(data) {
     __MVMockData.HTML = data;
     $('#mock-area').append(data);
-     QUnit.start();
+    __MVMockData.mockLoadedCallback()
   }
 
 })
 
 
-QUnit.test("FlatJS.MV existence tests", function() {
+__MVMockData.mockLoadedCallback = function() {
 
-  QUnit.equal(typeof FlatJS.MV, 'function', "FlatJS.MV exists, is a function");
+  QUnit.test("FlatJS.MV existence tests", function() {
 
-  QUnit.equal(typeof FlatJS.MV.extend, 'function', 'FlatJS.MV.extend exists, is a function');
+    var $mock = $('#flat-mv-test-mock');
 
-});
+    QUnit.equal($mock.length, 1, 'Mock successfully AJAXed in');
 
-QUnit.test("FlatJS.MV tests - class extension, basic functionality", function() {
+    QUnit.equal(typeof FlatJS.MV, 'function', "FlatJS.MV exists, is a function");
+
+    QUnit.equal(typeof FlatJS.MV.extend, 'function', 'FlatJS.MV.extend exists, is a function');
+
+  });
+
+  QUnit.test("FlatJS.MV tests - class extension, basic functionality", function() {
 
 
 
-});
+  });
+
+};
