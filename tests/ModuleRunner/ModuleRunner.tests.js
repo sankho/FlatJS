@@ -73,13 +73,9 @@ __moduleRunnerMockData.mockLoaded = function() {
 
     var $mock = $('#module-runner-test-mock');
 
-    QUnit.stop();
-
     //reset
     $mock.remove();
     $('#mock-area').append(__moduleRunnerMockData.HTML);
-
-    QUnit.start();
 
     var $mock = $('#module-runner-test-mock'),
         $two  = $mock.find('.module-two'),
