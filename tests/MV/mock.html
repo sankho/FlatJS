@@ -1,20 +1,10 @@
-<div id="flat-mv-test-mock" data-flat-mv>
+<div id="flat-mv-test-mock" data-js-module="FlatJS.MV">
 
-  <div data-mv-json="APP.JSON_DATA.people">
-    <!-- prototype -->
-    <div data-template data-mv-model="APP.Person">
-      <a data-key="name" href="#"></a>
-      <ul data-mv-json="todos">
-        <li data-template data-mv-model="APP.Todo">
-          <span data-key="title"></span>
-        </li>
-      </ul>
-    </div>
-
+  <div data-mv-each="people">
     <!-- actual data -->
     <div data-id="1" data-mv-model="APP.Person">
       <a data-key="name" href="#">Bill</a>
-      <ul data-mv-json="todos">
+      <ul data-mv-each="todos">
         <li data-mv-model="APP.Todo" data-id="1">
           <span data-key="title">Get Laundry</span>
         </li>
@@ -22,7 +12,7 @@
     </div>
     <div data-id="2" data-mv-model="APP.Person">
       <a data-key="name" href="#">Jane</a>
-      <ul data-mv-json="todos">
+      <ul data-mv-each="todos">
         <li data-mv-model="APP.Todo" data-id="1">
           <span data-key="title">Get Dinner</span>
         </li>
