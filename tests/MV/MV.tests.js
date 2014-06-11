@@ -23,14 +23,12 @@ __MVMockData.mockLoadedCallback = function() {
     var $mock = $('#flat-mv-test-mock');
 
     QUnit.equal($mock.length, 1, 'Mock successfully AJAXed in');
-
     QUnit.equal(typeof FlatJS.MV, 'function', "FlatJS.MV exists, is a function");
-
     QUnit.equal(typeof FlatJS.MV.extend, 'function', 'FlatJS.MV.extend exists, is a function');
 
   });
 
-  QUnit.test("FlatJS.MV tests - class extension, basic functionality", function() {
+  QUnit.test("FlatJS.MV tests - basic functionality", function() {
 
 
 
