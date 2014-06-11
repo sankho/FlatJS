@@ -98,6 +98,8 @@ __moduleRunnerMockData.mockLoaded = function() {
     runner.init();
 
     __moduleRunnerMockData.basicImplentationTests(mock, obj2, true);
+
+    $mock.remove();
   });
 
 };
