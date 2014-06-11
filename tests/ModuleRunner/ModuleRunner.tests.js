@@ -33,73 +33,66 @@ var __moduleRunnerMockData = {
 
 }
 
-QUnit.asyncTest("FlatJS.ModuleRunner Loads Mock File", function(assert) {
+QUnit.stop();
 
-  $.ajax({
+$.ajax({
 
-    url: 'ModuleRunner/mock.html',
-    success: function(data) {
-      __moduleRunnerMockData.HTML = data;
-      $('#mock-area').append(data);
+  url: 'ModuleRunner/mock.html',
+  success: function(data) {
+    __moduleRunnerMockData.HTML = data;
+    $('#mock-area').append(data);
 
-      __moduleRunnerMockData.mockLoaded();
-    }
+    QUnit.start();
+  }
 
-  })
+})
 
-});
+QUnit.test("FlatJS.ModuleRunner default functionality", function(assert) {
 
-__moduleRunnerMockData.mockLoaded = function() {
+  var $mock = $('#module-runner-test-mock'),
+      $two  = $mock.find('.module-two'),
+      mock  = $mock.get(0),
+      obj2  = $two.get(0);
+
+  var runner = new FlatJS.ModuleRunner();
 
   QUnit.ok($('#module-runner-test-mock').length > 0, "Module runner mock HTML loads and appends via ajax");
 
-  QUnit.start();
+  __moduleRunnerMockData.basicImplentationTests(mock, obj2);
 
-  QUnit.test("FlatJS.ModuleRunner default functionality", function(assert) {
+});
 
-    var $mock = $('#module-runner-test-mock'),
-        $two  = $mock.find('.module-two'),
-        mock  = $mock.get(0),
-        obj2  = $two.get(0);
+// reset
+QUnit.test('FlatJS.ModuleRunner - extended functionality', function(assert) {
 
-    var runner = new FlatJS.ModuleRunner();
+  var $mock = $('#module-runner-test-mock');
 
-    __moduleRunnerMockData.basicImplentationTests(mock, obj2);
+  //reset
+  $mock.remove();
+  $('#mock-area').append(__moduleRunnerMockData.HTML);
 
-  });
+  var $mock = $('#module-runner-test-mock'),
+      $two  = $mock.find('.module-two'),
+      mock  = $mock.get(0),
+      obj2  = $two.get(0);
 
-  // reset
-  QUnit.test('FlatJS.ModuleRunner - extended functionality', function(assert) {
+  // edit attributes
+  $mock.attr('data-new-js-module', 'module-one');
+  $two.attr('data-new-js-module', 'module-two');
 
-    var $mock = $('#module-runner-test-mock');
+  var runner = new FlatJS.ModuleRunner({
+    init:    false,
+    context: __moduleRunnerMockData,
+    attr:    'data-new-js-module',
+    node:    mock
+  })
 
-    //reset
-    $mock.remove();
-    $('#mock-area').append(__moduleRunnerMockData.HTML);
+  QUnit.equal(obj2.jsModules, undefined, "ModuleRunner does not automatically init if false flag is passed");
 
-    var $mock = $('#module-runner-test-mock'),
-        $two  = $mock.find('.module-two'),
-        mock  = $mock.get(0),
-        obj2  = $two.get(0);
+  runner.init();
 
-    // edit attributes
-    $mock.attr('data-new-js-module', 'module-one');
-    $two.attr('data-new-js-module', 'module-two');
+  __moduleRunnerMockData.basicImplentationTests(mock, obj2, true);
 
-    var runner = new FlatJS.ModuleRunner({
-      init:    false,
-      context: __moduleRunnerMockData,
-      attr:    'data-new-js-module',
-      node:    mock
-    })
+  $mock.remove();
 
-    QUnit.equal(obj2.jsModules, undefined, "ModuleRunner does not automatically init if false flag is passed");
-
-    runner.init();
-
-    __moduleRunnerMockData.basicImplentationTests(mock, obj2, true);
-
-    $mock.remove();
-  });
-
-};
+});
