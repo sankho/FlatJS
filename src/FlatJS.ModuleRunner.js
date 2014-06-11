@@ -24,6 +24,8 @@ FlatJS.ModuleRunner = (function() {
         findFn  = opts.findFn  || function(fn){fn()},
         callFn  = opts.callFn  || false;
 
+    var getAllElementsWithAttribute = FlatJS.Helpers.getAllElementsWithAttribute;
+
     /**
      * Inits the module runner on all children nodes - exposed as public so devs can run
      * the loader on <divs> after ajax calls, JS manipulation, etc.
@@ -40,36 +42,6 @@ FlatJS.ModuleRunner = (function() {
       for (var i = 0; i < elemLength; i++) {
         this.moduleInit(elems[i]);
       }
-    }
-
-    /**
-     * Takes a node as an argument, and looks through that node for all
-     * children elements with the given attribute.
-     *
-     * @param  {String} attribute DOM attribute to look for within nodes
-     * @param  {Object} _node     DOM Object to traverse through
-     * @method
-     * @private
-     * @static
-     * @return {Array}            An array of all matching elements.
-     */
-    function getAllElementsWithAttribute(attribute, _node) {
-      _node = _node || node;
-      var matchingElements = [],
-          allElements      = _node.getElementsByTagName('*'),
-          elemLength       = allElements.length;
-
-      for (var i = 0; i < elemLength; i++) {
-        if (allElements[i].getAttribute(attribute) !== null) {
-          matchingElements.push(allElements[i]);
-        }
-      }
-
-      if (_node !== document && _node.getAttribute && _node.getAttribute(attribute) !== null) {
-        matchingElements.push(_node);
-      }
-
-      return matchingElements;
     }
 
     /**
