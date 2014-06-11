@@ -1,8 +1,8 @@
 var FlatJS = FlatJS || {};
 
-/** 
+/**
  * Codez go here.
- * 
+ *
  * @module ModuleRunner
  */
 FlatJS.ModuleRunner = (function() {
@@ -19,7 +19,7 @@ FlatJS.ModuleRunner = (function() {
 
     var context = opts.context || window,
         node    = opts.node    || document,
-        init    = opts.init    || false,
+        init    = opts.init    || true,
         attr    = opts.attr    || 'data-js-module',
         findFn  = opts.findFn  || function(fn){fn()},
         callFn  = opts.callFn  || false;
@@ -27,7 +27,7 @@ FlatJS.ModuleRunner = (function() {
     /**
      * Inits the module runner on all children nodes - exposed as public so devs can run
      * the loader on <divs> after ajax calls, JS manipulation, etc.
-     * 
+     *
      * @param  {Object} _node DOM node to be inspected
      * @public
      * @method
@@ -45,7 +45,7 @@ FlatJS.ModuleRunner = (function() {
     /**
      * Takes a node as an argument, and looks through that node for all
      * children elements with the given attribute.
-     * 
+     *
      * @param  {String} attribute DOM attribute to look for within nodes
      * @param  {Object} _node     DOM Object to traverse through
      * @method
@@ -58,7 +58,7 @@ FlatJS.ModuleRunner = (function() {
       var matchingElements = [],
           allElements      = _node.getElementsByTagName('*'),
           elemLength       = allElements.length;
-      
+
       for (var i = 0; i < elemLength; i++) {
         if (allElements[i].getAttribute(attribute) !== null) {
           matchingElements.push(allElements[i]);
@@ -77,7 +77,7 @@ FlatJS.ModuleRunner = (function() {
      * looking for a function which matches the string being sought
      * after. Accounts for object depth w/ string splitting by period,
      * type checking, array splicing, and recursion.
-     * 
+     *
      * @param  {Object} objNode         DOM object to attach method to after execution
      * @param  {String / Array} c       Starts as a string, but can be an array representing the object being sought.
      * @param  {Object} parent          The current namespace / context functions are being sought within.
@@ -96,10 +96,10 @@ FlatJS.ModuleRunner = (function() {
       } else if (typeof c !== 'object') {
         return false;
       }
-          
+
       var obj    = parent[c[0]];
       var fn     = obj[c[1]];
-      
+
       if (typeof obj === 'object' && typeof fn === 'function') {
         return runMethodOnObj(fn, objNode, origName);
       } else if (typeof fn === 'object' && c[2]) {
@@ -114,7 +114,7 @@ FlatJS.ModuleRunner = (function() {
      * and attaches the result to the supplied node's object as
      * an array. Behavoir of how function is called can be extended
      * by using the options (see above, callFn).
-     * 
+     *
      * @param  {Function} fn      Function to be called
      * @param  {Object}   objNode DOM element to place return of function within
      * @return {Object}           Should return whatever that function returns; assuming it's an object.
@@ -130,7 +130,7 @@ FlatJS.ModuleRunner = (function() {
       } else {
         var obj = new fn(objNode);
       }
-      
+
       objNode.jsModules[name] = obj;
       return obj;
     }
@@ -148,8 +148,8 @@ FlatJS.ModuleRunner = (function() {
       if (typeof controllers !== 'string') {
         return;
       }
-      controllers = controllers.split(' ');
-      conCount    = controllers.length;
+      controllers  = controllers.split(' ');
+      var conCount = controllers.length;
       for (var i=0; i<conCount; i++) {
         (function() {
           var c = controllers[i];
