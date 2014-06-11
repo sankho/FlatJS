@@ -56,8 +56,7 @@ FlatJS.Dispatch = (function() {
           var obj = topic[cb];
 
           if (typeof obj.fn === 'function' && obj.instance === this) {
-            topic[cb] = undefined;
-            delete topic[cb];
+            topic.splice(obj, 1);
           }
         }
       }

@@ -1,12 +1,12 @@
 FlatJS.Object = (function() {
-  
+
 
   var FJSObject = FlatJS.Classy.extend({
 
     init: function(initialObject) {
       this._('initialObject', initialObject);
 
-      FlatJS.Object.extend(this, initialObject);
+      this.extend(initialObject);
     },
 
     set: function(prop, val) {
@@ -48,6 +48,10 @@ FlatJS.Object = (function() {
           delete callbacks[prop];
         }
       }
+    },
+
+    extend: function(obj) {
+      return FJSObject.objExtend(this, obj);
     }
 
   });
@@ -55,14 +59,14 @@ FlatJS.Object = (function() {
   function callAllFunctions(cbs, prop, oldVal, val) {
     for (var i = 0; i < cbs.length; i++) {
       var cb = cbs[i];
-      
+
       if (typeof cb == 'function') {
         cb(prop, oldVal, val);
       }
-    } 
+    }
   }
 
-  FJSObject.extend = function(){
+  FJSObject.objExtend = function(){
     var _class2type = {};
 
     var _type = function( obj ) {
@@ -183,7 +187,7 @@ FlatJS.Object = (function() {
     //   isPlainObject: _isPlainObject,
     //   extend: _extend
     // }
-    
+
     return _extend;
   }();
 

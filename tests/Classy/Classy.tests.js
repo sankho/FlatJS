@@ -3,9 +3,9 @@
 
 test("FlatJS.Classy existence tests", function() {
 
-  ok(typeof FlatJS.Classy === 'function', "FlatJS.Classy exists, is a function");
+  equal(typeof FlatJS.Classy, 'function', "FlatJS.Classy exists, is a function");
 
-  ok(typeof FlatJS.Classy.extend === 'function', 'FlatJS.Classy.extend exists, is a function');
+  equal(typeof FlatJS.Classy.extend, 'function', 'FlatJS.Classy.extend exists, is a function');
 
 });
 
@@ -67,5 +67,40 @@ test("FlatJS.Classy OOP tests - class extension, basic functionality", function(
   equal(exSquare.width, 5, "Square width should be 5")
   equal(exSquare.height, 5, "Square height should be 5")
   equal(exSquare.getArea(), 25, "Square area should be 25")
+
+});
+
+test("FlatJS.Classy OOP tests - private member functions & psuedo private storage", function(assert) {
+
+  var exClass = (function() {
+    var exClass = FlatJS.Classy.extend({
+
+      init: function(string) {
+        this._('string', string);
+      },
+
+      callPrivateFunction: function() {
+        return this._(privateFunction)();
+      }
+
+    });
+
+    function privateFunction() {
+      return this._('string');
+    }
+
+    return exClass;
+
+  }());
+
+  var exObj  = new exClass("boosh");
+  var exObj2 = new exClass("boosy");
+
+  equal(exObj.callPrivateFunction(), "boosh", "exObj can call a private function from a public function, get private variable set on init")
+  equal(exObj._('string'), "boosh", "psuedo private storage working on object")
+
+  equal(exObj2.callPrivateFunction(), "boosy", "exObj2 can call a private function from a public function, get private variable set on init")
+  equal(exObj2._('string'), "boosy", "psuedo private storage working on object")
+  equal(typeof privateFunction, 'undefined', "Private function should be out of this scope");
 
 });
