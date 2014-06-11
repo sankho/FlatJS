@@ -26,7 +26,7 @@ __MVMockData.mockLoadedCallback = function() {
 
   var $mock = $('#flat-mv-test-mock'),
       mock  = $mock.get(0),
-      mvMod = mock.jsModules['FlatJS.MV'];
+      mvMod = mock.jsModules ? mock.jsModules['FlatJS.MV'] : undefined;
 
   QUnit.test("FlatJS.MV existence tests", function() {
     var $mock = $('#flat-mv-test-mock');
