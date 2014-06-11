@@ -94,6 +94,11 @@ FlatJS.Classy = (function() {
 
   // Create a new Class that inherits from this class
   Classy.extend = function(prop) {
+
+    if (typeof prop === 'function') {
+      prop = prop();
+    }
+
     var _super = this.prototype;
 
     // Instantiate a base class (but only create the instance,
