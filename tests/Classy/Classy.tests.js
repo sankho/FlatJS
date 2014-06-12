@@ -25,6 +25,10 @@ QUnit.test("FlatJS.Classy OOP tests - class extension, basic functionality", fun
 
   });
 
+  Shape.staticFn = function() {
+    return "static string";
+  }
+
   var Rect = Shape.extend({
 
     init: function(width, height) {
@@ -47,6 +51,10 @@ QUnit.test("FlatJS.Classy OOP tests - class extension, basic functionality", fun
 
   });
 
+  Square.staticFn = function() {
+    return "overridden string";
+  }
+
   var exRect   = new Rect(5, 2);
   var exSquare = new Square(5);
 
@@ -55,6 +63,9 @@ QUnit.test("FlatJS.Classy OOP tests - class extension, basic functionality", fun
 
   QUnit.ok(exRect instanceof Rect, "exRect identified as an instance of class Rect")
   QUnit.ok(exRect instanceof Shape, "exRect identified as an instance of class Shape")
+
+  QUnit.equal(Rect.staticFn(), "static string", "Static functions are extended")
+  QUnit.equal(Square.staticFn(), "overridden string", "Static functions can be overriden")
 
   QUnit.equal(exRect.width, 5, "Rectangle width should be 5")
   QUnit.equal(exRect.height, 2, "Rectangle height should be 2")
