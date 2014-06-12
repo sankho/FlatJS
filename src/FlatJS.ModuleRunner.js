@@ -51,33 +51,13 @@ FlatJS.ModuleRunner = (function() {
      * type checking, array splicing, and recursion.
      *
      * @param  {Object} objNode         DOM object to attach method to after execution
-     * @param  {String / Array} c       Starts as a string, but can be an array representing the object being sought.
-     * @param  {Object} parent          The current namespace / context functions are being sought within.
      * @param  {String} origName        Stores the name as it comes in for pointer purposes.
+     * @param  {Object} parent          The current namespace / context functions are being sought within.
      * @return {Object}                 Oughta return an object w/ the result of the executed method.
      */
-    function findAndCallModuleByString(objNode, c, parent, origName) {
-      origName = origName || c;
-
-      if (c.indexOf('.') !== -1) {
-        c = c.split('.');
-      }
-
-      if (typeof c === 'string' && typeof parent[c] === 'function') {
-        return runMethodOnObj(parent[c], objNode, origName);
-      } else if (typeof c !== 'object') {
-        return false;
-      }
-
-      var obj    = parent[c[0]];
-      var fn     = obj[c[1]];
-
-      if (typeof obj === 'object' && typeof fn === 'function') {
-        return runMethodOnObj(fn, objNode, origName);
-      } else if (typeof fn === 'object' && c[2]) {
-        c.splice(0, 1);
-        return findAndCallModuleByString(objNode, c, obj, origName);
-      }
+    function findAndCallModuleByString(objNode, origName, parent) {
+      var fn = FlatJS.Helpers.findFunctionByString(origName, parent);
+      runMethodOnObj(fn, objNode, origName);
     }
 
     /**
