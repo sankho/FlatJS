@@ -36,16 +36,12 @@ __MVMockData.mockLoadedCallback = function() {
   });
 
   QUnit.test("FlatJS.MV tests - DOM loaded model generation", function() {
-
     QUnit.equal(typeof APP.Todo, 'function', "APP.Todo model references should be automatically generated");
     QUnit.equal(typeof APP.Person, 'function', "APP.Person model references should be automatically generated");
-    QUnit.equal(APP.Person.objects.length, 2, "APP.Person.objects has 2 people in it");
     QUnit.equal(APP.Todo.objects.length, 2, "APP.Todo.objects has 2 people in it");
-
-    // takes data from DOM for each node, adds it to model
-    // verify data is set correctly
-
-
+    QUnit.equal(APP.Person.objects.length, 2, "APP.Person.objects has 2 people in it");
+    QUnit.equal(APP.Person.objects[0].name, "Jane", "APP.Person.objects[0] has correct data on name")
+    QUnit.equal($mock.find('h1').text(), "Jane", "Correct name applied to first instance of model in view, updated from entry of second");
   });
 
 };
