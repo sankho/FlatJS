@@ -142,6 +142,13 @@ FlatJS.Classy = (function() {
       Class.objects.push(this);
     }
 
+    // Copy static functions
+    for (var name in this) {
+      if (!Class[name]) {
+        Class[name] = this[name];
+      }
+    }
+
     // Populate our constructed prototype object
     Class.prototype = prototype;
 
