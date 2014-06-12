@@ -43,8 +43,8 @@ FlatJS.Helpers = (function() {
      * @param  {Object} parent          The current namespace / context functions are being sought within.
      * @return {Function / Boolean}     Oughta return the function it's finding or false
      */
-    findFunctionByString: function(c, parent) {
-      parent = parent || window;
+    findFunctionByString: function(c, parent, defaultValue) {
+      parent     = parent || window;
 
       if (c.indexOf('.') !== -1) {
         c = c.split('.');
@@ -56,14 +56,21 @@ FlatJS.Helpers = (function() {
         return false;
       }
 
-      var obj    = parent[c[0]],
+      var obj    = parent[c[0]] || {},
           fn     = obj[c[1]];
 
       if (typeof obj === 'object' && typeof fn === 'function') {
         return fn;
       } else if (typeof fn === 'object' && c[2]) {
         c.splice(0, 1);
-        return this.findFunctionByString(c, obj);
+        return this.findFunctionByString(c, obj, defaultValue);
+      } else if (defaultValue && c[1]) {
+        var obj = parent[c[0]] = parent[c[0]] || {};
+        c.splice(0, 1);
+        return this.findFunctionByString(c, obj, defaultValue);
+      } else if (defaultValue) {
+        parent[c[0]] = defaultValue;
+        return parent[c[0]];
       }
     }
   });

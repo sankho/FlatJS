@@ -16,7 +16,12 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
   };
 
   function findAndInitializeModels() {
+    var modelNodes = FlatJS.Helpers.getAllElementsWithAttribute('data-mv-model', this.obj);
 
+    for (var i = 0; i < modelNodes.length; i++) {
+      var modelName = modelNodes[i].getAttribute('data-mv-model'),
+          model     = FlatJS.Helpers.findFunctionByString(modelName, window, FlatJS.Object.extend());
+    }
   }
 
   function bindMVKeys() {
