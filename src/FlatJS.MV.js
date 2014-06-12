@@ -31,19 +31,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     var id     = node.getAttribute('data-mv-id'),
         obj    = false;
 
-    for (var i = 0; i < model.objects.length; i++) {
-      var _obj = model.objects[i];
-
-      if (_obj.id == id) {
-        obj = _obj;
-      }
-    }
-
-    if (!obj) {
-      obj = new model({
-        id: id
-      });
-    }
+    obj = model.find(id) || new model({ id: id });
 
     this._(stripDataFromNodeAndUpdateObject)(obj, node);
   }

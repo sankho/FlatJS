@@ -191,6 +191,20 @@ FlatJS.Object = (function() {
     return _extend;
   }();
 
+  FJSObject.find = function(id) {
+    var obj;
+
+    for (var i = 0; i < this.objects.length; i++) {
+      var _obj = this.objects[i];
+
+      if (_obj.id == id) {
+        obj = _obj;
+      }
+    }
+
+    return obj;
+  }
+
   return FJSObject;
 
 }());
