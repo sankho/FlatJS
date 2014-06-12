@@ -57,7 +57,7 @@ FlatJS.ModuleRunner = (function() {
      */
     function findAndCallModuleByString(objNode, origName, parent) {
       var fn = FlatJS.Helpers.findFunctionByString(origName, parent);
-      runMethodOnObj(fn, objNode, origName);
+      return runMethodOnObj(fn, objNode, origName);
     }
 
     /**

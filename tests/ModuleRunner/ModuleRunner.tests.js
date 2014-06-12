@@ -13,22 +13,25 @@ var __moduleRunnerMockData = {
     obj.innerHTML = obj.innerHTML + '<p>Module One.</p>';
   },
 
-  moduleTwo: FlatJS.Classy.extend({
-    init: function(obj) {
-      this.int1 = 23;
-      this.int2 = 89;
+  nested: {
+    moduleTwo: FlatJS.Classy.extend({
+      init: function(obj) {
+        this.int1 = 23;
+        this.int2 = 89;
 
-      obj.innerHTML = obj.innerHTML + '<p>Module Two.</p>';
-    }
-  }),
+        obj.innerHTML = obj.innerHTML + '<p>Module Two.</p>';
+      }
+    }),
+  },
 
   basicImplentationTests: function(mock, obj2, nodeSet) {
       QUnit.ok(mock.jsModules, "jsModules array attaches to <div> on init, init runs by default, works without provided scope");
       QUnit.ok(mock.jsModules[!nodeSet ? '__moduleRunnerMockData.moduleOne' : 'moduleOne'] instanceof __moduleRunnerMockData.moduleOne, "moduleOne module executed on div, retrieves object and is instance of __moduleRunnerMockData.moduleOne");
 
       QUnit.ok(obj2.jsModules, "jsModules array attaches to <div> on inner <div> recursively");
-      QUnit.ok(obj2.jsModules[!nodeSet ? '__moduleRunnerMockData.moduleTwo' : 'moduleTwo'] instanceof __moduleRunnerMockData.moduleTwo, "moduleTwo is assigned appropriately to inner <div>");
-      QUnit.equal(obj2.jsModules[!nodeSet ? '__moduleRunnerMockData.moduleTwo' : 'moduleTwo'].int1, 23, "reference to inner object returns correctly set variable retrieved from data attribute");
+
+      QUnit.ok(obj2.jsModules[!nodeSet ? '__moduleRunnerMockData.nested.moduleTwo' : 'nested.moduleTwo'] instanceof __moduleRunnerMockData.nested.moduleTwo, "moduleTwo is assigned appropriately to inner <div>");
+      QUnit.equal(obj2.jsModules[!nodeSet ? '__moduleRunnerMockData.nested.moduleTwo' : 'nested.moduleTwo'].int1, 23, "reference to inner object returns correctly set variable retrieved from data attribute");
   }
 
 }
@@ -77,7 +80,7 @@ __moduleRunnerMockData.mockLoadedCallback = function() {
 
     // edit attributes
     $mock.attr('data-new-js-module', 'module-one');
-    $two.attr('data-new-js-module', 'module-two');
+    $two.attr('data-new-js-module', 'nested.module-two');
 
     var runner = new FlatJS.ModuleRunner({
       init:    false,
