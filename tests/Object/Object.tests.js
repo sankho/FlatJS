@@ -39,3 +39,17 @@ QUnit.asyncTest("FlatJS.Object setter, watch, and unwatch functionality", functi
   // will trigger errors if above unwatch call was unsucessful due to check on oldVal.
   x.set('g', 3);
 });
+
+QUnit.test("FlatJS.Object static query functions", function(assert) {
+
+  var exClass = FlatJS.Object.extend();
+
+  for (var id = 0; id < 10; id++) {
+    new exClass({
+      id: id
+    });
+  }
+
+  QUnit.equal(exClass.find(1), exClass.objects[1], "Objects have static find method which looks in class' objects variable for matching ID values");
+
+});
