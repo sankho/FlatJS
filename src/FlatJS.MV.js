@@ -21,14 +21,35 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     for (var i = 0; i < modelNodes.length; i++) {
       var node      = modelNodes[i],
           modelName = node.getAttribute('data-mv-model'),
-          model     = FlatJS.Helpers.findFunctionByString(modelName, window, FlatJS.Object.extend({
-            node: document.createElement('div')
-          }));
+          model     = FlatJS.Helpers.findFunctionByString(modelName, window, FlatJS.Object.extend({}));
 
-      new model({
-        node: node
+      this._(createModelObjectFromNode)(model, node);
+    }
+  }
+
+  function createModelObjectFromNode(model, node) {
+    var id     = node.getAttribute('data-mv-id'),
+        obj    = false;
+
+    for (var i = 0; i < model.objects.length; i++) {
+      var _obj = model.objects[i];
+
+      if (_obj.id == id) {
+        obj = _obj;
+      }
+    }
+
+    if (!obj) {
+      obj = new model({
+        id: id
       });
     }
+
+    this._(stripDataFromNodeAndUpdateObject)(obj, node);
+  }
+
+  function stripDataFromNodeAndUpdateObject(obj, node) {
+
   }
 
   function bindMVKeys() {
