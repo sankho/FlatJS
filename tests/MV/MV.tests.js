@@ -5,8 +5,6 @@ var __MVMockData = {
   customMV: FlatJS.MV || {}
 }
 
-var APP = {};
-
 $.ajax({
 
   url: 'MV/mock.html',
@@ -37,9 +35,9 @@ __MVMockData.mockLoadedCallback = function() {
 
   QUnit.test("FlatJS.MV tests - DOM loaded model generation", function() {
 
-    QUnit.equal(typeof APP.Person, 'object', "APP.Person & APP.Todo model references should be automatically generated");
-    QUnit.equal(typeof APP.Todo, 'object', "APP.Person & APP.Todo model references should be automatically generated");
-    QUnit.equal(APP.PERSON.objects.length, 2, "APP.PERSON.objects has 2 people in it");
+    QUnit.equal(typeof APP.Todo, 'function', "APP.Todo model references should be automatically generated");
+    QUnit.equal(typeof APP.Person, 'function', "APP.Person model references should be automatically generated");
+    QUnit.equal(APP.Person.objects.length, 2, "APP.PERSON.objects has 2 people in it");
 
   });
 
