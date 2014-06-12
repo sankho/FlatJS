@@ -19,12 +19,14 @@ $.ajax({
 
 __MVMockData.mockLoadedCallback = function() {
 
-  // init the MV default behavoir in mock
-  new FlatJS.ModuleRunner().init();
-
   var $mock = $('#flat-mv-test-mock'),
-      mock  = $mock.get(0),
-      mvMod = mock.jsModules ? mock.jsModules['FlatJS.MV'] : undefined;
+      mock  = $mock.get(0);
+
+  new FlatJS.ModuleRunner({
+    attr: 'data-js-mv-test-module'
+  });
+
+  var mvMod = mock.jsModules ? mock.jsModules['FlatJS.MV'] : undefined;
 
   QUnit.test("FlatJS.MV existence tests", function() {
     var $mock = $('#flat-mv-test-mock');
@@ -38,7 +40,6 @@ __MVMockData.mockLoadedCallback = function() {
     QUnit.equal(typeof APP.Todo, 'function', "APP.Todo model references should be automatically generated");
     QUnit.equal(typeof APP.Person, 'function', "APP.Person model references should be automatically generated");
     QUnit.equal(APP.Person.objects.length, 2, "APP.PERSON.objects has 2 people in it");
-
   });
 
 };
