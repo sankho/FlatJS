@@ -118,31 +118,31 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
       if (child.hasAttribute) {
         var isModel = child.hasAttribute('data-mv-model');
-        this._(constructJSONfromNode)(child, parentObj, isModel, isArray);
+        if (child.hasAttribute('data-json-key')) {
+          var key = child.getAttribute('data-json-key');
+          parentObj[key] = child.innerHTML;
+        } else if (isModel || child.hasAttribute('data-json-obj') || child.hasAttribute('data-json-array')) {
+          this._(constructJSONfromNode)(child, parentObj, isModel, isArray);
+        } else {
+          this._(assembleJSONIfChildren)(child, parentObj);
+        }
       }
     }
   }
 
   function constructJSONfromNode(child, parentObj, isModel, isArray) {
-    if (child.hasAttribute('data-json-key')) {
-      var key = child.getAttribute('data-json-key');
-      parentObj[key] = child.innerHTML;
-    } else if (isModel || child.hasAttribute('data-json-obj') || child.hasAttribute('data-json-array')) {
-      var isObj = child.hasAttribute('data-json-obj'),
-          key   = child.getAttribute(isObj ? 'data-json-obj' : 'data-json-array')
-      if (isModel) {
-        var modelClass = FlatJS.Helpers.findFunctionByString(child.getAttribute('data-mv-model')),
-            obj        = modelClass ? modelClass.find(child.getAttribute('data-mv-id')) : false;
-        if (obj && isArray) {
-          parentObj.push(obj)
-        } else if (obj) {
-          parentObj[key] = obj;
-        }
-      } else {
-        this._(assembleJSONIfChildren)(child, parentObj, key, isObj);
+    var isObj = child.hasAttribute('data-json-obj'),
+        key   = child.getAttribute(isObj ? 'data-json-obj' : 'data-json-array')
+    if (isModel) {
+      var modelClass = FlatJS.Helpers.findFunctionByString(child.getAttribute('data-mv-model')),
+          obj        = modelClass ? modelClass.find(child.getAttribute('data-mv-id')) : false;
+      if (obj && isArray) {
+        parentObj.push(obj)
+      } else if (obj) {
+        parentObj[key] = obj;
       }
     } else {
-      this._(assembleJSONIfChildren)(child, parentObj);
+      this._(assembleJSONIfChildren)(child, parentObj, key, isObj);
     }
   }
 
