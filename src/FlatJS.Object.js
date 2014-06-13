@@ -19,12 +19,12 @@ FlatJS.Object = (function() {
         for (var cba in propCallbacks) {
           var cbs = propCallbacks[cba];
 
-          callAllFunctions(cbs, prop, oldVal, val);
+          callAllFunctions(cbs, prop, oldVal, val, this);
         }
 
         if (this._('callbacks')['all']) {
           var cbs = this._('callbacks')['all'];
-          callAllFunctions(cbs, prop, oldVal, val)
+          callAllFunctions(cbs, prop, oldVal, val, this)
         }
       }
     },
@@ -56,12 +56,12 @@ FlatJS.Object = (function() {
 
   });
 
-  function callAllFunctions(cbs, prop, oldVal, val) {
+  function callAllFunctions(cbs, prop, oldVal, val, obj) {
     for (var i = 0; i < cbs.length; i++) {
       var cb = cbs[i];
 
       if (typeof cb == 'function') {
-        cb(prop, oldVal, val);
+        cb(prop, oldVal, val, obj);
       }
     }
   }

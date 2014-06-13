@@ -12,11 +12,12 @@ QUnit.asyncTest("FlatJS.Object setter, watch, and unwatch functionality", functi
 
   var x      = new FlatJS.Object();
 
-  function watchCallback(name, oldVal, val) {
+  function watchCallback(name, oldVal, val, obj) {
     QUnit.ok(true, "callback on watch function successful");
     QUnit.equal(val, 3, "callback on watch function successfully returns changed new value");
     QUnit.equal(oldVal, undefined, "callback on watch function successfully retains old value");
     QUnit.equal(name, 'g', "callback on watch function successfully retains name of property");
+    QUnit.equal(obj, x, "initial object passed through callback");
     QUnit.start();
   }
 
