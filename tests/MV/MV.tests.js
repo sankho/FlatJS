@@ -47,8 +47,8 @@ __MVMockData.mockLoadedCallback = function() {
     QUnit.equal(typeof mvMod.JSON, "object", "JSON object created & attached to mod");
     QUnit.equal(mvMod.JSON.you, APP.Person.find(2), "JSON object successfully creates pointers to related Person model objects")
 
-    APP.Todo.objects[0].set('title', 'sheeet');
-    QUnit.equal($('#first-todo span').text(), 'sheeet', "HTML syncs on object change successfully");
+    APP.Todo.objects[0].set('title', 'Cook Dinner');
+    QUnit.equal($('#first-todo span').text(), 'Cook Dinner', "HTML syncs on object change successfully");
   });
 
 };
