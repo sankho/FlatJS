@@ -3,6 +3,11 @@ var FlatJS = FlatJS || {};
 FlatJS.Helpers = (function() {
 
   var helpers = FlatJS.Classy.extend({
+
+    isArray: function(someVar) {
+      return Object.prototype.toString.call(someVar) === '[object Array]';
+    },
+
     /**
      * Takes a node as an argument, and looks through that node for all
      * children elements with the given attribute.
