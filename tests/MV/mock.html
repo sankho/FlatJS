@@ -1,14 +1,14 @@
 <div id="flat-mv-test-mock" data-js-mv-test-module="FlatJS.MV">
 
-  <div data-mv-each="you" data-mv-id="2" data-mv-model="APP.Person">
+  <div data-mv-obj="you" data-mv-id="2" data-mv-model="APP.Person">
     <h1 data-mv-key="name"></h1>
   </div>
 
-  <div data-mv-each="people">
+  <div data-mv-array="people">
     <!-- actual data -->
     <div data-mv-id="1" data-mv-model="APP.Person">
       <a data-mv-key="name" href="#">Bill</a>
-      <ul data-mv-each="todos">
+      <ul data-mv-array="todos">
         <li data-mv-model="APP.Todo" data-mv-id="1">
           <span data-mv-key="title">Get Laundry</span>
         </li>
@@ -16,7 +16,7 @@
     </div>
     <div data-mv-id="2" data-mv-model="APP.Person">
       <a data-mv-key="name" href="#">Jane</a>
-      <ul data-mv-each="todos">
+      <ul data-mv-array="todos">
         <li data-mv-model="APP.Todo" data-mv-id="2">
           <span data-mv-key="title">Get Dinner</span>
         </li>
