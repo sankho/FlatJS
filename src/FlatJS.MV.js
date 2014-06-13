@@ -108,9 +108,9 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     }
   }
 
-  function assembleJSON(parentObj) {
-    var children  = this.obj.childNodes,
-        parentObj = parentObj || this.JSON;;
+  function assembleJSON(parentObj, node) {
+    var children  = node ? node.childNodes : this.obj.childNodes,
+        parentObj = parentObj || this.JSON;
 
     for (var i = 0; i < children.length; i++) {
       var child = children[i];
@@ -122,10 +122,14 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
           var key = child.getAttribute('data-json-key');
 
           parentObj[key] = child.innerHTML;
-        } else if (child.hasAttribute('data-json-obj')) {
-
-        } else if (child.hasAttribute('data-json-array')) {
-
+        } else if (child.hasAttribute('data-json-obj') ||
+                   child.hasAttribute('data-json-array')) {
+          if (child.childNodes && child.childNodes.length > 0) {
+            var isObj = child.hasAttribute('data-json-obj'),
+                key   = child.getAttribute(isObj ? 'data-json-obj' : 'data-json-array');
+            parentObj[key] = isObj ? {} : [];
+            this._(assembleJSON)(parentObj[key], child);
+          }
         }
       }
     }
