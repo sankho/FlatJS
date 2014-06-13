@@ -77,7 +77,7 @@ __MVMockData.mockLoadedCallback = function() {
 
     mvModOne.updateJSON({
       header: {
-        title: "shit"
+        title: "Todo List - Update"
       }
     });
 
