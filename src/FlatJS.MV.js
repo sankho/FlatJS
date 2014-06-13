@@ -101,8 +101,8 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     for (var i = 0; i < nodes.length; i++) {
       var node = nodes[i];
 
-      if (!node.objectWatchSet) {
-        node.objectWatchSet = true;
+      if (!node.object._FJSwatchSet) {
+        node.object._FJSwatchSet = true;
         node.object.watch(node.getAttribute('data-mv-key'), this._(syncMVKeyOnObjectChange));
       }
     }
