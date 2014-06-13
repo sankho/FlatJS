@@ -117,35 +117,42 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       var child = children[i];
 
       if (child.hasAttribute) {
-        var model = child.hasAttribute('data-mv-model');
-
-        if (child.hasAttribute('data-json-key')) {
-          var key = child.getAttribute('data-json-key');
-
-          parentObj[key] = child.innerHTML;
-        } else if (child.hasAttribute('data-json-obj') ||
-                   child.hasAttribute('data-json-array') ||
-                   (model && isArray)) {
-          var isObj = child.hasAttribute('data-json-obj'),
-              key   = child.getAttribute(isObj ? 'data-json-obj' : 'data-json-array');
-
-          if (model) {
-            var modelClass = FlatJS.Helpers.findFunctionByString(child.getAttribute('data-mv-model')),
-                obj        = modelClass ? modelClass.find(child.getAttribute('data-mv-id')) : false;
-
-            if (obj && isArray) {
-              parentObj.push(obj);
-            } else if (obj) {
-              parentObj[key] = obj;
-            }
-          } else if (child.childNodes && child.childNodes.length > 0) {
-            parentObj[key] = isObj ? {} : [];
-            this._(assembleJSON)(parentObj[key], child.childNodes);
-          }
-        } else if (child.childNodes && child.childNodes.length > 0) {
-          this._(assembleJSON)(parentObj, child.childNodes);
-        }
+        var isModel = child.hasAttribute('data-mv-model');
+        this._(constructJSONfromNode)(child, parentObj, isModel, isArray);
       }
+    }
+  }
+
+  function constructJSONfromNode(child, parentObj, isModel, isArray) {
+    if (child.hasAttribute('data-json-key')) {
+      var key = child.getAttribute('data-json-key');
+      parentObj[key] = child.innerHTML;
+    } else if (isModel || child.hasAttribute('data-json-obj') || child.hasAttribute('data-json-array')) {
+      var isObj = child.hasAttribute('data-json-obj'),
+          key   = child.getAttribute(isObj ? 'data-json-obj' : 'data-json-array')
+      if (isModel) {
+        var modelClass = FlatJS.Helpers.findFunctionByString(child.getAttribute('data-mv-model')),
+            obj        = modelClass ? modelClass.find(child.getAttribute('data-mv-id')) : false;
+        if (obj && isArray) {
+          parentObj.push(obj)
+        } else if (obj) {
+          parentObj[key] = obj;
+        }
+      } else {
+        this._(assembleJSONIfChildren)(child, parentObj, key, isObj);
+      }
+    } else {
+      this._(assembleJSONIfChildren)(child, parentObj);
+    }
+  }
+
+  function assembleJSONIfChildren(child, parentObj, key, isObj) {
+    if (child.childNodes && child.childNodes.length > 0) {
+      if (key) {
+        parentObj = parentObj[key] = isObj ? {} : [];
+      }
+
+      this._(assembleJSON)(parentObj, child.childNodes);
     }
   }
 
