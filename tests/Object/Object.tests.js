@@ -1,22 +1,23 @@
 // should contain all tests for FlatJS.Object
 
-test("FlatJS.Object existence tests", function(assert) {
+QUnit.test("FlatJS.Object existence tests", function(assert) {
 
-  equal(typeof FlatJS.Object, 'function', 'FlatJS.Object exists and is a function');
-  equal(typeof FlatJS.Object.extend, 'function', 'FlatJS.Object exists and has an inherited extend function');
-  ok(FlatJS.Object.prototype instanceof FlatJS.Classy, 'FlatJS.Object inherits FlatJS.Classy');
+  QUnit.equal(typeof FlatJS.Object, 'function', 'FlatJS.Object exists and is a function');
+  QUnit.equal(typeof FlatJS.Object.extend, 'function', 'FlatJS.Object exists and has an inherited extend function');
+  QUnit.ok(FlatJS.Object.prototype instanceof FlatJS.Classy, 'FlatJS.Object inherits FlatJS.Classy');
 
 });
 
-asyncTest("FlatJS.Object setter, watch, and unwatch functionality", function(assert) {
+QUnit.asyncTest("FlatJS.Object setter, watch, and unwatch functionality", function(assert) {
 
   var x      = new FlatJS.Object();
 
-  function watchCallback(name, oldVal, val) {
-    ok(true, "callback on watch function successful");
-    equal(val, 3, "callback on watch function successfully returns changed new value");
-    equal(oldVal, undefined, "callback on watch function successfully retains old value");
-    equal(name, 'g', "callback on watch function successfully retains name of property");
+  function watchCallback(name, oldVal, val, obj) {
+    QUnit.ok(true, "callback on watch function successful");
+    QUnit.equal(val, 3, "callback on watch function successfully returns changed new value");
+    QUnit.equal(oldVal, undefined, "callback on watch function successfully retains old value");
+    QUnit.equal(name, 'g', "callback on watch function successfully retains name of property");
+    QUnit.equal(obj, x, "initial object passed through callback");
     QUnit.start();
   }
 
@@ -40,3 +41,16 @@ asyncTest("FlatJS.Object setter, watch, and unwatch functionality", function(ass
   x.set('g', 3);
 });
 
+QUnit.test("FlatJS.Object static query functions", function(assert) {
+
+  var exClass = FlatJS.Object.extend();
+
+  for (var id = 0; id < 10; id++) {
+    new exClass({
+      id: id
+    });
+  }
+
+  QUnit.equal(exClass.find(1), exClass.objects[1], "Objects have static find method which looks in class' objects variable for matching ID values");
+
+});

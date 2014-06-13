@@ -1,15 +1,15 @@
 // should contain all unit tests on FlatJS.Classy.js
 
 
-test("FlatJS.Classy existence tests", function() {
+QUnit.test("FlatJS.Classy existence tests", function() {
 
-  equal(typeof FlatJS.Classy, 'function', "FlatJS.Classy exists, is a function");
+  QUnit.equal(typeof FlatJS.Classy, 'function', "FlatJS.Classy exists, is a function");
 
-  equal(typeof FlatJS.Classy.extend, 'function', 'FlatJS.Classy.extend exists, is a function');
+  QUnit.equal(typeof FlatJS.Classy.extend, 'function', 'FlatJS.Classy.extend exists, is a function');
 
 });
 
-test("FlatJS.Classy OOP tests - class extension, basic functionality", function() {
+QUnit.test("FlatJS.Classy OOP tests - class extension, basic functionality", function() {
 
   var Shape = FlatJS.Classy.extend({
 
@@ -24,6 +24,10 @@ test("FlatJS.Classy OOP tests - class extension, basic functionality", function(
     }
 
   });
+
+  Shape.staticFn = function() {
+    return "static string";
+  }
 
   var Rect = Shape.extend({
 
@@ -47,34 +51,45 @@ test("FlatJS.Classy OOP tests - class extension, basic functionality", function(
 
   });
 
+  Square.staticFn = function() {
+    return "overridden string";
+  }
+
   var exRect   = new Rect(5, 2);
   var exSquare = new Square(5);
 
-  ok(typeof Rect === 'function', "Rect is a class")
-  ok(typeof Rect.extend === 'function', "Rect is extendable")
+  QUnit.ok(typeof Rect === 'function', "Rect is a class")
+  QUnit.ok(typeof Rect.extend === 'function', "Rect is extendable")
 
-  ok(exRect instanceof Rect, "exRect identified as an instance of class Rect")
-  ok(exRect instanceof Shape, "exRect identified as an instance of class Shape")
+  QUnit.ok(exRect instanceof Rect, "exRect identified as an instance of class Rect")
+  QUnit.ok(exRect instanceof Shape, "exRect identified as an instance of class Shape")
 
-  equal(exRect.width, 5, "Rectangle width should be 5")
-  equal(exRect.height, 2, "Rectangle height should be 2")
-  equal(exRect.getArea(), 10, "Rectangle area should be 10");
+  QUnit.equal(Rect.staticFn(), "static string", "Static functions are extended")
+  QUnit.equal(Square.staticFn(), "overridden string", "Static functions can be overriden")
 
-  ok(exSquare instanceof Rect, "exSquare identified as an instance of class Rect")
-  ok(exSquare instanceof Square, "exSquare identified as an instance of class Square")
-  ok(exSquare instanceof Shape, "exSquare identified as an instance of class Shape")
+  QUnit.equal(exRect.width, 5, "Rectangle width should be 5")
+  QUnit.equal(exRect.height, 2, "Rectangle height should be 2")
+  QUnit.equal(exRect.getArea(), 10, "Rectangle area should be 10");
 
-  equal(exSquare.width, 5, "Square width should be 5")
-  equal(exSquare.height, 5, "Square height should be 5")
-  equal(exSquare.getArea(), 25, "Square area should be 25")
+  QUnit.ok(exSquare instanceof Rect, "exSquare identified as an instance of class Rect")
+  QUnit.ok(exSquare instanceof Square, "exSquare identified as an instance of class Square")
+  QUnit.ok(exSquare instanceof Shape, "exSquare identified as an instance of class Shape")
+
+  QUnit.equal(exSquare.width, 5, "Square width should be 5")
+  QUnit.equal(exSquare.height, 5, "Square height should be 5")
+  QUnit.equal(exSquare.getArea(), 25, "Square area should be 25")
 
 });
 
-test("FlatJS.Classy OOP tests - private member functions & psuedo private storage", function(assert) {
+QUnit.test("FlatJS.Classy OOP tests - private member functions & psuedo private storage", function(assert) {
 
-  var exClass = (function() {
-    var exClass = FlatJS.Classy.extend({
+  var exClass = FlatJS.Classy.extend(function() {
 
+    function privateFunction() {
+      return this._('string');
+    }
+
+    return {
       init: function(string) {
         this._('string', string);
       },
@@ -83,24 +98,30 @@ test("FlatJS.Classy OOP tests - private member functions & psuedo private storag
         return this._(privateFunction)();
       }
 
-    });
-
-    function privateFunction() {
-      return this._('string');
     }
 
-    return exClass;
-
-  }());
+  });
 
   var exObj  = new exClass("boosh");
   var exObj2 = new exClass("boosy");
 
-  equal(exObj.callPrivateFunction(), "boosh", "exObj can call a private function from a public function, get private variable set on init")
-  equal(exObj._('string'), "boosh", "psuedo private storage working on object")
+  QUnit.equal(typeof exObj.callPrivateFunction, 'function', "FlatJS.Classy objects can be extended by passing a function as well");
 
-  equal(exObj2.callPrivateFunction(), "boosy", "exObj2 can call a private function from a public function, get private variable set on init")
-  equal(exObj2._('string'), "boosy", "psuedo private storage working on object")
-  equal(typeof privateFunction, 'undefined', "Private function should be out of this scope");
+  QUnit.equal(exObj.callPrivateFunction(), "boosh", "exObj can call a private function from a public function, get private variable set on init")
+  QUnit.equal(exObj._('string'), "boosh", "psuedo private storage working on object")
+
+  QUnit.equal(exObj2.callPrivateFunction(), "boosy", "exObj2 can call a private function from a public function, get private variable set on init")
+  QUnit.equal(exObj2._('string'), "boosy", "psuedo private storage working on object")
+  QUnit.equal(typeof privateFunction, 'undefined', "Private function should be out of this scope");
+
+});
+
+QUnit.test("FlatJS.Classy storage tests - created objects should be retained & referenceable statically", function() {
+
+  var exClass = FlatJS.Classy.extend(),
+      exChild = new exClass();
+
+  QUnit.equal(typeof exClass.objects, 'object', "Created classes should have an array attached called objects");
+  QUnit.equal(exClass.objects[0], exChild, "First item in created class's objects array matches created chidl");
 
 });

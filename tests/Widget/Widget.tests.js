@@ -24,32 +24,25 @@ __widgetMockData.nonRenderingWidget =  __widgetMockData.exampleWidget.extend({
     renderOnInit: false
   })
 
-QUnit.asyncTest("FlatJS.Widget - Loads Mock File", function(assert) {
+$.ajax({
 
-  $.ajax({
+  url: 'Widget/mock.html',
+  success: function(data) {
+    __widgetMockData.HTML = data;
+    $('#mock-area').append(data);
+    __widgetMockData.mockLoadedCallback();
+  }
 
-    url: 'Widget/mock.html',
-    success: function(data) {
-      __widgetMockData.HTML = data;
-      $('#mock-area').append(data);
+})
 
-      __widgetMockData.mockLoaded();
-    }
-
-  })
-
-});
-
-__widgetMockData.mockLoaded = function() {
-  QUnit.start();
-
-  QUnit.ok(true, "mock widget file loaded");
-
-  $mock = $('#flat-widget-mock');
-
-  QUnit.equal($mock.length, 1, "Mock object exists in DOM")
+__widgetMockData.mockLoadedCallback = function() {
 
   QUnit.test("FlatJS.Widget - Tests lifecycle", function() {
+    var $mock = $('#flat-widget-mock');
+
+    QUnit.ok(true, "mock widget file loaded");
+    QUnit.equal($mock.length, 1, "Mock object exists in DOM")
+
     var x = new __widgetMockData.exampleWidget($mock.get(0));
 
     QUnit.equal(x.initialized, true, "x.initializer() fires on object construction");
@@ -70,4 +63,5 @@ __widgetMockData.mockLoaded = function() {
     QUnit.equal(y.syncUIed, true, "y.syncUI() fires on object construction");
     QUnit.equal(y.bindUIed, true, "y.bindUI() fires on object construction");
   });
+
 }

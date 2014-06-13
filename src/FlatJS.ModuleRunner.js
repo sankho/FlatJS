@@ -24,6 +24,8 @@ FlatJS.ModuleRunner = (function() {
         findFn  = opts.findFn  || function(fn){fn()},
         callFn  = opts.callFn  || false;
 
+    var getAllElementsWithAttribute = FlatJS.Helpers.getAllElementsWithAttribute;
+
     /**
      * Inits the module runner on all children nodes - exposed as public so devs can run
      * the loader on <divs> after ajax calls, JS manipulation, etc.
@@ -43,69 +45,19 @@ FlatJS.ModuleRunner = (function() {
     }
 
     /**
-     * Takes a node as an argument, and looks through that node for all
-     * children elements with the given attribute.
-     *
-     * @param  {String} attribute DOM attribute to look for within nodes
-     * @param  {Object} _node     DOM Object to traverse through
-     * @method
-     * @private
-     * @static
-     * @return {Array}            An array of all matching elements.
-     */
-    function getAllElementsWithAttribute(attribute, _node) {
-      _node = _node || node;
-      var matchingElements = [],
-          allElements      = _node.getElementsByTagName('*'),
-          elemLength       = allElements.length;
-
-      for (var i = 0; i < elemLength; i++) {
-        if (allElements[i].getAttribute(attribute) !== null) {
-          matchingElements.push(allElements[i]);
-        }
-      }
-
-      if (_node !== document && _node.getAttribute && _node.getAttribute(attribute) !== null) {
-        matchingElements.push(_node);
-      }
-
-      return matchingElements;
-    }
-
-    /**
      * Recursive search through an object - or window by default -
      * looking for a function which matches the string being sought
      * after. Accounts for object depth w/ string splitting by period,
      * type checking, array splicing, and recursion.
      *
      * @param  {Object} objNode         DOM object to attach method to after execution
-     * @param  {String / Array} c       Starts as a string, but can be an array representing the object being sought.
-     * @param  {Object} parent          The current namespace / context functions are being sought within.
      * @param  {String} origName        Stores the name as it comes in for pointer purposes.
+     * @param  {Object} parent          The current namespace / context functions are being sought within.
      * @return {Object}                 Oughta return an object w/ the result of the executed method.
      */
-    function findAndCallModuleByString(objNode, c, parent, origName) {
-      origName = origName || c;
-
-      if (c.indexOf('.') !== -1) {
-        c = c.split('.');
-      }
-
-      if (typeof c === 'string' && typeof parent[c] === 'function') {
-        return runMethodOnObj(parent[c], objNode, origName);
-      } else if (typeof c !== 'object') {
-        return false;
-      }
-
-      var obj    = parent[c[0]];
-      var fn     = obj[c[1]];
-
-      if (typeof obj === 'object' && typeof fn === 'function') {
-        return runMethodOnObj(fn, objNode, origName);
-      } else if (typeof fn === 'object' && c[2]) {
-        c.splice(0, 1);
-        return findAndCallModuleByString(objNode, c, obj, origName);
-      }
+    function findAndCallModuleByString(objNode, origName, parent) {
+      var fn = FlatJS.Helpers.findFunctionByString(origName, parent);
+      return runMethodOnObj(fn, objNode, origName);
     }
 
     /**

@@ -1,12 +1,31 @@
-<div id="flat-mv-test-mock" data-flat-mv>
+<div id="flat-mv-test-mock" data-js-mv-test-module="FlatJS.MV">
 
-  <ul data-mv-json="APP.JSON_DATA.people" data-mv-model="APP.Person">
-    <li data-mv-item>
-      <a data-key="name" href="#"></a>
-      <ul data-mv-json="todos" data-mv-model="APP.Todo">
-        <li data-mv-item data-key="title"></li>
+  <div data-json-obj="header">
+    <h1 data-json-key="title">Todo List</h1>
+  </div>
+
+  <div data-json-obj="you" data-mv-id="2" data-mv-model="APP.Person">
+    <h2 data-mv-key="name"></h2>
+  </div>
+
+  <div data-json-array="people">
+    <!-- actual data -->
+    <div data-mv-id="1" data-mv-model="APP.Person">
+      <a data-mv-key="name" href="#">Bill</a>
+      <ul data-json-array="todos">
+        <li id="first-todo" data-mv-model="APP.Todo" data-mv-id="1">
+          <span data-mv-key="title">Get Laundry</span>
+        </li>
       </ul>
-    </li>
-  </ul>
+    </div>
+    <div data-mv-id="2" data-mv-model="APP.Person">
+      <a data-mv-key="name" href="#">Jane</a>
+      <ul data-json-array="todos">
+        <li data-mv-model="APP.Todo" data-mv-id="2">
+          <span data-mv-key="title">Get Dinner</span>
+        </li>
+      </ul>
+    </div>
+  </div>
 
 </div>
