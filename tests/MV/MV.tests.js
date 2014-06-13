@@ -42,6 +42,8 @@ __MVMockData.mockLoadedCallback = function() {
     QUnit.equal(APP.Person.objects.length, 2, "APP.Person.objects has 2 people in it");
     QUnit.equal(APP.Person.objects[0].name, "Jane", "APP.Person.objects[0] has correct data on name")
     QUnit.equal($mock.find('h1').text(), "Jane", "Correct name applied to first instance of model in view, updated from entry of second");
+    QUnit.equal(typeof mvMod.JSON, "object", "JSON object created & attached to mod");
+    QUnit.equal(mvMod.JSON.you, APP.Person.find(2), "JSON object successfully creates pointers to related Person model objects")
   });
 
 };
