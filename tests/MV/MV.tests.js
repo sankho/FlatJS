@@ -16,7 +16,6 @@ $.ajax({
 
 })
 
-
 __MVMockData.mockLoadedCallback = function() {
 
   var $mock = $('#flat-mv-test-mock .first'),
@@ -48,9 +47,41 @@ __MVMockData.mockLoadedCallback = function() {
     QUnit.equal(mvMod.JSON.you, APP.Person.find(2), "JSON object successfully creates pointers to related Person model objects")
     QUnit.equal(mvMod.JSON.header.title, "Todo List", "Non model string data saved to JSON object as well")
     QUnit.equal(mvMod.JSON.people[0], APP.Person.find(1), "Models are saved as relations to the JSON object, pushed onto array as well")
+  });
 
+  QUnit.test("FlatJS.MV - Changing model objects should update HTML", function() {
     APP.Todo.objects[0].set('title', 'Cook Dinner');
-    QUnit.equal($('.first-todo span:eq(0)').text(), 'Cook Dinner', "HTML syncs on object change successfully");
+    QUnit.equal($('.first .first-todo span').text(), 'Cook Dinner', "HTML syncs on object change successfully - first item");
+    QUnit.equal($('.second .first-todo span').text(), 'Cook Dinner', "HTML syncs on object change successfully - first item");
+  });
+
+  QUnit.test("FlatJS.MV - JSON Injection / Auto Template creation", function() {
+    // reset everything
+    $('#flat-mv-test-mock').remove();
+    $('#mock-area').append(__MVMockData.HTML);
+
+    var $mock    = $('#flat-mv-test-mock'),
+        $mockOne = $mock.find('.first'),
+        mockOne  = $mockOne.get(0),
+        $mockTwo = $mock.find('.second'),
+        mockTwo  = $mockTwo.get(0);
+
+    new FlatJS.ModuleRunner({
+      attr: 'data-js-mv-test-module'
+    });
+
+    var mvModOne = mockOne.jsModules ? mockOne.jsModules['FlatJS.MV'] : undefined,
+        mvModTwo = mockTwo.jsModules ? mockTwo.jsModules['FlatJS.MV'] : undefined;
+
+    QUnit.ok(mvModOne.updateJSON, "FlatJS.MV.prototype.updateJSON exists");
+
+    mvModOne.updateJSON({
+      header: {
+        title: "shit"
+      }
+    });
+
+    mvModOne.render();
   });
 
 };
