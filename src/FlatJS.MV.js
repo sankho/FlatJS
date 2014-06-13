@@ -25,15 +25,18 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
           modelName = node.getAttribute('data-mv-model'),
           model     = FlatJS.Helpers.findFunctionByString(modelName, window, FlatJS.Object.extend({}));
 
-      this._(createModelObjectFromNode)(model, node);
+      this._(createModelObjectFromNode)(model, node, modelName);
     }
   }
 
-  function createModelObjectFromNode(model, node) {
+  function createModelObjectFromNode(model, node, modelName) {
     var id     = node.getAttribute('data-mv-id'),
         obj    = false;
 
     obj = model.find(id) || new model({ id: id });
+
+    obj.nodes     = obj.nodes || [];
+    obj.modelName = obj.modelName || modelName;
 
     this._(stripDataFromNodeAndUpdateObject)(obj, node);
   }
@@ -47,6 +50,12 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       if (child && child.hasAttribute && child.hasAttribute('data-mv-key')) {
         this._(getKeyAndValueFromNodeAndAddToObject)(obj, child);
       }
+
+      if (child.childNodes && child.childNodes.length > 0) {
+        if (child.hasAttribute && !child.hasAttribute('data-mv-model')) {
+          this._(stripDataFromNodeAndUpdateObject)(obj, child);
+        }
+      }
     }
   }
 
@@ -54,7 +63,19 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     var key = node.getAttribute('data-mv-key'),
         val = node.innerHTML;
 
+    obj.watch(key, this._(syncMVKeysOnObjectChange));
+    obj.nodes.push(node);
     obj.set(key, val);
+  }
+
+  function syncMVKeysOnObjectChange(prop, oldVal, newVal, obj) {
+    for (var i = 0; i < obj.nodes.length; i++) {
+      var node = obj.nodes[i];
+
+      if (node && node.getAttribute('data-mv-key') && node.getAttribute('data-mv-key') === prop) {
+        node.innerHTML = newVal;
+      }
+    }
   }
 
   function syncMVKeys() {
