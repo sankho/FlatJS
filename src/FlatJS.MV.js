@@ -68,12 +68,12 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     var key = node.getAttribute('data-mv-key'),
         val = node.innerHTML;
 
-    obj.watch(key, this._(syncMVKeysOnObjectChange));
+    node.object = obj;
     obj.nodes.push(node);
     obj.set(key, val);
   }
 
-  function syncMVKeysOnObjectChange(prop, oldVal, newVal, obj) {
+  function syncMVKeyOnObjectChange(prop, oldVal, newVal, obj) {
     for (var i = 0; i < obj.nodes.length; i++) {
       var node = obj.nodes[i];
 
@@ -84,14 +84,31 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
   }
 
   function syncMVKeys() {
+    var nodes = FlatJS.Helpers.getAllElementsWithAttribute('data-mv-key', this.obj);
 
-  }
-
-  function assembleJSON() {
-
+    for (var i = 0; i < nodes.length; i++) {
+      var node = nodes[i],
+          attr = node.object[node.getAttribute('data-mv-key')];
+      if (attr) {
+        node.innerHTML = attr;
+      }
+    }
   }
 
   function bindMVKeys() {
+    var nodes = FlatJS.Helpers.getAllElementsWithAttribute('data-mv-key', this.obj);
+
+    for (var i = 0; i < nodes.length; i++) {
+      var node = nodes[i];
+
+      if (!node.objectWatchSet) {
+        node.objectWatchSet = true;
+        node.object.watch(node.getAttribute('data-mv-key'), this._(syncMVKeyOnObjectChange));
+      }
+    }
+  }
+
+  function assembleJSON() {
 
   }
 
