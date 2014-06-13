@@ -108,8 +108,27 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     }
   }
 
-  function assembleJSON() {
+  function assembleJSON(parentObj) {
+    var children  = this.obj.childNodes,
+        parentObj = parentObj || this.JSON;;
 
+    for (var i = 0; i < children.length; i++) {
+      var child = children[i];
+
+      if (child.hasAttribute) {
+        var model = child.hasAttribute('dava-mv-model');
+
+        if (child.hasAttribute('data-json-key')) {
+          var key = child.getAttribute('data-json-key');
+
+          parentObj[key] = child.innerHTML;
+        } else if (child.hasAttribute('data-json-obj')) {
+
+        } else if (child.hasAttribute('data-json-array')) {
+
+        }
+      }
+    }
   }
 
   return api;
