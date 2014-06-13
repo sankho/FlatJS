@@ -5,6 +5,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
   var api = {
 
     render: function() {
+      this._(internalInitializer)();
       this.initializer();
       this._(findAndInitializeModels)();
       this._(syncMVKeys)();
@@ -16,6 +17,10 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     }
 
   };
+
+  function internalInitializer() {
+    this.JSON = this.JSON || {};
+  }
 
   function findAndInitializeModels() {
     var modelNodes = FlatJS.Helpers.getAllElementsWithAttribute('data-mv-model', this.obj);
