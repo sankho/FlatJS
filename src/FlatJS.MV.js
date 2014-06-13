@@ -14,12 +14,19 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       this.syncUI();
       this._(bindMVKeys)();
       this.bindUI();
+    },
+
+    JSON: "",
+
+    updateJSON: function(obj) {
+      this.JSON = this.JSON.extend(obj);
+      return this.JSON;
     }
 
   };
 
   function internalInitializer() {
-    this.JSON = this.JSON || {};
+    this.JSON = this.JSON || new FlatJS.Object();
   }
 
   function findAndInitializeModels() {
