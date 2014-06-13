@@ -74,6 +74,7 @@ __MVMockData.mockLoadedCallback = function() {
         mvModTwo = mockTwo.jsModules ? mockTwo.jsModules['FlatJS.MV'] : undefined;
 
     QUnit.ok(mvModOne.updateJSON, "FlatJS.MV.prototype.updateJSON exists");
+    QUnit.ok(mvModOne.renderFromJSON, "FlatJS.MV.prototype.renderFromJSON exists");
 
     mvModOne.updateJSON({
       header: {
@@ -81,7 +82,7 @@ __MVMockData.mockLoadedCallback = function() {
       }
     });
 
-    mvModOne.render();
+    mvModOne.renderFromJSON();
   });
 
 };
