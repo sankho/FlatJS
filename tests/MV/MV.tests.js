@@ -19,7 +19,7 @@ $.ajax({
 
 __MVMockData.mockLoadedCallback = function() {
 
-  var $mock = $('#flat-mv-test-mock'),
+  var $mock = $('#flat-mv-test-mock .first'),
       mock  = $mock.get(0);
 
   new FlatJS.ModuleRunner({
@@ -50,7 +50,7 @@ __MVMockData.mockLoadedCallback = function() {
     QUnit.equal(mvMod.JSON.people[0], APP.Person.find(1), "Models are saved as relations to the JSON object, pushed onto array as well")
 
     APP.Todo.objects[0].set('title', 'Cook Dinner');
-    QUnit.equal($('#first-todo span').text(), 'Cook Dinner', "HTML syncs on object change successfully");
+    QUnit.equal($('.first-todo span:eq(0)').text(), 'Cook Dinner', "HTML syncs on object change successfully");
   });
 
 };
