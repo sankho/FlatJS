@@ -83,6 +83,8 @@ __MVMockData.mockLoadedCallback = function() {
     });
 
     mvModOne.renderFromJSON();
+
+    QUnit.equal($mockOne.find('h1').text(), "Todo List - Updated", "Updating JSON object on model updates HTML in view");
   });
 
 };
