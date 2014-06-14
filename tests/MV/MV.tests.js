@@ -78,9 +78,14 @@ __MVMockData.mockLoadedCallback = function() {
 
     mvModOne.updateJSON({
       header: {
-        title: "Todo List - Update"
+        title: "Todo List - Updated"
       }
     });
+
+    QUnit.equal(mvModOne.JSON.header.title, "Todo List - Updated", "updateJSON extends the inner JSON object as expected");
+
+    QUnit.ok(mvModOne.tmpl, "Template created from original markup");
+    QUnit.ok($(mvModOne.tmpl).find('.first-todo').length > 0, "ok");
 
     mvModOne.renderFromJSON();
 
