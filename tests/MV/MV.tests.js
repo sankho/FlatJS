@@ -95,7 +95,7 @@ __MVMockData.startSecondTests = function() {
     mvModOne.renderFromJSON();
 
     QUnit.equal($mockOne.find('h1').text(), "Todo List - Updated", "Updating JSON object on model updates HTML in view");
-    QUnit.equal($mockOne.find('.person:eq(0)').text(), 'Bill', "Array of models imported successfully w/ renderFromJson");
+    QUnit.equal($mockOne.find('.person:eq(0)').text().trim(), 'Bill', "Array of models imported successfully w/ renderFromJson");
   });
 
 };
