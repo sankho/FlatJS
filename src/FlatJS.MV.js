@@ -9,6 +9,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       this.initializer();
       this._(findAndInitializeModels)();
       this._(assembleJSON)();
+      this._(createTemplateFromMarkup)();
       this.renderFromJSON();
       this.renderUI();
       this.syncUI();
@@ -31,6 +32,48 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
   function internalInitializer() {
     this.JSON = this.JSON || new FlatJS.Object();
+  }
+
+  function createTemplateFromMarkup(tmplNode) {
+    var tmpl     = tmplNode ? tmplNode : this.obj.cloneNode(true),
+        children = tmpl.childNodes;
+
+    if (!this.tmpl) {
+      this.tmpl = tmpl;
+    }
+
+    for (var i = 0; i < children.length; i++) {
+      var child = children[i];
+
+      if (child.hasAttribute) {
+        if (child.hasAttribute('data-mv-key') || child.hasAttribute('data-json-key')) {
+          child.innerHTML = '';
+        } else if (child.hasAttribute('data-mv-id')) {
+          child.removeAttribute('data-mv-id');
+        } else if (child.hasAttribute('data-json-array')) {
+          this._(pruneArrayToOneElementForTemplate)(child);
+        }
+      }
+
+      if (child.childNodes && child.childNodes.length > 0) {
+        this._(createTemplateFromMarkup)(child);
+      }
+    }
+  }
+
+  function pruneArrayToOneElementForTemplate(child) {
+    var children = child.childNodes,
+        gotFirst = false;
+
+    for (var i = 0; i < children.length; i++) {
+      var _child = children[i];
+
+      if (_child.hasAttribute && !gotFirst) {
+        gotFirst = true;
+      } else if (_child.hasAttribute) {
+        _child.remove();
+      }
+    }
   }
 
   function findAndInitializeModels() {
