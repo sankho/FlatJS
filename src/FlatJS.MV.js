@@ -10,7 +10,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       this._(findAndInitializeModels)();
       this._(assembleJSON)();
       this._(createTemplateFromMarkup)();
-      this.renderFromJSON();
+      //this.renderFromJSON();
       this.renderUI();
       this._(syncMVKeys)();
       this.syncUI();
@@ -25,11 +25,38 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       return this.JSON;
     },
 
-    renderFromJSON: function() {
+    renderFromJSON: function(node, parentObj) {
+      node         = node || this.tmpl;
+      parentObj    = parentObj || this.JSON;
+      var children = node.childNodes;
 
+      for (var i = 0; i < children.length; i++) {
+        var child = children[i];
+        if (child.hasAttribute) {
+          if (child.hasAttribute('data-json-key')) {
+            var key = child.getAttribute('data-json-key');
+            child.innerHTML = parentObj[key];
+          } else if (child.getAttribute('data-mv-key')) {
+            var key = child.getAttribute('data-mv-key');
+            child.innerHTML = parentObj[key];
+          } else if (child.hasAttribute('data-json-obj')) {
+            var key = child.getAttribute('data-json-obj');
+            this.renderFromJSON(child, parentObj[key]);
+          } else if (child.getAttribute('data-mv-model')) {
+            var modelName = child.getAttribute('data-mv-model'),
+                modelId = child.getAttribute('data-mv-id');
+            this.renderFromJSON(child, FlatJS.Helpers.findFunctionByString(modelName, window).find(modelId));
+          } else if (child.getAttribute('data-json-array')) {
+    //            this.renderFromJSON(child);
+          } else if (child.childNodes && child.childNodes.length > 0) {
+            this.renderFromJSON(child, parentObj);
+          }
+        }
+      }
+
+      this.obj.innerHTML = this.tmpl.innerHTML;
     }
-
-  };
+  }
 
   function internalInitializer() {
     this.JSON = this.JSON || new FlatJS.Object();
