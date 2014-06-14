@@ -21,6 +21,10 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     updateJSON: function(obj) {
       this.JSON = this.JSON.extend(obj);
       return this.JSON;
+    },
+
+    renderFromJSON: function() {
+
     }
 
   };
