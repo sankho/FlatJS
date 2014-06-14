@@ -53,8 +53,13 @@ __MVMockData.mockLoadedCallback = function() {
     APP.Todo.objects[0].set('title', 'Cook Dinner');
     QUnit.equal($('.first .first-todo span').text(), 'Cook Dinner', "HTML syncs on object change successfully - first item");
     QUnit.equal($('.second .first-todo span').text(), 'Cook Dinner', "HTML syncs on object change successfully - first item");
+
+    __MVMockData.startSecondTests();
   });
 
+}
+
+__MVMockData.startSecondTests = function() {
   QUnit.test("FlatJS.MV - JSON Injection / Auto Template creation", function() {
     // reset everything
     $('#flat-mv-test-mock').remove();
@@ -90,6 +95,7 @@ __MVMockData.mockLoadedCallback = function() {
     mvModOne.renderFromJSON();
 
     QUnit.equal($mockOne.find('h1').text(), "Todo List - Updated", "Updating JSON object on model updates HTML in view");
+    QUnit.equal($mockOne.find('.person:eq(0)').text(), 'Bill', "Array of models imported successfully w/ renderFromJson");
   });
 
 };
