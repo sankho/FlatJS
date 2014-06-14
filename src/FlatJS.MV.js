@@ -12,6 +12,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       this._(createTemplateFromMarkup)();
       this.renderFromJSON();
       this.renderUI();
+      this._(syncMVKeys)();
       this.syncUI();
       this._(bindMVKeys)();
       this.bindUI();
@@ -124,7 +125,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
     node.object = obj;
     obj.nodes.push(node);
-    obj.set(key, val);
+    obj[key] = val;
   }
 
   function syncMVKeyOnObjectChange(prop, oldVal, newVal, obj) {
@@ -133,6 +134,18 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
       if (node && node.getAttribute('data-mv-key') && node.getAttribute('data-mv-key') === prop) {
         node.innerHTML = newVal;
+      }
+    }
+  }
+
+  function syncMVKeys() {
+    var nodes = FlatJS.Helpers.getAllElementsWithAttribute('data-mv-key', this.obj);
+
+    for (var i = 0; i < nodes.length; i++) {
+      var node = nodes[i],
+          attr = node.object[node.getAttribute('data-mv-key')];
+      if (attr) {
+        node.innerHTML = attr;
       }
     }
   }
