@@ -10,7 +10,6 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       this._(findAndInitializeModels)();
       this._(assembleJSON)();
       this._(createTemplateFromMarkup)();
-      //this.renderFromJSON();
       this.renderUI();
       this._(syncMVKeys)();
       this.syncUI();
@@ -25,7 +24,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       return this.JSON;
     },
 
-    renderFromJSON: function(node, parentObj) {
+    renderFromJSON: function(node, parentObj, returnParent) {
       node         = node || this.tmpl;
       parentObj    = parentObj || this.JSON;
       var children = node.childNodes;
@@ -43,18 +42,44 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
             var key = child.getAttribute('data-json-obj');
             this.renderFromJSON(child, parentObj[key]);
           } else if (child.getAttribute('data-mv-model')) {
-            var modelName = child.getAttribute('data-mv-model'),
-                modelId = child.getAttribute('data-mv-id');
-            this.renderFromJSON(child, FlatJS.Helpers.findFunctionByString(modelName, window).find(modelId));
-          } else if (child.getAttribute('data-json-array')) {
-    //            this.renderFromJSON(child);
+            this.renderFromJSON(child, parentObj);
+          } else if (child.hasAttribute('data-json-array')) {
+            var arr = parentObj[child.getAttribute('data-json-array')];
+            if (arr && child.childNodes) {
+              this._(renderJSONArrayOntoNode)(arr, child);
+            }
           } else if (child.childNodes && child.childNodes.length > 0) {
             this.renderFromJSON(child, parentObj);
           }
         }
       }
 
-      this.obj.innerHTML = this.tmpl.innerHTML;
+      if (returnParent) {
+        return node;
+      } else {
+        this.obj.innerHTML = '';
+        this.obj.appendChild(this.tmpl);
+      }
+    }
+  }
+
+  function renderJSONArrayOntoNode(arr, cnnr) {
+    var children = cnnr.childNodes,
+        tmpl     = false,
+        nodes    = [];
+
+    for (var i = 0; i < children.length && !tmpl; i++) {
+      var child = children[i];
+
+      if (child.hasAttribute) {
+        tmpl = child;
+      }
+    }
+
+    cnnr.innerHTML = '';
+
+    for (var i = 0; i < arr.length; i++) {
+      cnnr.appendChild(this.renderFromJSON(tmpl.cloneNode(true), arr[i], true));
     }
   }
 
