@@ -32,25 +32,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       for (var i = 0; i < children.length; i++) {
         var child = children[i];
         if (child.hasAttribute) {
-          if (child.hasAttribute('data-json-key')) {
-            var key = child.getAttribute('data-json-key');
-            child.innerHTML = parentObj[key];
-          } else if (child.getAttribute('data-mv-key')) {
-            var key = child.getAttribute('data-mv-key');
-            child.innerHTML = parentObj[key];
-          } else if (child.hasAttribute('data-json-obj')) {
-            var key = child.getAttribute('data-json-obj');
-            this.renderFromJSON(child, parentObj[key]);
-          } else if (child.getAttribute('data-mv-model')) {
-            this.renderFromJSON(child, parentObj);
-          } else if (child.hasAttribute('data-json-array')) {
-            var arr = parentObj[child.getAttribute('data-json-array')];
-            if (arr && child.childNodes) {
-              this._(renderJSONArrayOntoNode)(arr, child);
-            }
-          } else if (child.childNodes && child.childNodes.length > 0) {
-            this.renderFromJSON(child, parentObj);
-          }
+          this._(renderJSONOntoNode)(child, parentObj);
         }
       }
 
@@ -80,6 +62,28 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
     for (var i = 0; i < arr.length; i++) {
       cnnr.appendChild(this.renderFromJSON(tmpl.cloneNode(true), arr[i], true));
+    }
+  }
+
+  function renderJSONOntoNode(child, parentObj) {
+    if (child.hasAttribute('data-json-key')) {
+      var key = child.getAttribute('data-json-key');
+      child.innerHTML = parentObj[key];
+    } else if (child.getAttribute('data-mv-key')) {
+      var key = child.getAttribute('data-mv-key');
+      child.innerHTML = parentObj[key];
+    } else if (child.hasAttribute('data-json-obj')) {
+      var key = child.getAttribute('data-json-obj');
+      this.renderFromJSON(child, parentObj[key]);
+    } else if (child.getAttribute('data-mv-model')) {
+      this.renderFromJSON(child, parentObj);
+    } else if (child.hasAttribute('data-json-array')) {
+      var arr = parentObj[child.getAttribute('data-json-array')];
+      if (arr && child.childNodes) {
+        this._(renderJSONArrayOntoNode)(arr, child);
+      }
+    } else if (child.childNodes && child.childNodes.length > 0) {
+      this.renderFromJSON(child, parentObj);
     }
   }
 
