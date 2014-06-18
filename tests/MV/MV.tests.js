@@ -34,7 +34,7 @@ __MVMockData.mockLoadedCallback = function() {
     QUnit.ok(mvMod instanceof FlatJS.Widget, 'FlatJS.MV is an instance of FlatJS.Widget');
   });
 
-  QUnit.test("FlatJS.MV tests - DOM loaded model generation", function() {
+  QUnit.test("FlatJS.MV tests - DOM loaded model generation & JSON data assembly from markup", function() {
     QUnit.equal(typeof APP.Todo, 'function', "APP.Todo model references should be automatically generated");
     QUnit.equal(typeof APP.Person, 'function', "APP.Person model references should be automatically generated");
     QUnit.equal(APP.Todo.objects.length, 3, "APP.Todo.objects has 3 todos in it");
@@ -45,10 +45,12 @@ __MVMockData.mockLoadedCallback = function() {
 
     QUnit.equal(APP.Todo.find(1).arbitrary, 'key values', "JSON extention of object via data-mv-json key on node successful");
     QUnit.equal($mock.find('h2').text(), "Jane", "Correct name applied to first instance of model in view, updated from entry of second");
+
     QUnit.equal(typeof mvMod.JSON, "object", "JSON object created & attached to mod");
     QUnit.equal(mvMod.JSON.you, APP.Person.find(2), "JSON object successfully creates pointers to related Person model objects")
     QUnit.equal(mvMod.JSON.header.title, "Todo List", "Non model string data saved to JSON object as well")
-    QUnit.equal(mvMod.JSON.people[0], APP.Person.find(1), "Models are saved as relations to the JSON object, pushed onto array as well")
+    QUnit.equal(mvMod.JSON.people[0].personObj, APP.Person.find(1), "Models are saved as relations to the JSON object, pushed onto array as well")
+    QUnit.equal(typeof mvMod.JSON.people[0].todos, 'object', 'Todos successfully  added to individual people object');
   });
 
   QUnit.test("FlatJS.MV - Changing model objects should update HTML", function() {
