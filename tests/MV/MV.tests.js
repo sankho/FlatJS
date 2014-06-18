@@ -42,7 +42,7 @@ __MVMockData.mockLoadedCallback = function() {
     QUnit.equal(APP.Person.objects[0].name, "Jane", "APP.Person.objects[0] has correct data on name")
     QUnit.equal(APP.Todo.objects[0].title, "Get Laundry", "APP.Todo.objects[0] has correct data on title")
     QUnit.equal(APP.Person.objects[0].title, undefined, "Person object does not inherit Todo information even though markup is nested.")
-    QUnit.equal(APP.Person.find(1).arbitrary, 'key values', "JSON extention of object via data-mv-json key on node successful");
+    QUnit.equal(APP.Todo.find(1).arbitrary, 'key values', "JSON extention of object via data-mv-json key on node successful");
     QUnit.equal($mock.find('h2').text(), "Jane", "Correct name applied to first instance of model in view, updated from entry of second");
     QUnit.equal(typeof mvMod.JSON, "object", "JSON object created & attached to mod");
     QUnit.equal(mvMod.JSON.you, APP.Person.find(2), "JSON object successfully creates pointers to related Person model objects")
