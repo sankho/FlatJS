@@ -42,9 +42,7 @@ __MVMockData.mockLoadedCallback = function() {
     QUnit.equal(APP.Person.objects[0].name, "Jane", "APP.Person.objects[0] has correct data on name")
     QUnit.equal(APP.Todo.objects[0].title, "Get Laundry", "APP.Todo.objects[0] has correct data on title")
     QUnit.equal(APP.Person.objects[0].title, undefined, "Person object does not inherit Todo information even though markup is nested.")
-    QUnit.equal(APP.Person.find(1).todos, [APP.Todo.find(1)], "Object relations are set up via markup if objects are nested within each other's nodes");
-    QUnit.equal(APP.Person.find(1).todos.length, 2, "Object relations append correctly onto Model via markup, doesn't re-write existing objects");
-    QUnit.equal(APP.Person.find(2).todos.length, 1, "Object relations don't double up on assemblage");
+
     QUnit.equal(APP.Todo.find(1).arbitrary, 'key values', "JSON extention of object via data-mv-json key on node successful");
     QUnit.equal($mock.find('h2').text(), "Jane", "Correct name applied to first instance of model in view, updated from entry of second");
     QUnit.equal(typeof mvMod.JSON, "object", "JSON object created & attached to mod");
@@ -101,7 +99,38 @@ __MVMockData.startSecondTests = function() {
 
     QUnit.equal($mockOne.find('h1').text(), "Todo List - Updated", "Updating JSON object on model updates HTML in view");
     QUnit.equal($mockOne.find('.person:eq(0)').text().trim(), 'Bill', "Array of models imported successfully w/ renderFromJson");
-    QUnit.equal($mockOne.find('.first-todo span').text().trim(), 'Get Laundry', "Inner array of array (todos in people array)");
+    QUnit.equal($mockOne.find('.first-todo span').text().trim(), 'Get Laundry', "Todos translated over");
   });
+
+  QUnit.test("FlatJS.MV - Relational information drawn from mockup", function() {
+    // reset everything
+    $('#flat-mv-test-mock').remove();
+    $('#mock-area').append(__MVMockData.HTML);
+
+    var $mock    = $('#flat-mv-test-mock'),
+        $mockOne = $mock.find('.first'),
+        mockOne  = $mockOne.get(0),
+        $mockTwo = $mock.find('.second'),
+        mockTwo  = $mockTwo.get(0);
+
+    // move UL's into <person> objects to relate them
+    $mock.find('ul').each(function(i, obj) {
+      var $parent = $(obj).parent(),
+          $todos  = $(obj).remove();
+
+      $parent.find('.person').append($todos);
+    })
+
+    new FlatJS.ModuleRunner({
+      attr: 'data-js-mv-test-module'
+    });
+
+    var mvModOne = mockOne.jsModules ? mockOne.jsModules['FlatJS.MV'] : undefined,
+        mvModTwo = mockTwo.jsModules ? mockTwo.jsModules['FlatJS.MV'] : undefined;
+
+    QUnit.equal(APP.Person.find(1).todos, [APP.Todo.find(1)], "Object relations are set up via markup if objects are nested within each other's nodes");
+    QUnit.equal(APP.Person.find(1).todos.length, 2, "Object relations append correctly onto Model via markup, doesn't re-write existing objects");
+    QUnit.equal(APP.Person.find(2).todos.length, 1, "Object relations don't double up on assemblage");
+  })
 
 };
