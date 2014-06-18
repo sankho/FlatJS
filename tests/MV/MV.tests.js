@@ -96,6 +96,7 @@ __MVMockData.startSecondTests = function() {
 
     QUnit.equal($mockOne.find('h1').text(), "Todo List - Updated", "Updating JSON object on model updates HTML in view");
     QUnit.equal($mockOne.find('.person:eq(0)').text().trim(), 'Bill', "Array of models imported successfully w/ renderFromJson");
+    QUnit.equal($mockOne.find('.first-todo span').text().trim(), 'Get Laundry', "Inner array of array (todos in people array)");
   });
 
 };
