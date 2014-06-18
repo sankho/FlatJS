@@ -37,8 +37,8 @@ __MVMockData.mockLoadedCallback = function() {
   QUnit.test("FlatJS.MV tests - DOM loaded model generation", function() {
     QUnit.equal(typeof APP.Todo, 'function', "APP.Todo model references should be automatically generated");
     QUnit.equal(typeof APP.Person, 'function', "APP.Person model references should be automatically generated");
-    QUnit.equal(APP.Todo.objects.length, 2, "APP.Todo.objects has 2 people in it");
-    QUnit.equal(APP.Person.objects.length, 2, "APP.Person.objects has 2 people in it");
+    QUnit.equal(APP.Todo.objects.length, 4, "APP.Todo.objects has 4 todos in it");
+    QUnit.equal(APP.Person.objects.length, 4, "APP.Person.objects has 4 people in it");
     QUnit.equal(APP.Person.objects[0].name, "Jane", "APP.Person.objects[0] has correct data on name")
     QUnit.equal(APP.Todo.objects[0].title, "Get Laundry", "APP.Todo.objects[0] has correct data on title")
     QUnit.equal(APP.Person.objects[0].title, undefined, "Person object does not inherit Todo information even though markup is nested.")
@@ -51,8 +51,9 @@ __MVMockData.mockLoadedCallback = function() {
 
   QUnit.test("FlatJS.MV - Changing model objects should update HTML", function() {
     APP.Todo.objects[0].set('title', 'Cook Dinner');
+    APP.Todo.find(3).set('title', 'Cook Lasagana');
     QUnit.equal($('.first .first-todo span').text(), 'Cook Dinner', "HTML syncs on object change successfully - first item");
-    QUnit.equal($('.second .first-todo span').text(), 'Cook Dinner', "HTML syncs on object change successfully - first item");
+    QUnit.equal($('.second .first-todo span').text(), 'Cook Lasagana', "HTML syncs on object change successfully - first item");
 
     __MVMockData.startSecondTests();
   });
