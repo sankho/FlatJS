@@ -37,11 +37,14 @@ __MVMockData.mockLoadedCallback = function() {
   QUnit.test("FlatJS.MV tests - DOM loaded model generation", function() {
     QUnit.equal(typeof APP.Todo, 'function', "APP.Todo model references should be automatically generated");
     QUnit.equal(typeof APP.Person, 'function', "APP.Person model references should be automatically generated");
-    QUnit.equal(APP.Todo.objects.length, 4, "APP.Todo.objects has 4 todos in it");
-    QUnit.equal(APP.Person.objects.length, 4, "APP.Person.objects has 4 people in it");
+    QUnit.equal(APP.Todo.objects.length, 3, "APP.Todo.objects has 3 todos in it");
+    QUnit.equal(APP.Person.objects.length, 2, "APP.Person.objects has 2 people in it");
     QUnit.equal(APP.Person.objects[0].name, "Jane", "APP.Person.objects[0] has correct data on name")
     QUnit.equal(APP.Todo.objects[0].title, "Get Laundry", "APP.Todo.objects[0] has correct data on title")
     QUnit.equal(APP.Person.objects[0].title, undefined, "Person object does not inherit Todo information even though markup is nested.")
+    QUnit.equal(APP.Person.find(1).todos, [APP.Todo.find(1)], "Object relations are set up via markup if objects are nested within each other's nodes");
+    QUnit.equal(APP.Person.find(1).todos.length, 2, "Object relations append correctly onto Model via markup, doesn't re-write existing objects");
+    QUnit.equal(APP.Person.find(2).todos.length, 1, "Object relations don't double up on assemblage");
     QUnit.equal(APP.Todo.find(1).arbitrary, 'key values', "JSON extention of object via data-mv-json key on node successful");
     QUnit.equal($mock.find('h2').text(), "Jane", "Correct name applied to first instance of model in view, updated from entry of second");
     QUnit.equal(typeof mvMod.JSON, "object", "JSON object created & attached to mod");
