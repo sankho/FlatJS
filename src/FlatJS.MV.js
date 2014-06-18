@@ -139,7 +139,11 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     for (var i = 0; i < modelNodes.length; i++) {
       var node      = modelNodes[i],
           modelName = node.getAttribute('data-mv-model'),
-          model     = FlatJS.Helpers.findFunctionByString(modelName, window, FlatJS.Object.extend({}));
+          model     = FlatJS.Helpers.findFunctionByString(
+                        modelName,
+                        window,
+                        FlatJS.Object.extend({})
+                      );
 
       this._(createModelObjectFromNode)(model, node, modelName);
     }
