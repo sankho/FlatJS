@@ -111,19 +111,25 @@ __MVMockData.startSecondTests = function() {
         $mockOne = $mock.find('.first'),
         mockOne  = $mockOne.get(0),
         $mockTwo = $mock.find('.second'),
-        mockTwo  = $mockTwo.get(0);
+        mockTwo  = $mockTwo.get(0),
+        limit    = $mock.find('ul').length;
 
     // move UL's into <person> objects to relate them
     $mock.find('ul').each(function(i, obj) {
       var $parent = $(obj).parent(),
-          $todos  = $(obj).remove();
+          $todos  = $(obj).remove(),
+          key     = $todos.attr('data-json-array');
 
+      obj.removeAttribute('data-json-array');
+      obj.setAttribute('data-mv-array', key);
       $parent.find('.person').append($todos);
-    })
 
-    new FlatJS.ModuleRunner({
-      attr: 'data-js-mv-test-module'
-    });
+      if (i === limit-1) {
+        new FlatJS.ModuleRunner({
+          attr: 'data-js-mv-test-module'
+        });
+      }
+    })
 
     var mvModOne = mockOne.jsModules ? mockOne.jsModules['FlatJS.MV'] : undefined,
         mvModTwo = mockTwo.jsModules ? mockTwo.jsModules['FlatJS.MV'] : undefined;
