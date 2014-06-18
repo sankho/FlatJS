@@ -158,6 +158,10 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     obj.nodes     = obj.nodes || [];
     obj.modelName = obj.modelName || modelName;
 
+    if (node.hasAttribute('data-mv-json')) {
+      obj.extend(JSON.parse(node.getAttribute('data-mv-json')));
+    }
+
     this._(stripDataFromNodeAndUpdateObject)(obj, node);
   }
 
