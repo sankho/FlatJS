@@ -55,7 +55,7 @@ __MVMockData.mockLoadedCallback = function() {
 
   QUnit.test("FlatJS.MV - Changing model objects should update HTML", function() {
     APP.Todo.objects[0].set('title', 'Cook Dinner');
-    APP.Todo.find(3).set('title', 'Cook Lasagana');
+    APP.Todo.find(2).set('title', 'Cook Lasagana');
     QUnit.equal($('.first .first-todo span').text(), 'Cook Dinner', "HTML syncs on object change successfully - first item");
     QUnit.equal($('.second .first-todo span').text(), 'Cook Lasagana', "HTML syncs on object change successfully - first item");
 
