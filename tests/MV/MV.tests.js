@@ -91,7 +91,15 @@ __MVMockData.startSecondTests = function() {
     mvModOne.updateJSON({
       header: {
         title: "Todo List - Updated"
-      }
+      },
+      people: [
+        {
+          personObj: APP.Person.find(2),
+          todos: [
+            APP.Todo.find(1)
+          ]
+        }
+      ]
     });
 
     QUnit.equal(mvModOne.JSON.header.title, "Todo List - Updated", "updateJSON extends the inner JSON object as expected");
@@ -102,43 +110,34 @@ __MVMockData.startSecondTests = function() {
     mvModOne.renderFromJSON();
 
     QUnit.equal($mockOne.find('h1').text(), "Todo List - Updated", "Updating JSON object on model updates HTML in view");
-    QUnit.equal($mockOne.find('.person:eq(0)').text().trim(), 'Bill', "Array of models imported successfully w/ renderFromJson");
+    QUnit.equal($mockOne.find('.person:eq(0)').text().trim(), 'Jane', "Array of models imported & muted successfully w/ renderFromJson");
     QUnit.equal($mockOne.find('.first-todo:eq(0) span').text().trim(), 'Get Laundry', "Todos translated over");
 
-    __MVMockData.startThirdTests();
+    $.ajax({
+
+      url: 'MV/mock2.html',
+      success: function(data) {
+        __MVMockData.HTML2 = data;
+        __MVMockData.startThirdTests(data)
+      }
+
+    })
   });
 }
 
-__MVMockData.startThirdTests = function() {
+__MVMockData.startThirdTests = function(data) {
+  $('#mock-area').append(data);
 
   QUnit.test("FlatJS.MV - Relational information drawn from mockup", function() {
-    // reset everything
-    $('#flat-mv-test-mock').remove();
-    $('#mock-area').append(__MVMockData.HTML);
-
-    var $mock    = $('#flat-mv-test-mock'),
+    var $mock    = $('#flat-mv-test-mock-2'),
         $mockOne = $mock.find('.first'),
         mockOne  = $mockOne.get(0),
         $mockTwo = $mock.find('.second'),
-        mockTwo  = $mockTwo.get(0),
-        limit    = $mock.find('ul').length;
+        mockTwo  = $mockTwo.get(0);
 
-    // move UL's into <person> objects to relate them
-    $mock.find('ul').each(function(i, obj) {
-      var $parent = $(obj).parent(),
-          $todos  = $(obj).remove(),
-          key     = $todos.attr('data-json-array');
-
-      obj.removeAttribute('data-json-array');
-      obj.setAttribute('data-mv-array', key);
-      $parent.find('.person').append($todos);
-
-      if (i === limit-1) {
-        new FlatJS.ModuleRunner({
-          attr: 'data-js-mv-test-module'
-        });
-      }
-    })
+    new FlatJS.ModuleRunner({
+      attr: 'data-js-mv-test-module'
+    });
 
     var mvModOne = mockOne.jsModules ? mockOne.jsModules['FlatJS.MV'] : undefined,
         mvModTwo = mockTwo.jsModules ? mockTwo.jsModules['FlatJS.MV'] : undefined;

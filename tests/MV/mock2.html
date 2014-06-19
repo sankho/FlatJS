@@ -1,0 +1,98 @@
+<!--    // move UL's into <person> objects to relate them
+    $mock.find('ul').each(function(i, obj) {
+      var $parent = $(obj).parent(),
+          $todos  = $(obj).remove(),
+          key     = $todos.attr('data-json-array');
+
+      obj.removeAttribute('data-json-array');
+      obj.setAttribute('data-mv-array', key);
+      $parent.find('.person').append($todos);
+-->
+<div id="flat-mv-test-mock-2">
+
+  <div class="first" data-js-mv-test-module="FlatJS.MV">
+
+    <div data-json-obj="header">
+      <h1 data-json-key="title">Todo List</h1>
+    </div>
+
+    <div data-json-obj="you" data-mv-id="2" data-mv-model="APP.Person">
+      <h2 data-mv-key="name"></h2>
+    </div>
+
+    <div>
+      <div data-json-array="people">
+        <!-- actual data -->
+        <div>
+          <div data-json-obj="personObj" data-mv-id="1" data-mv-model="APP.Person" class="person">
+            <a data-mv-key="name" href="#">Bill</a>
+            <ul data-json-array="todos">
+              <li class="first-todo" data-mv-model="APP.Todo" data-mv-id="1" data-mv-json='{ "arbitrary": "key values" }'>
+                <span data-mv-key="title">Get Laundry</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div data-json-obj="personObj" data-mv-id="2" data-mv-model="APP.Person" class="person">
+            <a data-mv-key="name" href="#">Jane</a>
+            <ul data-json-array="todos">
+              <li>
+                <span data-json-key="title">Get Dinner</span>
+              </li>
+              <li>
+                <span data-json-key="title">Get Dinner</span>
+              </li>
+              <li>
+                <span data-json-key="title">Get Dinner</span>
+              </li>
+              <li>
+                <span data-json-key="title">Get Dinner</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="second" data-js-mv-test-module="FlatJS.MV">
+
+    <div data-json-obj="header">
+      <h1 data-json-key="title">Todo List</h1>
+    </div>
+
+    <div data-json-obj="you" data-mv-id="1" data-mv-model="APP.Person" class="person">
+      <h2 data-mv-key="name">fdsfsadfsa</h2>
+    </div>
+
+    <div>
+      <div data-json-array="people">
+        <!-- actual data -->
+        <div>
+          <div data-json-obj="personObj" data-mv-id="2" data-mv-model="APP.Person" class="person">
+            <a data-mv-key="name" href="#">Jane</a>
+          </div>
+          <ul data-json-array="todos">
+            <li class="first-todo" data-mv-model="APP.Todo" data-mv-id="2">
+              <span data-mv-key="title">Get Dinner</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <div data-mv-id="1" data-mv-model="APP.Person" class="person">
+            <a data-mv-key="name" href="#">Bill</a>
+          </div>
+          <ul data-json-array="todos">
+            <li data-mv-model="APP.Todo" data-mv-id="3">
+              <span data-mv-key="title">Get Chicken</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
