@@ -118,7 +118,8 @@ __MVMockData.startSecondTests = function() {
       url: 'MV/mock2.html',
       success: function(data) {
         $mock.remove();
-        __MVMockData.HTML2 = data;
+        __MVMockData.HTML2 = data
+        $('#mock-area').append(data);
         __MVMockData.startThirdTests(data)
       }
 
@@ -126,8 +127,7 @@ __MVMockData.startSecondTests = function() {
   });
 }
 
-__MVMockData.startThirdTests = function(data) {
-  $('#mock-area').append(data);
+__MVMockData.startThirdTests = function() {
 
   QUnit.test("FlatJS.MV - Relational information drawn from mockup", function() {
     var $mock    = $('#flat-mv-test-mock-2'),
@@ -172,7 +172,27 @@ __MVMockData.startThirdTests = function(data) {
       QUnit.equal($mockOne.find('.person:eq(0) a').text().trim(), 'Bill', "Array of models imported & muted successfully w/ renderFromJson");
       QUnit.equal($mockOne.find('.first-todo:eq(0) span').text().trim(), 'Get Laundry', "Todos translated over");
 
-      $mock.remove();
+      $.ajax({
+
+        url: 'MV/mock3.html',
+        success: function(data) {
+          $mock.remove();
+          __MVMockData.HTML3 = data;
+          $('#mock-area').append(data);
+          __MVMockData.startFourthTests()
+        }
+
+      });
     });
   })
 };
+
+__MVMockData.startFourthTests = function() {
+
+  QUnit.test("FlatJS.MV - Testing inputs & various node types for getter / setter functionality", function() {
+
+    QUnit.expect(0);
+
+  });
+
+}
