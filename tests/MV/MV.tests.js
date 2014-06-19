@@ -51,6 +51,8 @@ __MVMockData.mockLoadedCallback = function() {
     QUnit.equal(mvMod.JSON.header.title, "Todo List", "Non model string data saved to JSON object as well")
     QUnit.equal(mvMod.JSON.people[0].personObj, APP.Person.find(1), "Models are saved as relations to the JSON object, pushed onto array as well")
     QUnit.equal(typeof mvMod.JSON.people[0].todos, 'object', 'Todos successfully  added to individual people object');
+    QUnit.equal(mvMod.JSON.people[1].todos.length, 4, "Basic arrays are saving basic objects based on markup within arrays");
+    QUnit.equal(mvMod.JSON.people[1].todos[0].title, "Get Dinner", "Correct object in basic arrays within arrays");
   });
 
   QUnit.test("FlatJS.MV - Changing model objects should update HTML", function() {
@@ -103,7 +105,7 @@ __MVMockData.startSecondTests = function() {
     QUnit.equal($mockOne.find('.person:eq(0)').text().trim(), 'Bill', "Array of models imported successfully w/ renderFromJson");
     QUnit.equal($mockOne.find('.first-todo:eq(0) span').text().trim(), 'Get Laundry', "Todos translated over");
 
-    __MVMockData.startThirdTests();
+    //__MVMockData.startThirdTests();
   });
 }
 
