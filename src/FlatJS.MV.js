@@ -15,8 +15,6 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       this.syncUI();
       this._(bindMVKeys)();
       this.bindUI();
-
-      console.log(this.JSON);
     },
 
     JSON: "",
@@ -139,21 +137,21 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     var modelNodes = FlatJS.Helpers.getAllElementsWithAttribute('data-mv-model', this.obj);
 
     for (var i = 0; i < modelNodes.length; i++) {
-      var node      = modelNodes[i],
-          modelName = node.getAttribute('data-mv-model'),
-          model     = FlatJS.Helpers.findFunctionByString(
-                        modelName,
-                        window,
-                        FlatJS.Object.extend({})
-                      );
+      var node      = modelNodes[i];
 
-      this._(createModelObjectFromNode)(model, node, modelName);
+      this._(createModelObjectFromNode)(node);
     }
   }
 
-  function createModelObjectFromNode(model, node, modelName) {
-    var id     = node.getAttribute('data-mv-id'),
-        obj    = false;
+  function createModelObjectFromNode(node) {
+    var id        = node.getAttribute('data-mv-id'),
+        modelName = node.getAttribute('data-mv-model'),
+        model     = FlatJS.Helpers.findFunctionByString(
+                      modelName,
+                      window,
+                      FlatJS.Object.extend({})
+                    ),
+        obj       = false;
 
     obj = model.find(id) || new model({ id: id });
 
@@ -165,6 +163,8 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     }
 
     this._(stripDataFromNodeAndUpdateObject)(obj, node);
+
+    return obj;
   }
 
   function stripDataFromNodeAndUpdateObject(obj, node) {
@@ -177,7 +177,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
         if (child.hasAttribute('data-mv-key')) {
           this._(getKeyAndValueFromNodeAndAddToObject)(obj, child);
         } else if (child.hasAttribute('data-json-array')) {
-          // sheeeet should happen here.
+          this._(checkArrayForModelRelations)(obj, child);
         }
       }
 
@@ -185,6 +185,20 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
         if (child.hasAttribute && !child.hasAttribute('data-mv-model')) {
           this._(stripDataFromNodeAndUpdateObject)(obj, child);
         }
+      }
+    }
+  }
+
+  function checkArrayForModelRelations(obj, node) {
+    var children  = node.childNodes,
+        parentObj = obj[node.getAttribute('data-json-array')] = obj[node.getAttribute('data-json-array')] || [];
+
+    for (var i = 0; i < children.length; i++) {
+      var child     = children[i];
+
+      if (child.hasAttribute && child.hasAttribute('data-mv-model')) {
+        var obj = this._(createModelObjectFromNode)(child);
+        parentObj.push(obj);
       }
     }
   }
