@@ -117,6 +117,7 @@ __MVMockData.startSecondTests = function() {
 
       url: 'MV/mock2.html',
       success: function(data) {
+        $mock.remove();
         __MVMockData.HTML2 = data;
         __MVMockData.startThirdTests(data)
       }
