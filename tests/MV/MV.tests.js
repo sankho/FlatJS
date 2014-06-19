@@ -146,6 +146,8 @@ __MVMockData.startThirdTests = function(data) {
     QUnit.deepEqual(APP.Person.find(1).todos, [APP.Todo.find(1), APP.Todo.find(3)], "Object relations are set up via markup if objects are nested within each other's nodes");
     QUnit.equal(APP.Person.find(1).todos.length, 2, "Object relations append correctly onto Model via markup, doesn't re-write existing objects");
     QUnit.equal(APP.Person.find(2).todos.length, 1, "Object relations don't double up on assemblage");
-  })
 
+
+    $mock.remove();
+  })
 };
