@@ -253,14 +253,20 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
   function constructJSONfromArray(cnnr, parentObj, parentIsArray) {
     var children  = cnnr.childNodes,
+        stop      = false;
         parentObj = parentObj[cnnr.getAttribute('data-json-array')] = [];
 
-    for (var i = 0; i < children.length; i++) {
+    for (var i = 0; i < children.length && !stop; i++) {
       var child = children[i];
       if (child && child.hasAttribute) {
-        var obj = {}
-        parentObj.push(obj);
-        this._(assembleJSON)(obj, child.childNodes);
+        if (child.hasAttribute('data-mv-model')) {
+          stop = true;
+          this._(assembleJSON)(parentObj, children);
+        } else {
+          var obj = {}
+          parentObj.push(obj);
+          this._(assembleJSON)(obj, child.childNodes);
+        }
       }
     }
   }
