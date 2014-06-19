@@ -101,8 +101,13 @@ __MVMockData.startSecondTests = function() {
 
     QUnit.equal($mockOne.find('h1').text(), "Todo List - Updated", "Updating JSON object on model updates HTML in view");
     QUnit.equal($mockOne.find('.person:eq(0)').text().trim(), 'Bill', "Array of models imported successfully w/ renderFromJson");
-    QUnit.equal($mockOne.find('.first-todo span').text().trim(), 'Get Laundry', "Todos translated over");
+    QUnit.equal($mockOne.find('.first-todo:eq(0) span').text().trim(), 'Get Laundry', "Todos translated over");
+
+    __MVMockData.startThirdTests();
   });
+}
+
+__MVMockData.startThirdTests = function() {
 
   QUnit.test("FlatJS.MV - Relational information drawn from mockup", function() {
     // reset everything
