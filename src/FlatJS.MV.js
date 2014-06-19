@@ -15,6 +15,8 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       this.syncUI();
       this._(bindMVKeys)();
       this.bindUI();
+
+      console.log(this.JSON);
     },
 
     JSON: "",
@@ -171,8 +173,12 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     for (var i = 0; i < children.length; i++) {
       var child = children[i];
 
-      if (child && child.hasAttribute && child.hasAttribute('data-mv-key')) {
-        this._(getKeyAndValueFromNodeAndAddToObject)(obj, child);
+      if (child && child.hasAttribute) {
+        if (child.hasAttribute('data-mv-key')) {
+          this._(getKeyAndValueFromNodeAndAddToObject)(obj, child);
+        } else if (child.hasAttribute('data-json-array')) {
+          // sheeeet should happen here.
+        }
       }
 
       if (child.childNodes && child.childNodes.length > 0) {

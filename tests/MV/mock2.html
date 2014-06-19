@@ -1,13 +1,3 @@
-<!--    // move UL's into <person> objects to relate them
-    $mock.find('ul').each(function(i, obj) {
-      var $parent = $(obj).parent(),
-          $todos  = $(obj).remove(),
-          key     = $todos.attr('data-json-array');
-
-      obj.removeAttribute('data-json-array');
-      obj.setAttribute('data-mv-array', key);
-      $parent.find('.person').append($todos);
--->
 <div id="flat-mv-test-mock-2">
 
   <div class="first" data-js-mv-test-module="FlatJS.MV">
