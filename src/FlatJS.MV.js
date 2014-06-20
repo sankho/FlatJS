@@ -39,7 +39,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       if (returnParent) {
         return node;
       } else {
-        this.obj.innerHTML = '';
+        this.obj.textContent ? this.obj.textContent = '' : this.obj.innerHTML = '' ;
         this.obj.appendChild(this.tmpl);
       }
     }
