@@ -5,7 +5,9 @@ FlatJS.Helpers = (function() {
   var helpers = FlatJS.Classy.extend({
 
     convertDashedToCamelCase: function(string) {
-      string = string.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase() }).replace(/\s+/g, '');
+      if (string) {
+        string = string.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase() }).replace(/\s+/g, '');
+      }
 
       return string;
     },
