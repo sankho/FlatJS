@@ -162,7 +162,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       if (_child.hasAttribute && !gotFirst) {
         gotFirst = true;
       } else if (_child.hasAttribute) {
-        _child.remove();
+        _child.parentNode.removeChild(_child);
       }
     }
   }
