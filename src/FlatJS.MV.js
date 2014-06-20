@@ -112,7 +112,8 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute('data-json-obj'));
       this.renderFromJSON(child, parentObj[key]);
     } else if (child.getAttribute('data-mv-model')) {
-      this.renderFromJSON(child, parentObj);
+      key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute('data-mv-model'));
+      this.renderFromJSON(child, parentObj[key]);
     } else if (child.hasAttribute('data-json-array')) {
       var key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute('data-json-array')),
           arr = parentObj[key];
