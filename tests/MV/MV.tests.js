@@ -200,10 +200,10 @@ __MVMockData.startFourthTests = function() {
 
 
     QUnit.equal(mvMod.JSON.form.input, $mock.find('#text-input').val(), "Text input value converted to JSON");
-    QUnit.equal(mvMod.JSON.form.radio, { value: "test-radio", selected: true }, "Selected radio field value saved as JSON");
-    QUnit.equal(mvMod.JSON.form.radioOff, { value: "test-radio-off", selected: false }, "Radio field value converted to JSON, dashed key selectors converted to camel case");
-    QUnit.equal(mvMod.JSON.form.checkbox, { value: $mock.find('#checkbox').val(), selected: true }, "Checkbox value converted to JSON");
-    QUnit.equal(mvMod.JSON.form.checkboxOff, { value: $mock.find('#checkbox-off').val(), selected: false }, "Checkbox value converted to JSON");
+    QUnit.deepEqual(mvMod.JSON.form.radio, { value: "test-radio", selected: true }, "Selected radio field value saved as JSON");
+    QUnit.deepEqual(mvMod.JSON.form.radioOff, { value: "test-radio-off", selected: false }, "Radio field value converted to JSON, dashed key selectors converted to camel case");
+    QUnit.deepEqual(mvMod.JSON.form.checkbox, { value: $mock.find('#checkbox').val(), selected: true }, "Checkbox value converted to JSON");
+    QUnit.deepEqual(mvMod.JSON.form.checkboxOff, { value: $mock.find('#checkbox-off').val(), selected: false }, "Checkbox value converted to JSON");
     QUnit.equal(mvMod.JSON.form.textarea, "Microphone check one two what is this", "Textarea values converted to JSON");
   });
 
