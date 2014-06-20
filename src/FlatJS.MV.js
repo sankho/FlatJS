@@ -43,10 +43,26 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
         this.obj.appendChild(this.tmpl);
       }
     }
-  }
+  };
 
   function getValueFromNode(node) {
-    return node.innerHTML;
+    var type = node.getAttribute('type');
+
+    if (node.innerHTML) {
+      return node.innerHTML;
+    } else if (type == 'checkbox') {
+      return {
+        value: node.value,
+        selected: node.checked
+      };
+    } else if (type == 'radio') {
+      return {
+        value: node.value,
+        selected: node.checked
+      };
+    } else if (node.value) {
+      return node.value;
+    }
   }
 
   function setValueOnNode(node, value) {
