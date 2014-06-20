@@ -4,6 +4,7 @@
 
     <div data-json-obj="header">
       <h1 data-json-key="title">Todo List</h1>
+      <h5 data-json-key="arbitrary-top-title">Hey now</h5>
     </div>
 
     <div data-json-obj="you" data-mv-id="2" data-mv-model="APP.Person">
@@ -14,7 +15,7 @@
       <div data-json-array="people">
         <!-- actual data -->
         <div>
-          <div data-json-obj="personObj" data-mv-id="1" data-mv-model="APP.Person" class="person">
+          <div data-json-obj="person-obj" data-mv-id="1" data-mv-model="APP.Person" class="person">
             <a data-mv-key="name" href="#">Bill</a>
           </div>
           <ul data-json-array="todos">
@@ -77,6 +78,7 @@
           <ul data-json-array="todos">
             <li data-mv-model="APP.Todo" data-mv-id="3">
               <span data-mv-key="title">Get Chicken</span>
+              <span data-mv-key="something-extra">hey</span>
             </li>
           </ul>
         </div>

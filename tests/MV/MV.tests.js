@@ -42,6 +42,7 @@ __MVMockData.mockLoadedCallback = function() {
     QUnit.equal(APP.Person.objects[0].name, "Jane", "APP.Person.objects[0] has correct data on name")
     QUnit.equal(APP.Todo.objects[0].title, "Get Laundry", "APP.Todo.objects[0] has correct data on title")
     QUnit.equal(APP.Person.objects[0].title, undefined, "Person object does not inherit Todo information even though markup is nested.")
+    QUnit.equal(APP.Todo.find(3).somethingExtra, "hey", "camel case conversion working on data-mv-key");
 
     QUnit.equal(APP.Todo.find(1).arbitrary, 'key values', "JSON extention of object via data-mv-json key on node successful");
     QUnit.equal($mock.find('h2').text(), "Jane", "Correct name applied to first instance of model in view, updated from entry of second");
@@ -49,10 +50,11 @@ __MVMockData.mockLoadedCallback = function() {
     QUnit.equal(typeof mvMod.JSON, "object", "JSON object created & attached to mod");
     QUnit.equal(mvMod.JSON.you, APP.Person.find(2), "JSON object successfully creates pointers to related Person model objects")
     QUnit.equal(mvMod.JSON.header.title, "Todo List", "Non model string data saved to JSON object as well")
-    QUnit.equal(mvMod.JSON.people[0].personObj, APP.Person.find(1), "Models are saved as relations to the JSON object, pushed onto array as well")
+    QUnit.equal(mvMod.JSON.people[0].personObj, APP.Person.find(1), "Models are saved as relations to the JSON object, pushed onto array as well, camel case conversion working on data-json-obj")
     QUnit.equal(typeof mvMod.JSON.people[0].todos, 'object', 'Todos successfully  added to individual people object');
     QUnit.equal(mvMod.JSON.people[1].todos.length, 4, "Basic arrays are saving basic objects based on markup within arrays");
     QUnit.equal(mvMod.JSON.people[1].todos[0].title, "Get Dinner", "Correct object in basic arrays within arrays");
+    QUnit.equal(mvMod.JSON.header.arbitraryTopTitle, "Hey now", "Camel case conversion taking place for data-json-key");
   });
 
   QUnit.test("FlatJS.MV - Changing model objects should update HTML", function() {
