@@ -115,10 +115,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
   function createTemplateFromMarkup(tmplNode) {
     var tmpl     = tmplNode ? tmplNode : this.obj.cloneNode(true),
         children = tmpl.childNodes;
-
-    if (!this.tmpl) {
-      this.tmpl = tmpl;
-    }
+    this.tmpl = this.tmpl || tmpl;
 
     for (var i = 0; i < children.length; i++) {
       var child = children[i];
