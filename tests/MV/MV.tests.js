@@ -234,7 +234,7 @@ __MVMockData.startFourthTests = function() {
     QUnit.equal($('#radio-off').is(':checked'), true, "Unselected radio field turned on via JSON");
     QUnit.equal($('#checkbox').is(':checked'), false, "Selected checkbox turned off via JSON");
     QUnit.equal($('#checkbox-off').is(':checked'), true, "Unselected checkbox turned on via JSON");
-    QUnit.equal(mvMod.JSON.form.textarea, "The five foot assassin with the roughneck business", "Textarea values converted to JSON");
+    QUnit.equal($mock.find('textarea').val(), "The five foot assassin with the roughneck business", "Textarea values converted to JSON");
   });
 
 }
