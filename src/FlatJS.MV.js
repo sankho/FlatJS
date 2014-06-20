@@ -61,7 +61,22 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
   }
 
   function setValueOnNode(node, value) {
-    node.innerHTML = value;
+    var type = node.getAttribute('type');
+
+    if (type == 'checkbox' || type == 'radio') {
+      if (typeof value === 'boolean') {
+        node.checked = value;
+      } else if (typeof value === 'string') {
+        node.value = value;
+      } else if (typeof value === 'object') {
+        node.checked = value.selected;
+        node.value   = node.value;
+      }
+    } else if (node.value) {
+      node.value = value;
+    } else {
+      node.innerHTML = value;
+    }
   }
 
   function renderJSONArrayOntoNode(arr, cnnr) {
