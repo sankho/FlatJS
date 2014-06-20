@@ -84,8 +84,8 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
     cnnr.innerHTML = '';
 
-    for (var i = 0; i < arr.length; i++) {
-      cnnr.appendChild(this.renderFromJSON(tmpl.cloneNode(true), arr[i], true));
+    for (var j = 0; j < arr.length; j++) {
+      cnnr.appendChild(this.renderFromJSON(tmpl.cloneNode(true), arr[j], true));
     }
   }
 
@@ -221,8 +221,8 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       var child     = children[i];
 
       if (child.hasAttribute && child.hasAttribute('data-mv-model')) {
-        var obj = this._(createModelObjectFromNode)(child);
-        parentObj.push(obj);
+        var _obj = this._(createModelObjectFromNode)(child);
+        parentObj.push(_obj);
       }
     }
   }
@@ -272,9 +272,10 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
   }
 
   function assembleJSON(parentObj, children) {
-    var children        = children || this.obj.childNodes,
-        parentObj       = parentObj || this.JSON,
-        parentIsArray   = FlatJS.Helpers.isArray(parentObj);
+    children        = children || this.obj.childNodes;
+    parentObj       = parentObj || this.JSON;
+
+    var parentIsArray   = FlatJS.Helpers.isArray(parentObj);
 
     for (var i = 0; i < children.length; i++) {
       var child = children[i];
@@ -307,7 +308,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
           stop = true;
           this._(assembleJSON)(parentObj, children);
         } else {
-          var obj = {}
+          var obj = {};
           parentObj.push(obj);
           this._(assembleJSON)(obj, child.childNodes);
         }
@@ -317,12 +318,12 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
   function constructJSONfromNode(child, parentObj, isModel, parentIsArray) {
     var isObj = child.hasAttribute('data-json-obj'),
-        key   = child.getAttribute(isObj ? 'data-json-obj' : 'data-json-array')
+        key   = child.getAttribute(isObj ? 'data-json-obj' : 'data-json-array');
     if (isModel) {
       var modelClass = FlatJS.Helpers.findFunctionByString(child.getAttribute('data-mv-model')),
           obj        = modelClass ? modelClass.find(child.getAttribute('data-mv-id')) : false;
       if (obj && parentIsArray) {
-        parentObj.push(obj)
+        parentObj.push(obj);
       } else if (obj) {
         parentObj[key] = obj;
       }
