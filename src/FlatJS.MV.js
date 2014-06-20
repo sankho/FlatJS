@@ -88,14 +88,14 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       var child = children[i];
 
       if (child.hasAttribute) {
-        tmpl = child;
+        tmpl = child.cloneNode(true);
       }
     }
 
     cnnr.innerHTML = '';
 
     for (var j = 0; j < arr.length; j++) {
-      cnnr.appendChild(this.renderFromJSON(tmpl.cloneNode(true), arr[j], true));
+      cnnr.appendChild(this.renderFromJSON(tmpl, arr[j], true));
     }
   }
 
