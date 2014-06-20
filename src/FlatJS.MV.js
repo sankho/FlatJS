@@ -85,14 +85,16 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
   }
 
   function renderJSONOntoNode(child, parentObj) {
+    var key;
+
     if (child.hasAttribute('data-json-key')) {
-      var key = child.getAttribute('data-json-key');
+      key = child.getAttribute('data-json-key');
       this._(setValueOnNode)(child, parentObj[key]);
     } else if (child.getAttribute('data-mv-key')) {
-      var key = child.getAttribute('data-mv-key');
+      key = child.getAttribute('data-mv-key');
       this._(setValueOnNode)(child, parentObj[key]);
     } else if (child.hasAttribute('data-json-obj')) {
-      var key = child.getAttribute('data-json-obj');
+      key = child.getAttribute('data-json-obj');
       this.renderFromJSON(child, parentObj[key]);
     } else if (child.getAttribute('data-mv-model')) {
       this.renderFromJSON(child, parentObj);
