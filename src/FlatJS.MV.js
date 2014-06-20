@@ -45,6 +45,14 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     }
   }
 
+  function getValueFromNode(node) {
+    return node.innerHTML;
+  }
+
+  function setValueOnNode(node, value) {
+    node.innerHTML = value;
+  }
+
   function renderJSONArrayOntoNode(arr, cnnr) {
     var children = cnnr.childNodes,
         tmpl     = false,
@@ -68,10 +76,10 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
   function renderJSONOntoNode(child, parentObj) {
     if (child.hasAttribute('data-json-key')) {
       var key = child.getAttribute('data-json-key');
-      child.innerHTML = parentObj[key];
+      this._(setValueOnNode)(child, parentObj[key]);
     } else if (child.getAttribute('data-mv-key')) {
       var key = child.getAttribute('data-mv-key');
-      child.innerHTML = parentObj[key];
+      this._(setValueOnNode)(child, parentObj[key]);
     } else if (child.hasAttribute('data-json-obj')) {
       var key = child.getAttribute('data-json-obj');
       this.renderFromJSON(child, parentObj[key]);
@@ -104,7 +112,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
       if (child.hasAttribute) {
         if (child.hasAttribute('data-mv-key') || child.hasAttribute('data-json-key')) {
-          child.innerHTML = '';
+          this._(setValueOnNode)(child, '');
         } else if (child.hasAttribute('data-mv-id')) {
           child.removeAttribute('data-mv-id');
         } else if (child.hasAttribute('data-json-array')) {
@@ -205,7 +213,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
   function getKeyAndValueFromNodeAndAddToObject(obj, node) {
     var key = node.getAttribute('data-mv-key'),
-        val = node.innerHTML;
+        val = this._(getValueFromNode)(node);
 
     node.object = obj;
     obj.nodes.push(node);
@@ -217,7 +225,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       var node = obj.nodes[i];
 
       if (node && node.getAttribute('data-mv-key') && node.getAttribute('data-mv-key') === prop) {
-        node.innerHTML = newVal;
+        this._(setValueOnNode)(node, newVal);
       }
     }
   }
@@ -229,7 +237,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       var node = nodes[i],
           attr = node.object[node.getAttribute('data-mv-key')];
       if (attr) {
-        node.innerHTML = attr;
+        this._(setValueOnNode)(node, attr);
       }
     }
   }
@@ -259,7 +267,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
         var isModel = child.hasAttribute('data-mv-model');
         if (child.hasAttribute('data-json-key')) {
           var key = child.getAttribute('data-json-key');
-          parentObj[key] = child.innerHTML;
+          parentObj[key] = this._(getValueFromNode)(child);
         } else if (isModel || child.hasAttribute('data-json-obj')) {
           this._(constructJSONfromNode)(child, parentObj, isModel, parentIsArray);
         } else if (child.hasAttribute('data-json-array')) {
