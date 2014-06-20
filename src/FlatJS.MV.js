@@ -70,9 +70,9 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
         node.value = value;
       } else if (typeof value === 'object') {
         node.checked = value.selected;
-        node.value   = node.value;
+        node.value   = value.value;
       }
-    } else if (node.value) {
+    } else if (type == 'text' || type == 'textarea') {
       node.value = value;
     } else {
       node.innerHTML = value;
