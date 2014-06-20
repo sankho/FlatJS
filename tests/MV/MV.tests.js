@@ -105,6 +105,7 @@ __MVMockData.startSecondTests = function() {
     });
 
     QUnit.equal(mvModOne.JSON.header.title, "Todo List - Updated", "updateJSON extends the inner JSON object as expected");
+    QUnit.equal(mvModOne.JSON.people[0].personObj.name, "Jane", "updateJSON extends the inner JSON object as expected");
 
     QUnit.ok(mvModOne.tmpl, "Template created from original markup");
     QUnit.ok($(mvModOne.tmpl).find('.first-todo').length > 0, "Template markup is as expected");
@@ -112,7 +113,7 @@ __MVMockData.startSecondTests = function() {
     mvModOne.renderFromJSON();
 
     QUnit.equal($mockOne.find('h1').text(), "Todo List - Updated", "Updating JSON object on model updates HTML in view");
-    QUnit.equal($mockOne.find('.person:eq(0)').text().trim(), 'Jane', "Array of models imported & muted successfully w/ renderFromJson");
+    QUnit.equal($mockOne.find('.person:eq(0) a').text(), 'Jane', "Array of models imported & muted successfully w/ renderFromJson");
     QUnit.equal($mockOne.find('.first-todo:eq(0) span').text().trim(), 'Get Laundry', "Todos translated over");
 
     $.ajax({
