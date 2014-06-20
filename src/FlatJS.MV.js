@@ -50,14 +50,9 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
     if (node.innerHTML) {
       return node.innerHTML;
-    } else if (type == 'checkbox') {
+    } else if (type == 'checkbox' || type == 'radios') {
       return {
-        value: node.value,
-        selected: node.checked
-      };
-    } else if (type == 'radio') {
-      return {
-        value: node.value,
+        value:    node.value,
         selected: node.checked
       };
     } else if (node.value) {
