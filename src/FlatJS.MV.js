@@ -50,7 +50,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
     if (node.innerHTML) {
       return node.innerHTML;
-    } else if (type == 'checkbox' || type == 'radios') {
+    } else if (type == 'checkbox' || type == 'radio') {
       return {
         value:    node.value,
         selected: node.checked
@@ -163,7 +163,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
   function createModelObjectFromNode(node) {
     var id        = node.getAttribute('data-mv-id'),
-        modelName = node.getAttribute('data-mv-model'),
+        modelName = FlatJS.Helpers.convertDashedToCamelCase(node.getAttribute('data-mv-model')),
         model     = FlatJS.Helpers.findFunctionByString(
                       modelName,
                       window,
@@ -209,7 +209,8 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
   function checkArrayForModelRelations(obj, node) {
     var children  = node.childNodes,
-        parentObj = obj[node.getAttribute('data-json-array')] = obj[node.getAttribute('data-json-array')] || [];
+        key       = FlatJS.Helpers.convertDashedToCamelCase(node.getAttribute('data-json-array')),
+        parentObj = obj[key] = obj[key] || [];
 
     for (var i = 0; i < children.length; i++) {
       var child     = children[i];
@@ -222,7 +223,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
   }
 
   function getKeyAndValueFromNodeAndAddToObject(obj, node) {
-    var key = node.getAttribute('data-mv-key'),
+    var key = FlatJS.Helpers.convertDashedToCamelCase(node.getAttribute('data-mv-key')),
         val = this._(getValueFromNode)(node);
 
     node.object = obj;
@@ -245,7 +246,8 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
     for (var i = 0; i < nodes.length; i++) {
       var node = nodes[i],
-          attr = node.object[node.getAttribute('data-mv-key')];
+          key  = FlatJS.Helpers.convertDashedToCamelCase(node.getAttribute('data-mv-key')),
+          attr = node.object[key];
       if (attr) {
         this._(setValueOnNode)(node, attr);
       }
@@ -277,7 +279,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       if (child.hasAttribute) {
         var isModel = child.hasAttribute('data-mv-model');
         if (child.hasAttribute('data-json-key')) {
-          var key = child.getAttribute('data-json-key');
+          var key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute('data-json-key'));
           parentObj[key] = this._(getValueFromNode)(child);
         } else if (isModel || child.hasAttribute('data-json-obj')) {
           this._(constructJSONfromNode)(child, parentObj, isModel, parentIsArray);
@@ -292,8 +294,9 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
   function constructJSONfromArray(cnnr, parentObj, parentIsArray) {
     var children  = cnnr.childNodes,
-        stop      = false;
-        parentObj = parentObj[cnnr.getAttribute('data-json-array')] = [];
+        stop      = false,
+        key       = FlatJS.Helpers.convertDashedToCamelCase(cnnr.getAttribute('data-json-array'));
+        parentObj = parentObj[key] = [];
 
     for (var i = 0; i < children.length && !stop; i++) {
       var child = children[i];
@@ -312,7 +315,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
   function constructJSONfromNode(child, parentObj, isModel, parentIsArray) {
     var isObj = child.hasAttribute('data-json-obj'),
-        key   = child.getAttribute(isObj ? 'data-json-obj' : 'data-json-array');
+        key   = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute(isObj ? 'data-json-obj' : 'data-json-array'));
     if (isModel) {
       var modelClass = FlatJS.Helpers.findFunctionByString(child.getAttribute('data-mv-model')),
           obj        = modelClass ? modelClass.find(child.getAttribute('data-mv-id')) : false;
