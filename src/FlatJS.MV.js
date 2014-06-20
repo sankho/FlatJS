@@ -88,18 +88,19 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     var key;
 
     if (child.hasAttribute('data-json-key')) {
-      key = child.getAttribute('data-json-key');
+      key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute('data-json-key'));
       this._(setValueOnNode)(child, parentObj[key]);
     } else if (child.getAttribute('data-mv-key')) {
-      key = child.getAttribute('data-mv-key');
+      key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute('data-mv-key'));
       this._(setValueOnNode)(child, parentObj[key]);
     } else if (child.hasAttribute('data-json-obj')) {
-      key = child.getAttribute('data-json-obj');
+      key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute('data-json-obj'));
       this.renderFromJSON(child, parentObj[key]);
     } else if (child.getAttribute('data-mv-model')) {
       this.renderFromJSON(child, parentObj);
     } else if (child.hasAttribute('data-json-array')) {
-      var arr = parentObj[child.getAttribute('data-json-array')];
+      var key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute('data-json-array')),
+          arr = parentObj[key];
       if (arr && child.childNodes) {
         this._(renderJSONArrayOntoNode)(arr, child);
       }
