@@ -108,7 +108,8 @@ __MVMockData.startSecondTests = function() {
     QUnit.equal(mvModOne.JSON.people[0].personObj.name, "Jane", "updateJSON extends the inner JSON object as expected");
 
     QUnit.ok(mvModOne.tmpl, "Template created from original markup");
-    QUnit.ok($(mvModOne.tmpl).find('.first-todo').length > 0, "Template markup is as expected");
+    QUnit.equal($(mvModOne.tmpl).find('div div div .first-todo').length, 1, "Template markup is as expected");
+    QUnit.equal($(mvModOne.tmpl).find('div div div .person').length, 1, "Template markup is as expected");
 
     mvModOne.renderFromJSON();
 
