@@ -105,7 +105,7 @@ FlatJS.ModuleRunner = (function() {
       for (var i=0; i<conCount; i++) {
         (function() {
           var c = controllers[i];
-          var camel = c.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase() }).replace(/\s+/g, '');
+          var camel = FlatJS.Helpers.convertDashedToCamelCase(c);
 
           findFn(function() {
             findAndCallModuleByString(objNode, camel, context);
