@@ -276,8 +276,8 @@ __MVMockData.startFifthTests = function() {
         personNode = $mock.find('.first .person:eq(1)').get(0),
         person     = APP.Person.find(2);
 
-    QUnit.ok(person._fjs_nodes.indexOf(nameNode) !== -1, "Initial name node exists within _fjs_nodes array");
-    QUnit.ok(person._fjs_nodes.indexOf(personNode) !== -1, "Initial person node exists within _fjs_nodes array");
+    QUnit.ok(person._('FJSnodes').indexOf(nameNode) !== -1, "Initial name node exists within _('FJSnodes') array");
+    QUnit.ok(person._('FJSnodes').indexOf(personNode) !== -1, "Initial person node exists within _('FJSnodes') array");
 
     // TODO: Figure out how to make the below work in a cross browser
     // manner. Also figure out if the functionality really matters -
@@ -287,8 +287,8 @@ __MVMockData.startFifthTests = function() {
     //nameNode.parentNode.removeChild(nameNode);
     //personNode.parentNode.removeChild(personNode);
 
-    //QUnit.equal(person._fjs_nodes.indexOf(nameNode), -1, "DOM Node reference no longer exists within _fjs_nodes array after being removed from document");
-    //QUnit.equal(person._fjs_nodes.indexOf(personNode), -1, "DOM Node reference no longer exists within _fjs_nodes array after being removed from document");
+    //QUnit.equal(person._('FJSnodes').indexOf(nameNode), -1, "DOM Node reference no longer exists within _('FJSnodes') array after being removed from document");
+    //QUnit.equal(person._('FJSnodes').indexOf(personNode), -1, "DOM Node reference no longer exists within _('FJSnodes') array after being removed from document");
   })
 
 }
