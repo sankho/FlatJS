@@ -282,8 +282,8 @@ __MVMockData.startFifthTests = function() {
     nameNode.parentNode.removeChild(nameNode);
     personNode.parentNode.removeChild(personNode);
 
-    QUnit.ok(person._fjs_nodes.indexOf(nameNode) === -1, "DOM Node reference no longer exists within _fjs_nodes array after being removed from document");
-    QUnit.ok(person._fjs_nodes.indexOf(personNode) === -1, "DOM Node reference no longer exists within _fjs_nodes array after being removed from document");
+    QUnit.equal(person._fjs_nodes.indexOf(nameNode), -1, "DOM Node reference no longer exists within _fjs_nodes array after being removed from document");
+    QUnit.equal(person._fjs_nodes.indexOf(personNode), -1, "DOM Node reference no longer exists within _fjs_nodes array after being removed from document");
   })
 
 }
