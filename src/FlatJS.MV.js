@@ -95,7 +95,9 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     cnnr.innerHTML = '';
 
     for (var j = 0; j < arr.length; j++) {
-      cnnr.appendChild(this.renderFromJSON(tmpl, arr[j], true));
+      var _tmpl = tmpl.cloneNode(true),
+          node  = this.renderFromJSON(_tmpl, arr[j], true);
+      cnnr.appendChild(node);
     }
   }
 
