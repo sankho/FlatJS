@@ -272,6 +272,18 @@ __MVMockData.startFifthTests = function() {
     var $mock = $('#flat-mv-test-mock'),
         mvMod = $mock.find('.first').get(0).jsModules['FlatJS.MV'];
 
+    var nameNode   = $mock.find('.first h2').get(0),
+        personNode = $mock.find('.first .person:eq(1)').get(0),
+        person     = APP.Person.find(2);
+
+    QUnit.ok(person._fjs_nodes.indexOf(nameNode) !== -1, "Initial name node exists within _fjs_nodes array");
+    QUnit.ok(person._fjs_nodes.indexOf(personNode) !== -1, "Initial person node exists within _fjs_nodes array");
+
+    nameNode.parentNode.removeChild(nameNode);
+    personNode.parentNode.removeChild(personNode);
+
+    QUnit.ok(person._fjs_nodes.indexOf(nameNode) === -1, "DOM Node reference no longer exists within _fjs_nodes array after being removed from document");
+    QUnit.ok(person._fjs_nodes.indexOf(personNode) === -1, "DOM Node reference no longer exists within _fjs_nodes array after being removed from document");
   })
 
 }
