@@ -237,6 +237,41 @@ __MVMockData.startFourthTests = function() {
     QUnit.equal($('#checkbox').is(':checked'), false, "Selected checkbox turned off via JSON");
     QUnit.equal($('#checkbox-off').is(':checked'), true, "Unselected checkbox turned on via JSON");
     QUnit.equal($mock.find('textarea').val(), "The five foot assassin with the roughneck business", "Textarea values converted to JSON");
+
+    $mock.remove();
+    __MVMockData.startFifthTests();
   });
+}
+
+__MVMockData.startFifthTests = function() {
+
+  QUnit.test("Deleting and updating model object behavoir & cleanup", function() {
+
+    $('#mock-area').append(__MVMockData.HTML);
+
+    new FlatJS.ModuleRunner({
+      attr: 'data-js-mv-test-module'
+    });
+
+    var $mock = $('#flat-mv-test-mock'),
+        mvMod = $mock.find('.first').get(0).jsModules['FlatJS.MV'];
+
+    APP.Person.find(2).delete();
+
+    QUnit.equal($mock.find('.first h2').length, 0, "Deleting model object also removes references in dom");
+    QUnit.equal($mock.find('.first [data-js-obj="you"]').length, 0, "Deleting model object also removes references in dom");
+    QUnit.equal($mock.find('.first [data-mv-id="1"]').length, 0, "Deleting model object also removes references in dom");
+
+    $mock.remove();
+    $('#mock-area').append(__MVMockData.HTML);
+
+    new FlatJS.ModuleRunner({
+      attr: 'data-js-mv-test-module'
+    });
+
+    var $mock = $('#flat-mv-test-mock'),
+        mvMod = $mock.find('.first').get(0).jsModules['FlatJS.MV'];
+
+  })
 
 }
