@@ -192,8 +192,9 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
     obj = model.find(id) || new model({ id: id });
 
-    obj.nodes     = obj.nodes || [];
-    obj.modelName = obj.modelName || modelName;
+    obj.modelName  = obj.modelName  || modelName;
+    obj._fjs_nodes = obj._fjs_nodes || [];
+    obj._fjs_nodes.push(node);
 
     if (node.hasAttribute('data-mv-json')) {
       obj.extend(JSON.parse(node.getAttribute('data-mv-json')));
@@ -246,13 +247,13 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
         val = this._(getValueFromNode)(node);
 
     node.object = obj;
-    obj.nodes.push(node);
+    obj._fjs_nodes.push(node);
     obj[key] = val;
   }
 
   function syncMVKeyOnObjectChange(prop, oldVal, newVal, obj) {
-    for (var i = 0; i < obj.nodes.length; i++) {
-      var node = obj.nodes[i];
+    for (var i = 0; i < obj._fjs_nodes.length; i++) {
+      var node = obj._fjs_nodes[i];
 
       if (node && node.getAttribute('data-mv-key') && node.getAttribute('data-mv-key') === prop) {
         this._(setValueOnNode)(node, newVal);
@@ -362,7 +363,9 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     if (this._fjs_nodes) {
       for (n in this._fjs_nodes) {
         var node = this._fjs_nodes[n];
-        node.parentNode.removeChild(node);
+        if (node && node.parentNode) {
+          node.parentNode.removeChild(node);
+        }
       }
     }
   }
