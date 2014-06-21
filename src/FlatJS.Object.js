@@ -52,6 +52,10 @@ FlatJS.Object = (function() {
 
     extend: function(obj) {
       return FJSObject.objExtend(this, obj);
+    },
+
+    delete: function() {
+
     }
 
   });
