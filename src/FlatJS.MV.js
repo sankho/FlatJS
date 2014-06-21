@@ -338,7 +338,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     var isObj = child.hasAttribute('data-json-obj'),
         key   = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute(isObj ? 'data-json-obj' : 'data-json-array'));
     if (isModel) {
-      var modelClass = FlatJS.Helpers.findFunctionByString(child.getAttribute('data-mv-model')),
+      var modelClass = FlatJS.Helpers.findFunctionByString(FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute('data-mv-model'))),
           obj        = modelClass ? modelClass.find(child.getAttribute('data-mv-id')) : false;
       if (obj && parentIsArray) {
         parentObj.push(obj);
