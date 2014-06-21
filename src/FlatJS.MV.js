@@ -358,6 +358,15 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     }
   }
 
+  FlatJS.Object.prototype.delete = function() {
+    if (this._fjs_nodes) {
+      for (n in this._fjs_nodes) {
+        var node = this._fjs_nodes[n];
+        node.parentNode.removeChild(node);
+      }
+    }
+  }
+
   return api;
 
 });
