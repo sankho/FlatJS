@@ -245,7 +245,7 @@ __MVMockData.startFourthTests = function() {
 
 __MVMockData.startFifthTests = function() {
 
-  QUnit.test("Deleting and updating model object behavoir & cleanup", function() {
+  QUnit.test("FlatJS.MV - Deleting and updating model object behavoir & cleanup", function() {
 
     $('#mock-area').append(__MVMockData.HTML);
 
