@@ -59,7 +59,7 @@ FlatJS.Helpers = (function() {
     findFunctionByString: function(c, parent, defaultValue) {
       parent     = parent || window;
 
-      if (c.indexOf('.') !== -1) {
+      if (c.indexOf && c.indexOf('.') !== -1) {
         c = c.split('.');
       }
 
