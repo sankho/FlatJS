@@ -260,7 +260,7 @@ __MVMockData.startFifthTests = function() {
 
     QUnit.equal($mock.find('.first h2').length, 0, "Deleting model object also removes references in dom");
     QUnit.equal($mock.find('.first [data-json-obj="you"]').length, 0, "Deleting model object also removes references in dom");
-    QUnit.equal($mock.find('.first [data-mv-id="1"]').length, 0, "Deleting model object also removes references in dom");
+    QUnit.equal($mock.find('.first [data-mv-model="APP.Person"][data-mv-id="2"]').length, 0, "Deleting model object also removes references in dom");
 
     $mock.remove();
     $('#mock-area').append(__MVMockData.HTML);
