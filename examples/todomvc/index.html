@@ -12,11 +12,13 @@
     <link rel="stylesheet" href="css/app.css">
 
     <script>
+      // create a namespace for your app before the script runs.
+      // not required, but a good practice.
       FlatTodo = {};
     </script>
   </head>
   <body>
-    <section id="todoapp">
+    <section id="todoapp" data-js-module="FlatTodo.TodoApp">
       <header id="header">
         <h1>todos</h1>
         <input id="new-todo" placeholder="What needs to be done?" autofocus>
