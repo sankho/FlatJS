@@ -10,7 +10,17 @@
 
       bindUI: function() {
         this._('$newTodoInput').on('keyup', this._(addNewTodoOnEnter));
+        this._('$todoList').find('.destroy').on('click', this._(destroyTodoItem));
       }
+    }
+
+    function destroyTodoItem(e) {
+      var $btn  = $(e.currentTarget),
+          $todo = $btn.parent().parent(),
+          id    = $todo.attr('data-mv-id'),
+          todo  = FlatTodo.Todo.find(id);
+
+      todo.delete();
     }
 
     function addNewTodoOnEnter(e) {
