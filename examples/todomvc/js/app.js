@@ -31,11 +31,12 @@
         this._('$newTodoInput').val('');
 
         var todo = new FlatTodo.Todo({
-          // IDs could be auto generated
+          // IDs should be auto generated
           id: FlatTodo.Todo.objects.length+1,
           text: val
         });
 
+        // the below could be more automated / easier
         this.JSON.todosList.push(todo);
         this.renderFromJSON();
         this.initializer();
