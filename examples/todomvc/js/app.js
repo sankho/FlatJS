@@ -1,25 +1,16 @@
 (function (window) {
-	'use strict';
+  'use strict';
 
-  FlatTodo.runner = new FlatJS.ModuleRunner();
-
-})(window);
-
-
-
-
-
-
-FlatTodo.TodoApp = FlatJS.MV.extend(function() {
-
-  var app = {
-
-    initializer: function() {
-
+  FlatTodo.TodoHandler = FlatJS.MV.extend(function() {
+    return {
+      initializer: function() {
+        this._('newTodoInput', document.getElementById('new-todo'));
+      }
     }
+  })
 
-  };
+  FlatTodo.runner = new FlatJS.ModuleRunner({
+    context: FlatTodo
+  });
 
-  return app;
-
-})
+}(window));
