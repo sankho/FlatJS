@@ -11,6 +11,18 @@
       bindUI: function() {
         this._('$newTodoInput').on('keyup', this._(addNewTodoOnEnter));
         this._('$todoList').find('.destroy').on('click', this._(destroyTodoItem));
+      },
+
+      renderUI: function() {
+        this._('$todoList').find('li').each(function(i, obj) {
+          var todoObj = obj.object,
+              $obj    = $(obj);
+
+          // inputs having objects for values fucks up the model object
+          todoObj.completed.selected == true ? $obj.addClass('completed') : $obj.removeClass('completed');
+
+          $obj.find('.toggle').attr('checked', todoObj.completed);
+        });
       }
     }
 
@@ -33,13 +45,22 @@
         var todo = new FlatTodo.Todo({
           // IDs should be auto generated
           id: FlatTodo.Todo.objects.length+1,
-          text: val
+          text: val,
+          completed: {
+            value: "on",
+            selected: false
+          }
         });
+
+
+        // IDs need to be written into new nodes on
+        // re-rendering
 
         // the below could be more automated / easier
         this.JSON.todosList.push(todo);
         this.renderFromJSON();
         this.initializer();
+        this.renderUI();
         this.bindUI();
       }
     }
