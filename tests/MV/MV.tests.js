@@ -19,12 +19,13 @@ $.ajax({
 __MVMockData.mockLoadedCallback = function() {
 
   var $mock = $('#flat-mv-test-mock .first'),
+      $moc2 = $('#flat-mv-test-mock .second'),
       mock  = $mock.get(0);
 
   new FlatJS.ModuleRunner({
     attr: 'data-js-mv-test-module'
   });
-
+null
   var mvMod = mock.jsModules ? mock.jsModules['FlatJS.MV'] : undefined;
 
   QUnit.test("FlatJS.MV existence tests", function() {
@@ -55,6 +56,12 @@ __MVMockData.mockLoadedCallback = function() {
     QUnit.equal(mvMod.JSON.people[1].todos.length, 4, "Basic arrays are saving basic objects based on markup within arrays");
     QUnit.equal(mvMod.JSON.people[1].todos[0].title, "Get Dinner", "Correct object in basic arrays within arrays");
     QUnit.equal(mvMod.JSON.header.arbitraryTopTitle, "Hey now", "Camel case conversion taking place for data-json-key");
+  });
+
+  QUnit.test('FlatJS.MV - CSS Classes are added on attribute check', function() {
+    QUnit.ok($mock.find('.first-todo:eq(0)').hasClass('completed'), 'Classes added if array passed to attribute defining a key value match and a class name.');
+    QUnit.ok($moc2.find('li:eq(0)').hasClass('not-completed'), 'Default / secondary classes added if array passed to attribute defining a key value non match and a class name corrseponding to that lack of match. Words.');
+    QUnit.ok($moc2.find('li:eq(1)').hasClass('completed whatever'), 'Multiple class assertions successfully made on object if double sided array passed.');
   });
 
   QUnit.test("FlatJS.MV - Changing model objects should update HTML", function() {
