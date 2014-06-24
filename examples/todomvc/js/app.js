@@ -63,7 +63,8 @@
         // 6.) the below could be more automated / easier... as in only one command
         // this.JSON.set('todosList', this.JSON.todosList.push(todo)); <-- not bad, little ugly though
         // this.JSON.set('todosList', 'push', todo); <-- kind of like this one myself
-        // either command should elimate the need for all the below bullshit
+        // either command should elimate the need for all the below bullshit; e.g. no re-rendering
+        // so make sure .watch is set on all json-keys etc like models are. 2-way binding, I think.
         this.JSON.todosList.push(todo);
         this.renderFromJSON();
         this.initializer();
