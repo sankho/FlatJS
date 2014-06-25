@@ -210,40 +210,43 @@ __MVMockData.startFourthTests = function() {
         mvMod    = $mock.get(0).jsModules['FlatJS.MV'];
 
     QUnit.equal(mvMod.JSON.form.input, $mock.find('#text-input').val(), "Text input value converted to JSON");
-    QUnit.deepEqual(mvMod.JSON.form.radio, { value: "test-radio", selected: true }, "Selected radio field value saved as JSON");
-    QUnit.deepEqual(mvMod.JSON.form.radioOff, { value: "test-radio-off", selected: false }, "Radio field value converted to JSON, dashed key selectors converted to camel case");
-    QUnit.deepEqual(mvMod.JSON.form.checkbox, { value: $mock.find('#checkbox').val(), selected: true }, "Checkbox value converted to JSON");
-    QUnit.deepEqual(mvMod.JSON.form.checkboxOff, { value: $mock.find('#checkbox-off').val(), selected: false }, "Checkbox value converted to JSON");
+    QUnit.equal(mvMod.JSON.form.radio, "test-radio", "Selected radio field value saved as JSON, not picking up on unselected buttons");
+    QUnit.equal(mvMod.JSON.form.radioOff, false, "Radio field value converted to JSON, dashed key selectors converted to camel case");
+    QUnit.equal(mvMod.JSON.form.checkbox, $mock.find('#checkbox').val(), "Checkbox value converted to JSON");
+    QUnit.equal(mvMod.JSON.form.checkboxOff, false, "Checkbox value converted to JSON");
     QUnit.equal(mvMod.JSON.form.textarea, "Microphone check one two what is this", "Textarea values converted to JSON");
 
     mvMod.updateJSON({
       form: {
-        input:    "Heyo",
-        radio:    {
-          selected: false,
-          value:    "new value"
-        },
-        radioOff: {
-          selected: true
-        },
-        checkbox:    {
-          selected: false
-        },
-        checkboxOff: {
-          selected: true
-        },
-        textarea: "The five foot assassin with the roughneck business"
+        input:       "Heyo",
+        radio:       "test-radio-2",
+        radioOff:    true,
+        checkbox:    false,
+        checkboxOff: true,
+        textarea:    "The five foot assassin with the roughneck business"
       }
     });
     mvMod.renderFromJSON();
 
     QUnit.equal($mock.find('#text-input').val(), "Heyo", "Text input updated from JSON");
     QUnit.equal($('#radio').is(':checked'), false, "Selected radio field turned off via JSON");
-    QUnit.equal($('#radio').val(), "new value", "Radio field value changed via JSON");
+    QUnit.equal($('#radio-2').is(':checked'), true, "Radio field value changed via JSON");
     QUnit.equal($('#radio-off').is(':checked'), true, "Unselected radio field turned on via JSON");
+    QUnit.equal(mvMod.JSON.radioOff, 'test-radio-off', "Unselected radio field turned on via JSON, value is imported");
     QUnit.equal($('#checkbox').is(':checked'), false, "Selected checkbox turned off via JSON");
     QUnit.equal($('#checkbox-off').is(':checked'), true, "Unselected checkbox turned on via JSON");
+    QUnit.equal(mvMod.JSON.checkboxOff, 'test-checkbox-off', "Unselected checkbox text value imported via JSON.");
     QUnit.equal($mock.find('textarea').val(), "The five foot assassin with the roughneck business", "Textarea values converted to JSON");
+
+    mvMod.updateJSON({
+      form: {
+        checkbox:    "new value"
+      }
+    });
+    mvMod.renderFromJSON();
+
+    QUnit.equal($('#checkbox').val(), "new value", "New value set onto checkbox");
+    QUnit.ok($('#checkbox').is(':checked'), "Checkbox set on by setting a non false value");
 
     $mock.remove();
     __MVMockData.startFifthTests();
@@ -276,9 +279,6 @@ __MVMockData.startFifthTests = function() {
     // maybe checking whether nodes exist or not on the obj.watch call
     // set in Flat.MV somewhere will work.
 
-    //nameNode.parentNode.removeChild(nameNode);
-    //personNode.parentNode.removeChild(personNode);
-
     //$('#mock-area').append(__MVMockData.HTML);
 
     //new FlatJS.ModuleRunner({
@@ -294,6 +294,9 @@ __MVMockData.startFifthTests = function() {
 
     //QUnit.ok(person._('FJSnodes').indexOf(nameNode) !== -1, "Initial name node exists within _('FJSnodes') array");
     //QUnit.ok(person._('FJSnodes').indexOf(personNode) !== -1, "Initial person node exists within _('FJSnodes') array");
+
+    //nameNode.parentNode.removeChild(nameNode);
+    //personNode.parentNode.removeChild(personNode);
 
     //QUnit.equal(person._('FJSnodes').indexOf(nameNode), -1, "DOM Node reference no longer exists within _('FJSnodes') array after being removed from document");
     //QUnit.equal(person._('FJSnodes').indexOf(personNode), -1, "DOM Node reference no longer exists within _('FJSnodes') array after being removed from document");
