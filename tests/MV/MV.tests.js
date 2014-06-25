@@ -69,6 +69,13 @@ null
     APP.Todo.find(2).set('title', 'Cook Lasagana');
     QUnit.equal($('.first .first-todo span').text(), 'Cook Dinner', "HTML syncs on object change successfully - first item");
     QUnit.equal($('.second .first-todo span').text(), 'Cook Lasagana', "HTML syncs on object change successfully - first item");
+  });
+
+  QUnit.test("FlatJS.MV - Finding model object from HTML Nodes", function() {
+    var node = $mock.find('h2').get(0);
+
+    if (mvMod.getResourceFromNode)
+      QUnit.equal(mvMod.getResourceFromNode(node), APP.Person.find(2), "getResourceFromNode method successfully gets model from parent node of given HTML node");
 
     __MVMockData.startSecondTests();
   });
