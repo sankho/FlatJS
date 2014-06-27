@@ -10,6 +10,11 @@ QUnit.test("FlatJS.Object existence tests", function(assert) {
 
 QUnit.asyncTest("FlatJS.Object construction, setter, watch, and unwatch functionality", function(assert) {
 
+  // adds an object with an ID to ensure
+  // object X does some work
+  var y = new FlatJS.Object({
+    id: 1
+  });
   var x      = new FlatJS.Object();
 
   function watchCallback(name, oldVal, val, obj) {
