@@ -47,8 +47,31 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
         this.obj.textContent ? this.obj.textContent = '' : this.obj.innerHTML = '' ;
         this.obj.appendChild(this.tmpl);
       }
+    },
+
+    findModelFromNode: function(node) {
+      if (node.hasAttribute('data-mv-model') && node.hasAttribute('data-mv-id')) {
+        // ugly.
+        var model = FlatJS.Helpers.findFunctionByString(FlatJS.Helpers.convertDashedToCamelCase(node.getAttribute('data-mv-model')));
+
+        return model.find(node.getAttribute('data-mv-id'));
+      } else {
+        return this.findModelFromNode(node.parentNode);
+      }
     }
   };
+
+  function applyCSSChanges() {
+    var nodes = FlatJS.Helpers.getAllElementsWithAttribute('data-mv-class', this.obj);
+
+    for (var i = 0; i < nodes.length; i++) {
+      this._(makeCSSChangeOnNode)(node[i]);
+    }
+  }
+
+  function makeCSSChangeOnNode(node) {
+
+  }
 
   function getValueFromNode(node) {
     var type = node.getAttribute('type');
