@@ -48,8 +48,6 @@ __MVMockData.mockLoadedCallback = function() {
     QUnit.equal(APP.Todo.find(1).arbitrary, 'key values', "JSON extention of object via data-mv-json key on node successful");
     QUnit.equal($mock.find('h2').text(), "Jane", "Correct name applied to first instance of model in view, updated from entry of second");
 
-    QUnit.equal(APP.Person.find(2), mvMod.findResourceFromNode($mock.find('h2').get(0)), "FlatJS.MV.findResourceFromNode works as expected");
-
     QUnit.equal(typeof mvMod.JSON, "object", "JSON object created & attached to mod");
     QUnit.equal(mvMod.JSON.you, APP.Person.find(2), "JSON object successfully creates pointers to related Person model objects")
     QUnit.equal(mvMod.JSON.header.title, "Todo List", "Non model string data saved to JSON object as well")
@@ -76,8 +74,7 @@ __MVMockData.mockLoadedCallback = function() {
   QUnit.test("FlatJS.MV - Finding model object from HTML Nodes", function() {
     var node = $mock.find('h2').get(0);
 
-    if (mvMod.getResourceFromNode)
-      QUnit.equal(mvMod.getResourceFromNode(node), APP.Person.find(2), "getResourceFromNode method successfully gets model from parent node of given HTML node");
+    QUnit.equal(APP.Person.find(2), mvMod.findResourceFromNode($mock.find('h2').get(0)), "FlatJS.MV.findResourceFromNode works as expected");
 
     __MVMockData.startSecondTests();
   });
