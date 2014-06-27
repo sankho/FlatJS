@@ -6,12 +6,16 @@ footer {
   margin-top: 250px;
 }
 
-.page-header.small-top {
-  margin-top: 50px;
+.page-header.big-top {
+  margin-top: 150px;
+}
+
+.page-header.no-top {
+  margin-top: 20px;
 }
 
 .page-header {
-  margin-top: 150px;
+  margin-top: 50px;
 }
 
 pre.prettyprint {
