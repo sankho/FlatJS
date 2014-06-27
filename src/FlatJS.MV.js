@@ -97,10 +97,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     if (node.innerHTML) {
       return node.innerHTML;
     } else if (type == 'checkbox' || type == 'radio') {
-      return {
-        value:    node.value,
-        selected: node.checked
-      };
+      return node.checked ? node.value : node.checked;
     } else if (node.value) {
       return node.value;
     }
@@ -347,7 +344,11 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
         var isModel = child.hasAttribute('data-mv-model');
         if (child.hasAttribute('data-json-key')) {
           var key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute('data-json-key'));
-          parentObj[key] = this._(getValueFromNode)(child);
+          if (child.getAttribute('type') === 'radio') {
+            parentObj[key] = parentObj[key] || this._(getValueFromNode)(child);
+          } else {
+            parentObj[key] = this._(getValueFromNode)(child);
+          }
         } else if (isModel || child.hasAttribute('data-json-obj')) {
           this._(constructJSONfromNode)(child, parentObj, isModel, parentIsArray);
         } else if (child.hasAttribute('data-json-array')) {
