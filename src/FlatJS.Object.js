@@ -56,6 +56,14 @@ FlatJS.Object = (function() {
 
     extend: function(obj) {
       return FJSObject.objExtend(this, obj);
+    },
+
+    push: function(prop, val) {
+      if (this[prop] && typeof this[prop].push === 'function' && typeof this[prop].slice === 'function') {
+        var arr = this[prop].slice();
+        arr.push(val);
+        this.set(prop, arr);
+      }
     }
 
   });
