@@ -74,7 +74,8 @@ __MVMockData.mockLoadedCallback = function() {
   QUnit.test("FlatJS.MV - Finding model object from HTML Nodes", function() {
     var node = $mock.find('h2').get(0);
 
-    QUnit.equal(APP.Person.find(2), mvMod.findResourceFromNode($mock.find('h2').get(0)), "FlatJS.MV.findResourceFromNode works as expected");
+    QUnit.equal(mvMod.findResourceFromNode($mock.find('h2').get(0)), APP.Person.find(2), "FlatJS.MV.findResourceFromNode works as expected");
+    QUnit.equal(mvMod.findResourceFromNode($mock.find('li.first-todo:eq(0)').get(0)), APP.Todo.find(1));
 
     __MVMockData.startSecondTests();
   });
