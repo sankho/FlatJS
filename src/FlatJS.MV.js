@@ -4,12 +4,17 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
   var api = {
 
-    render: function() {
+    init: function(node) {
+      this.obj = node;
       this._(internalInitializer)();
-      this.initializer();
       this._(findAndInitializeModels)();
       this._(assembleJSON)();
       this._(createTemplateFromMarkup)();
+      this._super(node);
+    },
+
+    render: function() {
+      this.initializer();
       this.renderUI();
       this._(syncMVKeys)();
       this.syncUI();
