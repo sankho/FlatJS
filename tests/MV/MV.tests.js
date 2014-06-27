@@ -25,7 +25,7 @@ __MVMockData.mockLoadedCallback = function() {
   new FlatJS.ModuleRunner({
     attr: 'data-js-mv-test-module'
   });
-null
+
   var mvMod = mock.jsModules ? mock.jsModules['FlatJS.MV'] : undefined;
 
   QUnit.test("FlatJS.MV existence tests", function() {
@@ -63,7 +63,7 @@ null
   QUnit.test('FlatJS.MV - CSS Classes are added on attribute check', function() {
     QUnit.ok($mock.find('.first-todo:eq(0)').hasClass('completed'), 'Classes added if array passed to attribute defining a key value match and a class name.');
     QUnit.ok($moc2.find('li:eq(0)').hasClass('not-completed'), 'Default / secondary classes added if array passed to attribute defining a key value non match and a class name corrseponding to that lack of match. Words.');
-    QUnit.ok($moc2.find('li:eq(1)').hasClass('completed whatever'), 'Multiple class assertions successfully made on object if double sided array passed.');
+    QUnit.ok($moc2.find('li:eq(1)').hasClass('not-completed') && $moc2.find('li:eq(1)').hasClass('whatever'), 'Multiple class assertions successfully made on object if double sided array passed.');
   });
 
   QUnit.test("FlatJS.MV - Changing model objects should update HTML", function() {
