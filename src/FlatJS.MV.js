@@ -16,7 +16,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     render: function() {
       this.initializer();
       this.renderUI();
-      this._(applyCSSChanges);
+      this._(applyCSSChanges)();
       this._(syncMVKeys)();
       this.syncUI();
       this._(bindMVKeys)();
@@ -66,12 +66,26 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     var nodes = FlatJS.Helpers.getAllElementsWithAttribute('data-mv-class', this.obj);
 
     for (var i = 0; i < nodes.length; i++) {
-      this._(makeCSSChangeOnNode)(node[i]);
+      this._(makeCSSChangeOnNode)(nodes[i]);
     }
   }
 
   function makeCSSChangeOnNode(node) {
-    var obj = this.findResourceFromNode()
+    var obj   = this.findResourceFromNode(node),
+        rules = JSON.parse(node.getAttribute('data-mv-class')),
+        rules = rules[0].push ? rules : [rules];
+
+    for (var i = 0; i < rules.length; i++) {
+      var rule      = rules[i],
+          prop      = rule[0],
+          val       = rule[1],
+          className = rule[2],
+          secondary = rule[3];
+
+      if (obj[prop] == val && node.className.indexOf(className) === -1) {
+        node.className = node.className + ' ' + className + ' ';
+      }
+    }
   }
 
   function getValueFromNode(node) {
