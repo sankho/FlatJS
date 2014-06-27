@@ -24,13 +24,12 @@ QUnit.asyncTest("FlatJS.Object construction, setter, watch, and unwatch function
     QUnit.equal(oldVal, undefined, "callback on watch function successfully retains old value");
     QUnit.equal(name, 'g', "callback on watch function successfully retains name of property");
     QUnit.equal(obj, x, "initial object passed through callback");
-    QUnit.start();
   }
 
   function watchNumArrayCallback(name, oldVal, val, obj) {
     QUnit.ok(true, "Pushing an object triggers the callback");
-    QUnit.equal(val, [2,3,5], "FlatJS.Object.prototype.push function works as expected");
-    QUnit.equal(oldVal, [2,3], "Old value retained on push");
+    QUnit.deepEqual(val, [2,3,5], "FlatJS.Object.prototype.push function works as expected");
+    QUnit.deepEqual(oldVal, [2,3], "Old value retained on push");
     QUnit.start();
   }
 
