@@ -80,10 +80,13 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
           prop      = rule[0],
           val       = rule[1],
           className = rule[2],
-          secondary = rule[3];
+          secondary = rule[3],
+          match     = obj[prop] == val;
 
-      if (obj[prop] == val && node.className.indexOf(className) === -1) {
+      if (match && node.className.indexOf(className) === -1) {
         node.className = node.className + ' ' + className + ' ';
+      } else if (!match && secondary && node.className.indexOf(secondary) === -1) {
+        node.className = node.className + ' ' + secondary + ' ';
       }
     }
   }
