@@ -16,6 +16,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     render: function() {
       this.initializer();
       this.renderUI();
+      this._(applyCSSChanges);
       this._(syncMVKeys)();
       this.syncUI();
       this._(bindMVKeys)();
@@ -49,14 +50,14 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       }
     },
 
-    findModelFromNode: function(node) {
+    findResourceFromNode: function(node) {
       if (node.hasAttribute('data-mv-model') && node.hasAttribute('data-mv-id')) {
         // ugly.
         var model = FlatJS.Helpers.findFunctionByString(FlatJS.Helpers.convertDashedToCamelCase(node.getAttribute('data-mv-model')));
 
         return model.find(node.getAttribute('data-mv-id'));
       } else {
-        return this.findModelFromNode(node.parentNode);
+        return this.findResourceFromNode(node.parentNode);
       }
     }
   };
@@ -70,7 +71,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
   }
 
   function makeCSSChangeOnNode(node) {
-
+    var obj = this.findResourceFromNode()
   }
 
   function getValueFromNode(node) {
