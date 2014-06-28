@@ -110,7 +110,8 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       if (typeof value === 'boolean') {
         node.checked = value;
       } else if (typeof value === 'string') {
-        node.value = value;
+        node.checked = true;
+        node.value   = value ? value : node.value;
       } else if (typeof value === 'object') {
         node.checked = value.selected;
         node.value   = value.value;
