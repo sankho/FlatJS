@@ -297,7 +297,9 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
 
       if (child.hasAttribute && child.hasAttribute('data-mv-model')) {
         var _obj = this._(createModelObjectFromNode)(child);
-        parentObj.push(_obj);
+        if (parentObj.indexOf(_obj) == -1) {
+          parentObj.push(_obj);
+        }
       }
     }
   }
