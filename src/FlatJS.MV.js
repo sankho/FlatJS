@@ -10,14 +10,15 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       this._(findAndInitializeModels)();
       this._(assembleJSON)();
       this._(createTemplateFromMarkup)();
+      this._(syncMVKeys)();
       this._super(node);
     },
 
     render: function() {
       this.initializer();
       this.renderUI();
+      this._(findAndInitializeModels)();
       this._(applyCSSChanges)();
-      this._(syncMVKeys)();
       this.syncUI();
       this._(bindMVKeys)();
       this.bindUI();
@@ -99,7 +100,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     if (node.innerHTML) {
       return node.innerHTML;
     } else if (type == 'checkbox' || type == 'radio') {
-      return node.checked ? node.hasAttribute('value') ? node.value : true : node.checked;
+      return node.checked ? node.value !== 'on' ? node.value : true : node.checked;
     } else if (node.value) {
       return node.value;
     }
@@ -143,6 +144,9 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     for (var j = 0; j < arr.length; j++) {
       var _tmpl = tmpl.cloneNode(true),
           node  = this.renderFromJSON(_tmpl, arr[j], true);
+      if (arr[j].id) {
+        node.setAttribute('data-mv-id', arr[j].id);
+      }
       cnnr.appendChild(node);
     }
   }
@@ -167,6 +171,9 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       this.renderFromJSON(child, parentObj[key]);
     } else if (child.getAttribute('data-mv-model')) {
       key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute('data-mv-model'));
+      if (parentObj[key].id) {
+        child.setAttribute('data-mv-id', parentObj[key].id);
+      }
       this.renderFromJSON(child, parentObj[key]);
     } else if (child.hasAttribute('data-json-array')) {
       var key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute('data-json-array')),
@@ -318,11 +325,13 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     var nodes = FlatJS.Helpers.getAllElementsWithAttribute('data-mv-key', this.obj);
 
     for (var i = 0; i < nodes.length; i++) {
-      var node = nodes[i],
-          key  = FlatJS.Helpers.convertDashedToCamelCase(node.getAttribute('data-mv-key')),
-          attr = node.object[key];
-      if (attr) {
-        this._(setValueOnNode)(node, attr);
+      var node = nodes[i];
+      if (node && node.object) {
+        key  = FlatJS.Helpers.convertDashedToCamelCase(node.getAttribute('data-mv-key')),
+        attr = node.object[key];
+        if (attr) {
+          this._(setValueOnNode)(node, attr);
+        }
       }
     }
   }
@@ -333,7 +342,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     for (var i = 0; i < nodes.length; i++) {
       var node = nodes[i];
 
-      if (!node.object._('FJSwatchSet')) {
+      if (node && node.object && !node.object._('FJSwatchSet')) {
         node.object._('FJSwatchSet', true);
         node.object.watch(node.getAttribute('data-mv-key'), this._(syncMVKeyOnObjectChange));
       }
