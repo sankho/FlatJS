@@ -157,13 +157,13 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     if (child.hasAttribute('data-json-key')) {
       key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute('data-json-key'));
       this._(setValueOnNode)(child, parentObj[key]);
-      if (parentObj[key] == true && child.getAttribute('type') === 'radio' || child.getAttribute('type') === 'checkbox') {
+      if (parentObj[key] == true && (child.getAttribute('type') === 'radio' || child.getAttribute('type') === 'checkbox')) {
         parentObj[key] = this._(getValueFromNode)(child);
       }
     } else if (child.getAttribute('data-mv-key')) {
       key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute('data-mv-key'));
       this._(setValueOnNode)(child, parentObj[key]);
-      if (parentObj[key] == true && child.getAttribute('type') === 'radio' || child.getAttribute('type') === 'checkbox') {
+      if (parentObj[key] == true && (child.getAttribute('type') === 'radio' || child.getAttribute('type') === 'checkbox')) {
         parentObj[key] = this._(getValueFromNode)(child);
       }
     } else if (child.hasAttribute('data-json-obj')) {
