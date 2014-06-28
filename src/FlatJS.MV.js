@@ -51,11 +51,13 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     },
 
     findResourceFromNode: function(node) {
-      if (node.hasAttribute('data-mv-model') && node.hasAttribute('data-mv-id')) {
+      if (node.hasAttribute && node.hasAttribute('data-mv-model') && node.hasAttribute('data-mv-id')) {
         // ugly.
         var model = FlatJS.Helpers.findFunctionByString(FlatJS.Helpers.convertDashedToCamelCase(node.getAttribute('data-mv-model')));
 
         return model.find(node.getAttribute('data-mv-id'));
+      } else if (node === document) {
+        return false;
       } else {
         return this.findResourceFromNode(node.parentNode);
       }
