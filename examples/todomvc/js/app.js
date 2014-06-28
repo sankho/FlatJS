@@ -6,40 +6,17 @@
       initializer: function() {
         this._('$newTodoInput', $('#new-todo'));
         this._('$todoList', $('#todo-list'));
+        this._('$newTodoInput').focus();
       },
 
       bindUI: function() {
         this._('$newTodoInput').on('keyup', this._(addNewTodoOnEnter));
         this._('$todoList').find('.destroy').on('click', this._(destroyTodoItem));
-      },
-
-      renderUI: function() {
-        this._('$todoList').find('li').each(function(i, obj) {
-          var todoObj = obj.object,
-              $obj    = $(obj);
-
-          // 1.) classes should be conditionally added via markup if possible...
-          // data-mv-class="['keyValue', 'expectedValue', 'trueClass', 'falseClass']"
-          //
-          // 2.) inputs having objects for values fucks up the model object - figure out
-          // something better. either no objects, or everything has to have objects for values :\
-          todoObj.completed.selected == true ? $obj.addClass('completed') : $obj.removeClass('completed');
-
-          // 3.) this is where the whole objects with "checked" or "selected" values is needed / wanted
-          // data-mv-select="['keyValue', 'expectedValue']"
-          $obj.find('.toggle').attr('checked', todoObj.completed);
-        });
       }
     }
 
     function destroyTodoItem(e) {
-      // 4.) this should be this.findModelFromNode(e.currentTarget).delete(); - one / two liner
-      // consider term for model... resource? domResource?
-      var $btn  = $(e.currentTarget),
-          $todo = $btn.parent().parent(),
-          id    = $todo.attr('data-mv-id'),
-          todo  = FlatTodo.Todo.find(id);
-
+      var todo  = this.findResourceFromNode(e.currentTarget);
       todo.delete();
     }
 
@@ -51,13 +28,8 @@
         this._('$newTodoInput').val('');
 
         var todo = new FlatTodo.Todo({
-          // 5.) Temporary IDs need to be written into new nodes on creating
-          id: FlatTodo.Todo.objects.length+1,
           text: val,
-          completed: {
-            value: "on",
-            selected: false
-          }
+          completed: true
         });
 
         // 6.) the below could be more automated / easier... as in only one command
@@ -67,9 +39,7 @@
         // so make sure .watch is set on all json-keys etc like models are. 2-way binding, I think.
         this.JSON.todosList.push(todo);
         this.renderFromJSON();
-        this.initializer();
-        this.renderUI();
-        this.bindUI();
+        this.render();
       }
     }
 
