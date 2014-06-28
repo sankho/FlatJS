@@ -97,7 +97,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     if (node.innerHTML) {
       return node.innerHTML;
     } else if (type == 'checkbox' || type == 'radio') {
-      return node.checked ? node.value : node.checked;
+      return node.checked ? node.hasAttribute('value') ? node.value : true : node.checked;
     } else if (node.value) {
       return node.value;
     }
