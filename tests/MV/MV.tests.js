@@ -239,10 +239,11 @@ __MVMockData.startFourthTests = function() {
     QUnit.equal($('#radio').is(':checked'), false, "Selected radio field turned off via JSON");
     QUnit.equal($('#radio-2').is(':checked'), true, "Radio field value changed via JSON");
     QUnit.equal($('#radio-off').is(':checked'), true, "Unselected radio field turned on via JSON");
-    QUnit.equal(mvMod.JSON.radioOff, 'test-radio-off', "Unselected radio field turned on via JSON, value is imported");
+    console.log(mvMod.JSON);
+    QUnit.equal(mvMod.JSON.form.radioOff, 'test-radio-off', "Unselected radio field turned on via JSON, value is imported");
     QUnit.equal($('#checkbox').is(':checked'), false, "Selected checkbox turned off via JSON");
     QUnit.equal($('#checkbox-off').is(':checked'), true, "Unselected checkbox turned on via JSON");
-    QUnit.equal(mvMod.JSON.checkboxOff, 'test-checkbox-off', "Unselected checkbox text value imported via JSON.");
+    QUnit.equal(mvMod.JSON.form.checkboxOff, 'test-checkbox-off', "Unselected checkbox text value imported via JSON.");
     QUnit.equal($mock.find('textarea').val(), "The five foot assassin with the roughneck business", "Textarea values converted to JSON");
 
     mvMod.updateJSON({
