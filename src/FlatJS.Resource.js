@@ -1,10 +1,12 @@
-FlatJS.Object = (function() {
+FlatJS.Resource = (function() {
 
 
-  var FJSObject = FlatJS.Classy.extend({
+  var Resource = FlatJS.Classy.extend({
 
     init: function(initialObject) {
-      this._('initialObject', initialObject);
+      if (!this.id || (initialObject && !initialObject.id)) {
+        this.id = this._(createTemporaryIdForObject)();
+      }
 
       this.extend(initialObject);
     },
@@ -13,8 +15,8 @@ FlatJS.Object = (function() {
       var oldVal  = this[prop];
       this[prop]  = val;
 
-      if (this._('callbacks')) {
-        var propCallbacks = this._('callbacks')[prop];
+      if (this._('fjsCbs')) {
+        var propCallbacks = this._('fjsCbs')[prop];
 
         for (var cba in propCallbacks) {
           var cbs = propCallbacks[cba];
@@ -22,24 +24,24 @@ FlatJS.Object = (function() {
           callAllFunctions(cbs, prop, oldVal, val, this);
         }
 
-        if (this._('callbacks')['all']) {
-          var cbs = this._('callbacks')['all'];
+        if (this._('fjsCbs')['all']) {
+          var cbs = this._('fjsCbs')['all'];
           callAllFunctions(cbs, prop, oldVal, val, this)
         }
       }
     },
 
     watch: function(prop, handler) {
-      var callbacks            = this._('callbacks') || {};
+      var callbacks            = this._('fjsCbs') || {};
       callbacks[prop]          = callbacks[prop] || {};
       callbacks[prop][handler] = callbacks[prop][handler] || [];
 
       callbacks[prop][handler].push(handler);
-      this._('callbacks', callbacks);
+      this._('fjsCbs', callbacks);
     },
 
     unwatch: function(prop, handler) {
-      var callbacks = this._('callbacks');
+      var callbacks = this._('fjsCbs');
 
       if (callbacks && callbacks[prop]) {
         if (handler && callbacks[prop][handler]) {
@@ -51,10 +53,28 @@ FlatJS.Object = (function() {
     },
 
     extend: function(obj) {
-      return FJSObject.objExtend(this, obj);
+      return Resource.objExtend(this, obj);
+    },
+
+    push: function(prop, val) {
+      if (this[prop] && typeof this[prop].push === 'function' && typeof this[prop].slice === 'function') {
+        var arr = this[prop].slice();
+        arr.push(val);
+        this.set(prop, arr);
+      }
     }
 
   });
+
+  function createTemporaryIdForObject() {
+    var temp_id = Math.floor((Math.random() * 9999) + 1) * -1;
+
+    if (this.constructor.find(temp_id)) {
+      return this._(createTemporaryIdForObject)();
+    } else {
+      return temp_id;
+    }
+  }
 
   function callAllFunctions(cbs, prop, oldVal, val, obj) {
     for (var i = 0; i < cbs.length; i++) {
@@ -66,7 +86,7 @@ FlatJS.Object = (function() {
     }
   }
 
-  FJSObject.objExtend = function(){
+  Resource.objExtend = function(){
     var _class2type = {};
 
     var _type = function( obj ) {
@@ -191,11 +211,11 @@ FlatJS.Object = (function() {
     return _extend;
   }();
 
-  FJSObject.find = function(id) {
+  Resource.find = function(id) {
     var obj;
 
-    for (var i = 0; i < this.objects.length; i++) {
-      var _obj = this.objects[i];
+    for (var i = 0; i < this.fjsObjects.length && !obj; i++) {
+      var _obj = this.fjsObjects[i];
 
       if (_obj.id == id) {
         obj = _obj;
@@ -205,6 +225,6 @@ FlatJS.Object = (function() {
     return obj;
   }
 
-  return FJSObject;
+  return Resource;
 
 }());

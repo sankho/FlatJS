@@ -121,7 +121,7 @@ QUnit.test("FlatJS.Classy storage tests - created objects should be retained & r
   var exClass = FlatJS.Classy.extend(),
       exChild = new exClass();
 
-  QUnit.equal(typeof exClass.objects, 'object', "Created classes should have an array attached called objects");
-  QUnit.equal(exClass.objects[0], exChild, "First item in created class's objects array matches created chidl");
+  QUnit.equal(typeof exClass.fjsObjects, 'object', "Created classes should have an array attached called objects");
+  QUnit.equal(exClass.fjsObjects[0], exChild, "First item in created class's objects array matches created chidl");
 
 });

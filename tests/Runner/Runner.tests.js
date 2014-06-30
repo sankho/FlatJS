@@ -25,20 +25,20 @@ var __moduleRunnerMockData = {
   },
 
   basicImplentationTests: function(mock, obj2, nodeSet) {
-      QUnit.ok(mock.jsModules, "jsModules array attaches to <div> on init, init runs by default, works without provided scope");
-      QUnit.ok(mock.jsModules[!nodeSet ? '__moduleRunnerMockData.moduleOne' : 'moduleOne'] instanceof __moduleRunnerMockData.moduleOne, "moduleOne module executed on div, retrieves object and is instance of __moduleRunnerMockData.moduleOne");
+      QUnit.ok(mock.fjsComponents, "fjsComponents array attaches to <div> on init, init runs by default, works without provided scope");
+      QUnit.ok(mock.fjsComponents[!nodeSet ? '__moduleRunnerMockData.moduleOne' : 'moduleOne'] instanceof __moduleRunnerMockData.moduleOne, "moduleOne module executed on div, retrieves object and is instance of __moduleRunnerMockData.moduleOne");
 
-      QUnit.ok(obj2.jsModules, "jsModules array attaches to <div> on inner <div> recursively");
+      QUnit.ok(obj2.fjsComponents, "jsModules array attaches to <div> on inner <div> recursively");
 
-      QUnit.ok(obj2.jsModules[!nodeSet ? '__moduleRunnerMockData.nested.moduleTwo' : 'nested.moduleTwo'] instanceof __moduleRunnerMockData.nested.moduleTwo, "moduleTwo is assigned appropriately to inner <div>");
-      QUnit.equal(obj2.jsModules[!nodeSet ? '__moduleRunnerMockData.nested.moduleTwo' : 'nested.moduleTwo'].int1, 23, "reference to inner object returns correctly set variable retrieved from data attribute");
+      QUnit.ok(obj2.fjsComponents[!nodeSet ? '__moduleRunnerMockData.nested.moduleTwo' : 'nested.moduleTwo'] instanceof __moduleRunnerMockData.nested.moduleTwo, "moduleTwo is assigned appropriately to inner <div>");
+      QUnit.equal(obj2.fjsComponents[!nodeSet ? '__moduleRunnerMockData.nested.moduleTwo' : 'nested.moduleTwo'].int1, 23, "reference to inner object returns correctly set variable retrieved from data attribute");
   }
 
 }
 
 $.ajax({
 
-  url: 'ModuleRunner/mock.html',
+  url: 'Runner/mock.html',
   success: function(data) {
     __moduleRunnerMockData.HTML = data;
     $('#mock-area').append(data);
@@ -49,14 +49,14 @@ $.ajax({
 
 __moduleRunnerMockData.mockLoadedCallback = function() {
 
-  QUnit.test("FlatJS.ModuleRunner default functionality", function(assert) {
+  QUnit.test("FlatJS.Runner default functionality", function(assert) {
 
     var $mock = $('#module-runner-test-mock'),
         $two  = $mock.find('.module-two'),
         mock  = $mock.get(0),
         obj2  = $two.get(0);
 
-    var runner = new FlatJS.ModuleRunner();
+    var runner = new FlatJS.Runner();
 
     QUnit.ok($('#module-runner-test-mock').length > 0, "Module runner mock HTML loads and appends via ajax");
 
@@ -65,7 +65,7 @@ __moduleRunnerMockData.mockLoadedCallback = function() {
   });
 
   // reset
-  QUnit.test('FlatJS.ModuleRunner - extended functionality', function(assert) {
+  QUnit.test('FlatJS.Runner - extended functionality', function(assert) {
 
     var $mock = $('#module-runner-test-mock');
 
@@ -82,14 +82,14 @@ __moduleRunnerMockData.mockLoadedCallback = function() {
     $mock.attr('data-new-js-module', 'module-one');
     $two.attr('data-new-js-module', 'nested.module-two');
 
-    var runner = new FlatJS.ModuleRunner({
+    var runner = new FlatJS.Runner({
       init:    false,
       context: __moduleRunnerMockData,
       attr:    'data-new-js-module',
       node:    mock
     })
 
-    QUnit.equal(obj2.jsModules, undefined, "ModuleRunner does not automatically init if false flag is passed");
+    QUnit.equal(obj2.jsModules, undefined, "Runner does not automatically init if false flag is passed");
 
     runner.init();
 

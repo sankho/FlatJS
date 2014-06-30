@@ -139,7 +139,7 @@ FlatJS.Classy = (function() {
       }
 
       // Add to objects array
-      Class.objects.push(this);
+      Class.fjsObjects.push(this);
     }
 
     // Copy static functions
@@ -159,7 +159,7 @@ FlatJS.Classy = (function() {
     Class.extend = arguments.callee;
 
     // Creates a static store for all created objects of Class
-    Class.objects = [];
+    Class.fjsObjects = [];
 
     return Class;
   };
