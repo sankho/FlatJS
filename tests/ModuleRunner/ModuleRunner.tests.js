@@ -25,13 +25,13 @@ var __moduleRunnerMockData = {
   },
 
   basicImplentationTests: function(mock, obj2, nodeSet) {
-      QUnit.ok(mock.jsModules, "jsModules array attaches to <div> on init, init runs by default, works without provided scope");
-      QUnit.ok(mock.jsModules[!nodeSet ? '__moduleRunnerMockData.moduleOne' : 'moduleOne'] instanceof __moduleRunnerMockData.moduleOne, "moduleOne module executed on div, retrieves object and is instance of __moduleRunnerMockData.moduleOne");
+      QUnit.ok(mock.fjsComponents, "fjsComponents array attaches to <div> on init, init runs by default, works without provided scope");
+      QUnit.ok(mock.fjsComponents[!nodeSet ? '__moduleRunnerMockData.moduleOne' : 'moduleOne'] instanceof __moduleRunnerMockData.moduleOne, "moduleOne module executed on div, retrieves object and is instance of __moduleRunnerMockData.moduleOne");
 
-      QUnit.ok(obj2.jsModules, "jsModules array attaches to <div> on inner <div> recursively");
+      QUnit.ok(obj2.fjsComponents, "jsModules array attaches to <div> on inner <div> recursively");
 
-      QUnit.ok(obj2.jsModules[!nodeSet ? '__moduleRunnerMockData.nested.moduleTwo' : 'nested.moduleTwo'] instanceof __moduleRunnerMockData.nested.moduleTwo, "moduleTwo is assigned appropriately to inner <div>");
-      QUnit.equal(obj2.jsModules[!nodeSet ? '__moduleRunnerMockData.nested.moduleTwo' : 'nested.moduleTwo'].int1, 23, "reference to inner object returns correctly set variable retrieved from data attribute");
+      QUnit.ok(obj2.fjsComponents[!nodeSet ? '__moduleRunnerMockData.nested.moduleTwo' : 'nested.moduleTwo'] instanceof __moduleRunnerMockData.nested.moduleTwo, "moduleTwo is assigned appropriately to inner <div>");
+      QUnit.equal(obj2.fjsComponents[!nodeSet ? '__moduleRunnerMockData.nested.moduleTwo' : 'nested.moduleTwo'].int1, 23, "reference to inner object returns correctly set variable retrieved from data attribute");
   }
 
 }

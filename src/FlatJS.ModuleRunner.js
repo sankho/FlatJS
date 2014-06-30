@@ -21,6 +21,7 @@ FlatJS.ModuleRunner = (function() {
         node    = opts.node    || document,
         init    = opts.init !== undefined ? opts.init : true,
         attr    = opts.attr    || 'fjs-component',
+        objKey  = opts.objKey  || 'fjsComponents',
         findFn  = opts.findFn  || function(fn){fn()},
         callFn  = opts.callFn  || false;
 
@@ -73,8 +74,8 @@ FlatJS.ModuleRunner = (function() {
      * @return {String}   name    String used to identify function w/ namespaces
      */
     function runMethodOnObj(fn, objNode, name) {
-      if (!objNode.jsModules) {
-        objNode.jsModules = {};
+      if (!objNode[objKey]) {
+        objNode[objKey] = {};
       }
 
       if (typeof callFn === 'function') {
@@ -83,7 +84,7 @@ FlatJS.ModuleRunner = (function() {
         var obj = new fn(objNode);
       }
 
-      objNode.jsModules[name] = obj;
+      objNode[objKey][name] = obj;
       return obj;
     }
 

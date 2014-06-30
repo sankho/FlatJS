@@ -4,7 +4,7 @@ FlatJS.Object = (function() {
   var FJSObject = FlatJS.Classy.extend({
 
     init: function(initialObject) {
-      if (!this.id && !initialObject.id) {
+      if (!this.id || (initialObject && !initialObject.id)) {
         this.id = this._(createTemporaryIdForObject)();
       }
 

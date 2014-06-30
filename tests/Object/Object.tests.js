@@ -69,6 +69,6 @@ QUnit.test("FlatJS.Object static query functions", function(assert) {
     });
   }
 
-  QUnit.equal(exClass.find(1), exClass.objects[1], "Objects have static find method which looks in class' objects variable for matching ID values");
+  QUnit.equal(exClass.find(1), exClass.fjsObjects[1], "Objects have static find method which looks in class' objects variable for matching ID values");
 
 });
