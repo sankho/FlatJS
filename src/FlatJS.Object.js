@@ -4,9 +4,7 @@ FlatJS.Object = (function() {
   var FJSObject = FlatJS.Classy.extend({
 
     init: function(initialObject) {
-      this._('initialObject', initialObject || {});
-
-      if (!this.id && !this._('initialObject').id) {
+      if (!this.id && !initialObject.id) {
         this.id = this._(createTemporaryIdForObject)();
       }
 
@@ -17,8 +15,8 @@ FlatJS.Object = (function() {
       var oldVal  = this[prop];
       this[prop]  = val;
 
-      if (this._('callbacks')) {
-        var propCallbacks = this._('callbacks')[prop];
+      if (this._('fjsCallbacks')) {
+        var propCallbacks = this._('fjsCallbacks')[prop];
 
         for (var cba in propCallbacks) {
           var cbs = propCallbacks[cba];
@@ -26,24 +24,24 @@ FlatJS.Object = (function() {
           callAllFunctions(cbs, prop, oldVal, val, this);
         }
 
-        if (this._('callbacks')['all']) {
-          var cbs = this._('callbacks')['all'];
+        if (this._('fjsCallbacks')['all']) {
+          var cbs = this._('fjsCallbacks')['all'];
           callAllFunctions(cbs, prop, oldVal, val, this)
         }
       }
     },
 
     watch: function(prop, handler) {
-      var callbacks            = this._('callbacks') || {};
+      var callbacks            = this._('fjsCallbacks') || {};
       callbacks[prop]          = callbacks[prop] || {};
       callbacks[prop][handler] = callbacks[prop][handler] || [];
 
       callbacks[prop][handler].push(handler);
-      this._('callbacks', callbacks);
+      this._('fjsCallbacks', callbacks);
     },
 
     unwatch: function(prop, handler) {
-      var callbacks = this._('callbacks');
+      var callbacks = this._('fjsCallbacks');
 
       if (callbacks && callbacks[prop]) {
         if (handler && callbacks[prop][handler]) {
@@ -216,8 +214,8 @@ FlatJS.Object = (function() {
   FJSObject.find = function(id) {
     var obj;
 
-    for (var i = 0; i < this.objects.length && !obj; i++) {
-      var _obj = this.objects[i];
+    for (var i = 0; i < this.fjsObjects.length && !obj; i++) {
+      var _obj = this.fjsObjects[i];
 
       if (_obj.id == id) {
         obj = _obj;

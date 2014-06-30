@@ -20,7 +20,7 @@ FlatJS.ModuleRunner = (function() {
     var context = opts.context || window,
         node    = opts.node    || document,
         init    = opts.init !== undefined ? opts.init : true,
-        attr    = opts.attr    || 'data-js-module',
+        attr    = opts.attr    || 'fjs-component',
         findFn  = opts.findFn  || function(fn){fn()},
         callFn  = opts.callFn  || false;
 
