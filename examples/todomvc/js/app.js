@@ -37,7 +37,7 @@
         // this.JSON.set('todosList', 'push', todo); <-- kind of like this one myself
         // either command should elimate the need for all the below bullshit; e.g. no re-rendering
         // so make sure .watch is set on all json-keys etc like models are. 2-way binding, I think.
-        this.JSON.todosList.push(todo);
+        this.fjsData.todosList.push(todo);
         this.renderFromJSON();
         this.render();
       }
