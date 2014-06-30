@@ -15,8 +15,8 @@ FlatJS.Object = (function() {
       var oldVal  = this[prop];
       this[prop]  = val;
 
-      if (this._('fjsCallbacks')) {
-        var propCallbacks = this._('fjsCallbacks')[prop];
+      if (this._('fjsCbs')) {
+        var propCallbacks = this._('fjsCbs')[prop];
 
         for (var cba in propCallbacks) {
           var cbs = propCallbacks[cba];
@@ -24,24 +24,24 @@ FlatJS.Object = (function() {
           callAllFunctions(cbs, prop, oldVal, val, this);
         }
 
-        if (this._('fjsCallbacks')['all']) {
-          var cbs = this._('fjsCallbacks')['all'];
+        if (this._('fjsCbs')['all']) {
+          var cbs = this._('fjsCbs')['all'];
           callAllFunctions(cbs, prop, oldVal, val, this)
         }
       }
     },
 
     watch: function(prop, handler) {
-      var callbacks            = this._('fjsCallbacks') || {};
+      var callbacks            = this._('fjsCbs') || {};
       callbacks[prop]          = callbacks[prop] || {};
       callbacks[prop][handler] = callbacks[prop][handler] || [];
 
       callbacks[prop][handler].push(handler);
-      this._('fjsCallbacks', callbacks);
+      this._('fjsCbs', callbacks);
     },
 
     unwatch: function(prop, handler) {
-      var callbacks = this._('fjsCallbacks');
+      var callbacks = this._('fjsCbs');
 
       if (callbacks && callbacks[prop]) {
         if (handler && callbacks[prop][handler]) {
