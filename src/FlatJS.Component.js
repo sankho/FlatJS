@@ -203,7 +203,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     for (var i = 0; i < obj._('fjsNodes').length; i++) {
       var node = obj._('fjsNodes')[i];
 
-      if (node && node.getAttribute(ATTR.key) && node.getAttribute(ATTR.key) === prop) {
+      if (node && node.getAttribute(ATTR.key) && convertCamelCase(node.getAttribute(ATTR.key)) === prop) {
         this._(setValueOnNode)(node, newVal);
       }
     }
@@ -228,11 +228,12 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     var nodes = FlatJS.Helpers.getAllElementsWithAttribute(ATTR.key, this.obj);
 
     for (var i = 0; i < nodes.length; i++) {
-      var node = nodes[i];
+      var node  = nodes[i],
+          model = this.findResourceFromNode(node) || this.fjsData;
 
-      if (node && node.fjsObject && !node.fjsObject._('fjsWatchSet')) {
-        node.fjsObject._('fjsWatchSet', true);
-        node.fjsObject.watch(node.getAttribute(ATTR.key), this._(syncMVKeyOnObjectChange));
+      if (node) {
+        var key = convertCamelCase(node.getAttribute(ATTR.key));
+        model.watch(key, this._(syncMVKeyOnObjectChange));
       }
     }
   }
