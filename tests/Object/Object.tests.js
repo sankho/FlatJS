@@ -8,16 +8,28 @@ QUnit.test("FlatJS.Object existence tests", function(assert) {
 
 });
 
-QUnit.asyncTest("FlatJS.Object setter, watch, and unwatch functionality", function(assert) {
+QUnit.asyncTest("FlatJS.Object construction, setter, watch, and unwatch functionality", function(assert) {
 
+  // adds an object with an ID to ensure
+  // object X does some work
+  var y = new FlatJS.Object({
+    id: 1
+  });
   var x      = new FlatJS.Object();
 
   function watchCallback(name, oldVal, val, obj) {
     QUnit.ok(true, "callback on watch function successful");
     QUnit.equal(val, 3, "callback on watch function successfully returns changed new value");
+    QUnit.equal(typeof x.id, "number", "temporary ID created");
     QUnit.equal(oldVal, undefined, "callback on watch function successfully retains old value");
     QUnit.equal(name, 'g', "callback on watch function successfully retains name of property");
     QUnit.equal(obj, x, "initial object passed through callback");
+  }
+
+  function watchNumArrayCallback(name, oldVal, val, obj) {
+    QUnit.ok(true, "Pushing an object triggers the callback");
+    QUnit.deepEqual(val, [2,3,5], "FlatJS.Object.prototype.push function works as expected");
+    QUnit.deepEqual(oldVal, [2,3], "Old value retained on push");
     QUnit.start();
   }
 
@@ -25,7 +37,7 @@ QUnit.asyncTest("FlatJS.Object setter, watch, and unwatch functionality", functi
 
   x.set('g', 3);
 
-  equal(x.g, 3, "x.set() sets a variable on the object, successfully mutes actual object");
+  QUnit.equal(x.g, 3, "x.set() sets a variable on the object, successfully mutes actual object");
 
   x.unwatch('g', watchCallback);
 
@@ -39,6 +51,12 @@ QUnit.asyncTest("FlatJS.Object setter, watch, and unwatch functionality", functi
 
   // will trigger errors if above unwatch call was unsucessful due to check on oldVal.
   x.set('g', 3);
+
+  x.set('numArray', [2,3]);
+
+  x.watch('numArray', watchNumArrayCallback);
+
+  x.push('numArray', 5);
 });
 
 QUnit.test("FlatJS.Object static query functions", function(assert) {

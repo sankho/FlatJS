@@ -4,7 +4,11 @@ FlatJS.Object = (function() {
   var FJSObject = FlatJS.Classy.extend({
 
     init: function(initialObject) {
-      this._('initialObject', initialObject);
+      this._('initialObject', initialObject || {});
+
+      if (!this.id && !this._('initialObject').id) {
+        this.id = this._(createTemporaryIdForObject)();
+      }
 
       this.extend(initialObject);
     },
@@ -52,9 +56,27 @@ FlatJS.Object = (function() {
 
     extend: function(obj) {
       return FJSObject.objExtend(this, obj);
+    },
+
+    push: function(prop, val) {
+      if (this[prop] && typeof this[prop].push === 'function' && typeof this[prop].slice === 'function') {
+        var arr = this[prop].slice();
+        arr.push(val);
+        this.set(prop, arr);
+      }
     }
 
   });
+
+  function createTemporaryIdForObject() {
+    var temp_id = Math.floor((Math.random() * 9999) + 1) * -1;
+
+    if (this.constructor.find(temp_id)) {
+      return this._(createTemporaryIdForObject)();
+    } else {
+      return temp_id;
+    }
+  }
 
   function callAllFunctions(cbs, prop, oldVal, val, obj) {
     for (var i = 0; i < cbs.length; i++) {
@@ -194,7 +216,7 @@ FlatJS.Object = (function() {
   FJSObject.find = function(id) {
     var obj;
 
-    for (var i = 0; i < this.objects.length; i++) {
+    for (var i = 0; i < this.objects.length && !obj; i++) {
       var _obj = this.objects[i];
 
       if (_obj.id == id) {
