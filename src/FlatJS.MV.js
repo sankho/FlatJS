@@ -9,10 +9,13 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     class:    'fjs-class',
     key:      'fjs-key',
     array:    'fjs-array',
-    object:   'fjs-object'
+    object:   'fjs-obj'
   }
 
   var api = {
+
+    fjsTmpl: undefined,
+    fjsData: undefined,
 
     init: function(node) {
       this.obj = node;
@@ -33,8 +36,6 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
       this._(bindMVKeys)();
       this.bindUI();
     },
-
-    JSON: "",
 
     updateJSON: function(obj) {
       this.fjsData = this.fjsData.extend(obj);

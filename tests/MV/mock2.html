@@ -2,42 +2,42 @@
 
   <div class="first" data-js-mv-test-module="FlatJS.MV">
 
-    <div data-json-obj="header">
-      <h1 data-json-key="title">Todo List</h1>
+    <div fjs-obj="header">
+      <h1 fjs-key="title">Todo List</h1>
     </div>
 
-    <div data-json-obj="you" data-mv-id="2" data-mv-model="APP.Person">
-      <h2 data-mv-key="name"></h2>
+    <div fjs-obj="you" fjs-id="2" fjs-resource="APP.Person">
+      <h2 fjs-key="name"></h2>
     </div>
 
     <div>
-      <div data-json-array="people">
+      <div fjs-array="people">
         <!-- actual data -->
         <div>
-          <div data-json-obj="personObj" data-mv-id="1" data-mv-model="APP.Person" class="person">
-            <a data-mv-key="name" href="#">Bill</a>
-            <ul data-json-array="todos">
-              <li class="first-todo" data-mv-model="APP.Todo" data-mv-id="1" data-mv-json='{ "arbitrary": "key values" }'>
-                <span data-mv-key="title">Get Laundry</span>
+          <div fjs-obj="personObj" fjs-id="1" fjs-resource="APP.Person" class="person">
+            <a fjs-key="name" href="#">Bill</a>
+            <ul fjs-array="todos">
+              <li class="first-todo" fjs-resource="APP.Todo" fjs-id="1" fjs-json='{ "arbitrary": "key values" }'>
+                <span fjs-key="title">Get Laundry</span>
               </li>
             </ul>
           </div>
         </div>
         <div>
-          <div data-json-obj="personObj" data-mv-id="2" data-mv-model="APP.Person" class="person">
-            <a data-mv-key="name" href="#">Jane</a>
-            <ul data-json-array="todos">
+          <div fjs-obj="personObj" fjs-id="2" fjs-resource="APP.Person" class="person">
+            <a fjs-key="name" href="#">Jane</a>
+            <ul fjs-array="todos">
               <li>
-                <span data-json-key="title">Get Dinner</span>
+                <span fjs-key="title">Get Dinner</span>
               </li>
               <li>
-                <span data-json-key="title">Get Dinner</span>
+                <span fjs-key="title">Get Dinner</span>
               </li>
               <li>
-                <span data-json-key="title">Get Dinner</span>
+                <span fjs-key="title">Get Dinner</span>
               </li>
               <li>
-                <span data-json-key="title">Get Dinner</span>
+                <span fjs-key="title">Get Dinner</span>
               </li>
             </ul>
           </div>
@@ -49,33 +49,33 @@
 
   <div class="second" data-js-mv-test-module="FlatJS.MV">
 
-    <div data-json-obj="header">
-      <h1 data-json-key="title">Todo List</h1>
+    <div fjs-obj="header">
+      <h1 fjs-key="title">Todo List</h1>
     </div>
 
-    <div data-json-obj="you" data-mv-id="1" data-mv-model="APP.Person" class="person">
-      <h2 data-mv-key="name">fdsfsadfsa</h2>
+    <div fjs-obj="you" fjs-id="1" fjs-resource="APP.Person" class="person">
+      <h2 fjs-key="name">fdsfsadfsa</h2>
     </div>
 
     <div>
-      <div data-json-array="people">
+      <div fjs-array="people">
         <!-- actual data -->
         <div>
-          <div data-json-obj="personObj" data-mv-id="2" data-mv-model="APP.Person" class="person">
-            <a data-mv-key="name" href="#">Jane</a>
-            <ul data-json-array="todos">
-              <li class="first-todo" data-mv-model="APP.Todo" data-mv-id="2">
-                <span data-mv-key="title">Get Dinner</span>
+          <div fjs-obj="personObj" fjs-id="2" fjs-resource="APP.Person" class="person">
+            <a fjs-key="name" href="#">Jane</a>
+            <ul fjs-array="todos">
+              <li class="first-todo" fjs-resource="APP.Todo" fjs-id="2">
+                <span fjs-key="title">Get Dinner</span>
               </li>
             </ul>
           </div>
         </div>
         <div>
-          <div data-mv-id="1" data-mv-model="APP.Person" class="person">
-            <a data-mv-key="name" href="#">Bill</a>
-            <ul data-json-array="todos">
-              <li data-mv-model="APP.Todo" data-mv-id="3">
-                <span data-mv-key="title">Get Chicken</span>
+          <div fjs-id="1" fjs-resource="APP.Person" class="person">
+            <a fjs-key="name" href="#">Bill</a>
+            <ul fjs-array="todos">
+              <li fjs-resource="APP.Todo" fjs-id="3">
+                <span fjs-key="title">Get Chicken</span>
               </li>
             </ul>
           </div>
