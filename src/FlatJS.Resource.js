@@ -1,7 +1,7 @@
-FlatJS.Object = (function() {
+FlatJS.Resource = (function() {
 
 
-  var FJSObject = FlatJS.Classy.extend({
+  var Resource = FlatJS.Classy.extend({
 
     init: function(initialObject) {
       if (!this.id || (initialObject && !initialObject.id)) {
@@ -53,7 +53,7 @@ FlatJS.Object = (function() {
     },
 
     extend: function(obj) {
-      return FJSObject.objExtend(this, obj);
+      return Resource.objExtend(this, obj);
     },
 
     push: function(prop, val) {
@@ -86,7 +86,7 @@ FlatJS.Object = (function() {
     }
   }
 
-  FJSObject.objExtend = function(){
+  Resource.objExtend = function(){
     var _class2type = {};
 
     var _type = function( obj ) {
@@ -211,7 +211,7 @@ FlatJS.Object = (function() {
     return _extend;
   }();
 
-  FJSObject.find = function(id) {
+  Resource.find = function(id) {
     var obj;
 
     for (var i = 0; i < this.fjsObjects.length && !obj; i++) {
@@ -225,6 +225,6 @@ FlatJS.Object = (function() {
     return obj;
   }
 
-  return FJSObject;
+  return Resource;
 
 }());

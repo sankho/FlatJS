@@ -1,21 +1,21 @@
-// should contain all tests for FlatJS.Object
+// should contain all tests for FlatJS.Resource
 
-QUnit.test("FlatJS.Object existence tests", function(assert) {
+QUnit.test("FlatJS.Resource existence tests", function(assert) {
 
-  QUnit.equal(typeof FlatJS.Object, 'function', 'FlatJS.Object exists and is a function');
-  QUnit.equal(typeof FlatJS.Object.extend, 'function', 'FlatJS.Object exists and has an inherited extend function');
-  QUnit.ok(FlatJS.Object.prototype instanceof FlatJS.Classy, 'FlatJS.Object inherits FlatJS.Classy');
+  QUnit.equal(typeof FlatJS.Resource, 'function', 'FlatJS.Resource exists and is a function');
+  QUnit.equal(typeof FlatJS.Resource.extend, 'function', 'FlatJS.Resource exists and has an inherited extend function');
+  QUnit.ok(FlatJS.Resource.prototype instanceof FlatJS.Classy, 'FlatJS.Resource inherits FlatJS.Classy');
 
 });
 
-QUnit.asyncTest("FlatJS.Object construction, setter, watch, and unwatch functionality", function(assert) {
+QUnit.asyncTest("FlatJS.Resource construction, setter, watch, and unwatch functionality", function(assert) {
 
   // adds an object with an ID to ensure
   // object X does some work
-  var y = new FlatJS.Object({
+  var y = new FlatJS.Resource({
     id: 1
   });
-  var x      = new FlatJS.Object();
+  var x      = new FlatJS.Resource();
 
   function watchCallback(name, oldVal, val, obj) {
     QUnit.ok(true, "callback on watch function successful");
@@ -28,7 +28,7 @@ QUnit.asyncTest("FlatJS.Object construction, setter, watch, and unwatch function
 
   function watchNumArrayCallback(name, oldVal, val, obj) {
     QUnit.ok(true, "Pushing an object triggers the callback");
-    QUnit.deepEqual(val, [2,3,5], "FlatJS.Object.prototype.push function works as expected");
+    QUnit.deepEqual(val, [2,3,5], "FlatJS.Resource.prototype.push function works as expected");
     QUnit.deepEqual(oldVal, [2,3], "Old value retained on push");
     QUnit.start();
   }
@@ -59,9 +59,9 @@ QUnit.asyncTest("FlatJS.Object construction, setter, watch, and unwatch function
   x.push('numArray', 5);
 });
 
-QUnit.test("FlatJS.Object static query functions", function(assert) {
+QUnit.test("FlatJS.Resource static query functions", function(assert) {
 
-  var exClass = FlatJS.Object.extend();
+  var exClass = FlatJS.Resource.extend();
 
   for (var id = 0; id < 10; id++) {
     new exClass({

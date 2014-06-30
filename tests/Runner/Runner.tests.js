@@ -38,7 +38,7 @@ var __moduleRunnerMockData = {
 
 $.ajax({
 
-  url: 'ModuleRunner/mock.html',
+  url: 'Runner/mock.html',
   success: function(data) {
     __moduleRunnerMockData.HTML = data;
     $('#mock-area').append(data);
@@ -49,14 +49,14 @@ $.ajax({
 
 __moduleRunnerMockData.mockLoadedCallback = function() {
 
-  QUnit.test("FlatJS.ModuleRunner default functionality", function(assert) {
+  QUnit.test("FlatJS.Runner default functionality", function(assert) {
 
     var $mock = $('#module-runner-test-mock'),
         $two  = $mock.find('.module-two'),
         mock  = $mock.get(0),
         obj2  = $two.get(0);
 
-    var runner = new FlatJS.ModuleRunner();
+    var runner = new FlatJS.Runner();
 
     QUnit.ok($('#module-runner-test-mock').length > 0, "Module runner mock HTML loads and appends via ajax");
 
@@ -65,7 +65,7 @@ __moduleRunnerMockData.mockLoadedCallback = function() {
   });
 
   // reset
-  QUnit.test('FlatJS.ModuleRunner - extended functionality', function(assert) {
+  QUnit.test('FlatJS.Runner - extended functionality', function(assert) {
 
     var $mock = $('#module-runner-test-mock');
 
@@ -82,14 +82,14 @@ __moduleRunnerMockData.mockLoadedCallback = function() {
     $mock.attr('data-new-js-module', 'module-one');
     $two.attr('data-new-js-module', 'nested.module-two');
 
-    var runner = new FlatJS.ModuleRunner({
+    var runner = new FlatJS.Runner({
       init:    false,
       context: __moduleRunnerMockData,
       attr:    'data-new-js-module',
       node:    mock
     })
 
-    QUnit.equal(obj2.jsModules, undefined, "ModuleRunner does not automatically init if false flag is passed");
+    QUnit.equal(obj2.jsModules, undefined, "Runner does not automatically init if false flag is passed");
 
     runner.init();
 

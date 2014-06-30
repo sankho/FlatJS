@@ -1,7 +1,7 @@
 (function (window) {
   'use strict';
 
-  FlatTodo.TodoHandler = FlatJS.MV.extend(function() {
+  FlatTodo.TodoHandler = FlatJS.Component.extend(function() {
     var api = {
       initializer: function() {
         this._('$newTodoInput', $('#new-todo'));
@@ -49,7 +49,7 @@
   // 7.) using callFn to define this.obj as a jQuery object was bad news because FlatJS.MV
   // is expecting this.obj to be a node. Need to a: think of better private namespace and
   // b: store the node within this namespace.
-  FlatTodo.runner = new FlatJS.ModuleRunner({
+  FlatTodo.runner = new FlatJS.Runner({
     context: FlatTodo
   });
 

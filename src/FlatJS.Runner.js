@@ -5,7 +5,7 @@ var FlatJS = FlatJS || {};
  *
  * @module ModuleRunner
  */
-FlatJS.ModuleRunner = (function() {
+FlatJS.Runner = (function() {
 
   /**
    * Function to be treated as prototype class, returned at bottom of closure.
@@ -14,7 +14,7 @@ FlatJS.ModuleRunner = (function() {
    * @private
    * @param  {Object} opts Extendable options
    */
-  function moduleRunner(opts) {
+  function runner(opts) {
     opts = opts || {};
 
     var context = opts.context || window,
@@ -120,6 +120,6 @@ FlatJS.ModuleRunner = (function() {
     }
   }
 
-  return moduleRunner;
+  return runner;
 
 }());

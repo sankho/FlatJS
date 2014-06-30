@@ -1,6 +1,6 @@
 var FlatJS = FlatJS || {};
 
-FlatJS.MV = FlatJS.Widget.extend(function() {
+FlatJS.Component = FlatJS.Widget.extend(function() {
 
   var ATTR = {
     resource: 'fjs-resource',
@@ -192,7 +192,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
   }
 
   function internalInitializer() {
-    this.fjsData = this.fjsData || new FlatJS.Object();
+    this.fjsData = this.fjsData || new FlatJS.Resource();
   }
 
   function createTemplateFromMarkup(tmplNode) {
@@ -250,7 +250,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
         model     = FlatJS.Helpers.findFunctionByString(
                       modelName,
                       window,
-                      FlatJS.Object.extend({})
+                      FlatJS.Resource.extend({})
                     ),
         obj       = false;
 
@@ -432,7 +432,7 @@ FlatJS.MV = FlatJS.Widget.extend(function() {
     }
   }
 
-  FlatJS.Object.prototype.delete = function() {
+  FlatJS.Resource.prototype.delete = function() {
     if (this._('fjsNodes')) {
       for (n in this._('fjsNodes')) {
         var node = this._('fjsNodes')[n];
