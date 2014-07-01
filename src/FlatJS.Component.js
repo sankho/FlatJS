@@ -78,8 +78,13 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
 
       if (match && node.className.indexOf(className) === -1) {
         node.className = node.className + ' ' + className + ' ';
-      } else if (!match && secondary && node.className.indexOf(secondary) === -1) {
-        node.className = node.className + ' ' + secondary + ' ';
+        node.className = node.className.replace(secondary, '');
+      } else if (!match) {
+        node.className = node.className.replace(className, '');
+        node.className = node.className.replace(secondary, '');
+        if (secondary && node.className.indexOf(secondary) === -1) {
+          node.className = node.className + ' ' + secondary + ' ';
+        }
       }
     }
   }
@@ -212,6 +217,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
 
   function syncArrayOnObjectChange(node, newVal, oldVal, obj) {
     this._(renderJSONArrayOntoNode)(newVal, node);
+    this._(applyCSSChanges)();
   }
 
 
