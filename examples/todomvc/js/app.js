@@ -21,25 +21,21 @@
     }
 
     function addNewTodoOnEnter(e) {
-      var keycode = (e.keyCode ? e.keyCode : e.which),
-          val     = this._('$newTodoInput').val();
+      var keycode = (e.keyCode ? e.keyCode : e.which);
 
       if (keycode == '13') {
-        this._('$newTodoInput').val('');
+        // the below should work when two way binding is set up
+        //var val = this.fjsData.newTodo;
+        
+        var val = e.currentTarget.value;
+        this.fjsData.set('newTodo', '');
 
         var todo = new FlatTodo.Todo({
           text: val,
-          completed: true
+          completed: false
         });
 
-        // 6.) the below could be more automated / easier... as in only one command
-        // this.JSON.set('todosList', this.JSON.todosList.push(todo)); <-- not bad, little ugly though
-        // this.JSON.set('todosList', 'push', todo); <-- kind of like this one myself
-        // either command should elimate the need for all the below bullshit; e.g. no re-rendering
-        // so make sure .watch is set on all json-keys etc like models are. 2-way binding, I think.
-        this.fjsData.todosList.push(todo);
-        this.renderFromJSON();
-        this.render();
+        this.fjsData.push('todosList', todo);
       }
     }
 
