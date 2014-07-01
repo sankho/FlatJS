@@ -144,6 +144,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     obj = model.find(id) || new model({ id: id });
 
     obj.modelName  = obj.modelName  || modelName;
+    obj._('fjsNodes').push(node);
 
     if (node.hasAttribute(ATTR.json)) {
       obj.extend(JSON.parse(node.getAttribute(ATTR.json)));
