@@ -211,7 +211,77 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
   }
 
   function syncArrayOnObjectChange(node, newVal, oldVal, obj) {
-    // do stuff!
+    this._(renderJSONArrayOntoNode)(newVal, node);
+  }
+
+
+  function renderJSONArrayOntoNode(arr, cnnr) {
+    var children = cnnr.childNodes,
+        tmpl     = false,
+        nodes    = [];
+
+    for (var i = 0; i < children.length && !tmpl; i++) {
+      var child = children[i];
+
+      if (child.hasAttribute) {
+        tmpl = child.cloneNode(true);
+      }
+    }
+
+    cnnr.innerHTML = '';
+
+    for (var j = 0; j < arr.length; j++) {
+      var _tmpl = tmpl.cloneNode(true),
+          node  = this._(renderFromJSON)(_tmpl, arr[j], true);
+      if (arr[j].id) {
+        node.setAttribute(ATTR.id, arr[j].id);
+      }
+      cnnr.appendChild(node);
+    }
+  }
+
+  function renderFromJSON(node, parentObj, returnParent) {
+    var children = node.childNodes;
+
+    for (var i = 0; i < children.length; i++) {
+      var child = children[i];
+      if (child.hasAttribute) {
+        this._(renderJSONOntoNode)(child, parentObj);
+      }
+    }
+
+    if (returnParent) {
+      return node;
+    }
+  }
+
+  function renderJSONOntoNode(child, parentObj) {
+    var key;
+
+    if (child.hasAttribute(ATTR.key)) {
+      key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute(ATTR.key));
+      this._(setValueOnNode)(child, parentObj[key]);
+      if (parentObj[key] == true && (child.getAttribute('type') === 'radio' || child.getAttribute('type') === 'checkbox')) {
+        parentObj[key] = this._(getValueFromNode)(child);
+      }
+    } else if (child.hasAttribute(ATTR.object)) {
+      key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute(ATTR.object));
+      this._(renderFromJSON)(child, parentObj[key]);
+    } else if (child.getAttribute(ATTR.resource)) {
+      key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute(ATTR.resource));
+      if (parentObj[key].id) {
+        child.setAttribute(ATTR.id, parentObj[key].id);
+      }
+      this._(renderFromJSON)(child, parentObj[key]);
+    } else if (child.hasAttribute(ATTR.array)) {
+      var key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute(ATTR.array)),
+          arr = parentObj[key];
+      if (arr && child.childNodes) {
+        this._(renderJSONArrayOntoNode)(arr, child);
+      }
+    } else if (child.childNodes && child.childNodes.length > 0) {
+      this._(renderFromJSON)(child, parentObj);
+    }
   }
 
   function syncBindedNodes() {
