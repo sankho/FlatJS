@@ -52,7 +52,6 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
 
   function internalInitializer() {
     this.fjsData = this.fjsData || new FlatJS.Resource();
-    this.fjsData._('fjsNodes', []);
   }
 
   function applyCSSChanges() {
@@ -148,7 +147,6 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     obj = model.find(id) || new model({ id: id });
 
     obj.modelName  = obj.modelName  || modelName;
-    obj._('fjsNodes', obj._('fjsNodes') || []);
 
     if (node.hasAttribute(ATTR.json)) {
       obj.extend(JSON.parse(node.getAttribute(ATTR.json)));
@@ -219,6 +217,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
 
   function syncArrayOnObjectChange(node, newVal, oldVal, obj) {
     this._(renderJSONArrayOntoNode)(newVal, node);
+    this._(bindNodes)(node);
     this._(applyCSSChanges)();
   }
 
@@ -307,27 +306,29 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     }
   }
 
-  function bindNodes() {
-    this._(bindNodesByType)(ATTR.key);
-    this._(bindNodesByType)(ATTR.array);
+  function bindNodes(obj) {
+    obj = obj || this.obj;
+    this._(bindNodesByType)(ATTR.key, obj);
+    this._(bindNodesByType)(ATTR.array, obj);
   }
 
-  function bindNodesByType(attr) {
-    var nodes = FlatJS.Helpers.getAllElementsWithAttribute(attr, this.obj);
+  function bindNodesByType(attr, obj) {
+    var nodes = FlatJS.Helpers.getAllElementsWithAttribute(attr, obj);
 
     for (var i = 0; i < nodes.length; i++) {
       var node  = nodes[i];
 
-      if (node) {
-        var model = this.findResourceFromNode(node) || this.fjsData;
+      if (node && !node.fjsWatchSet) {
+        node.fjsWatchSet = true;
+
+        var key   = convertCamelCase(node.getAttribute(attr)),
+            model = this.findResourceFromNode(node) || this.fjsData;
 
         if (model._('fjsNodes').indexOf(node) === -1) {
           model._('fjsNodes').push(node);
         }
 
         node.fjsObject = node.fjsObject || model;
-
-        var key = convertCamelCase(node.getAttribute(attr));
         model.watch(key, this._(syncNodeOnObjectChange));
       }
     }
@@ -406,17 +407,6 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
       }
 
       this._(assembleJSON)(parentObj, child.childNodes);
-    }
-  }
-
-  FlatJS.Resource.prototype.delete = function() {
-    if (this._('fjsNodes')) {
-      for (n in this._('fjsNodes')) {
-        var node = this._('fjsNodes')[n];
-        if (node && node.parentNode) {
-          node.parentNode.removeChild(node);
-        }
-      }
     }
   }
 

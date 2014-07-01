@@ -4,6 +4,8 @@ FlatJS.Resource = (function() {
   var Resource = FlatJS.Classy.extend({
 
     init: function(initialObject) {
+      this._('fjsNodes', []);
+
       if (!this.id || (initialObject && !initialObject.id)) {
         this.id = this._(createTemporaryIdForObject)();
       }
@@ -61,6 +63,17 @@ FlatJS.Resource = (function() {
         var arr = this[prop].slice();
         arr.push(val);
         this.set(prop, arr);
+      }
+    },
+
+    delete: function() {
+      if (this._('fjsNodes')) {
+        for (n in this._('fjsNodes')) {
+          var node = this._('fjsNodes')[n];
+          if (node && node.parentNode) {
+            node.parentNode.removeChild(node);
+          }
+        }
       }
     }
 
