@@ -23,8 +23,8 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
       this._(findAndInitializeResources)();
       this._(assembleJSON)();
       this._(applyCSSChanges)();
-      this._(bindMVKeys)();
-      this._(syncMVKeys)();
+      this._(bindNodes)();
+      this._(syncBindedNodes)();
       this.initializer();
       this.renderUI();
       this.syncUI();
@@ -98,7 +98,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
 
   function setValueOnNode(node, value) {
     var type = node.getAttribute('type');
-    
+
     if (type == 'checkbox' || type == 'radio') {
       if (typeof value === 'boolean') {
         node.checked = value;
@@ -198,17 +198,23 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     obj[key] = val;
   }
 
-  function syncMVKeyOnObjectChange(prop, oldVal, newVal, obj) {
+  function syncNodeOnObjectChange(prop, oldVal, newVal, obj) {
     for (var i = 0; i < obj._('fjsNodes').length; i++) {
       var node = obj._('fjsNodes')[i];
 
       if (node && node.getAttribute(ATTR.key) && convertCamelCase(node.getAttribute(ATTR.key)) === prop) {
-        this._(setValueOnNode)(node, newVal);
+        this._(setValueOnNode)(node, newVal); 
+      } else if (node && obj[prop].length && obj[prop].push && node.getAttribute(ATTR.array) && convertCamelCase(node.getAttribute(ATTR.array)) === prop) {
+        this._(syncArrayOnObjectChange)(node, newVal, oldVal, obj);
       }
     }
   }
 
-  function syncMVKeys() {
+  function syncArrayOnObjectChange(node, newVal, oldVal, obj) {
+    // do stuff!
+  }
+
+  function syncBindedNodes() {
     var nodes = FlatJS.Helpers.getAllElementsWithAttribute(ATTR.key, this.obj);
 
     for (var i = 0; i < nodes.length; i++) {
@@ -223,8 +229,13 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     }
   }
 
-  function bindMVKeys() {
-    var nodes = FlatJS.Helpers.getAllElementsWithAttribute(ATTR.key, this.obj);
+  function bindNodes() {
+    this._(bindNodesByType)(ATTR.key);
+    this._(bindNodesByType)(ATTR.array);
+  }
+
+  function bindNodesByType(attr) {
+    var nodes = FlatJS.Helpers.getAllElementsWithAttribute(attr, this.obj);
 
     for (var i = 0; i < nodes.length; i++) {
       var node  = nodes[i];
@@ -238,8 +249,8 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
 
         node.fjsObject = node.fjsObject || this.fjsData;
 
-        var key = convertCamelCase(node.getAttribute(ATTR.key));
-        model.watch(key, this._(syncMVKeyOnObjectChange));
+        var key = convertCamelCase(node.getAttribute(attr));
+        model.watch(key, this._(syncNodeOnObjectChange));
       }
     }
   }
