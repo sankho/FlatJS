@@ -15,7 +15,6 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
 
   var api = {
 
-    fjsTmpl: undefined,
     fjsData: undefined,
 
     render: function() {
