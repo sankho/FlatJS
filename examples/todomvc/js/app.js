@@ -29,7 +29,7 @@
 
         var todo = new FlatTodo.Todo({
           text: val,
-          completed: true
+          completed: false
         });
 
         this.fjsData.push('todosList', todo);
