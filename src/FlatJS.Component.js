@@ -76,8 +76,10 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
           secondary = rule[3],
           match     = obj[prop] == val;
 
-      if (match && node.className.indexOf(className) === -1) {
-        node.className = node.className + ' ' + className + ' ';
+      if (match) {
+        if (node.className.indexOf(className) === -1) {
+          node.className = node.className + ' ' + className + ' ';
+        }
         node.className = node.className.replace(secondary, '');
       } else if (!match) {
         node.className = node.className.replace(className, '');
@@ -323,7 +325,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
           model._('fjsNodes').push(node);
         }
 
-        node.fjsObject = node.fjsObject || this.fjsData;
+        node.fjsObject = node.fjsObject || model;
 
         var key = convertCamelCase(node.getAttribute(attr));
         model.watch(key, this._(syncNodeOnObjectChange));
