@@ -52,6 +52,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
 
   function internalInitializer() {
     this.fjsData = this.fjsData || new FlatJS.Resource();
+    this.fjsData._('fjsNodes', []);
   }
 
   function applyCSSChanges() {
@@ -97,7 +98,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
 
   function setValueOnNode(node, value) {
     var type = node.getAttribute('type');
-
+    
     if (type == 'checkbox' || type == 'radio') {
       if (typeof value === 'boolean') {
         node.checked = value;
@@ -108,9 +109,11 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
         node.checked = value.selected;
         node.value   = value.value;
       }
-    } else if (type == 'text' || type == 'textarea') {
+    } else if (type == 'text') {
       node.value = value;
-    } else {
+    } else if (typeof node.value !== 'undefined') {
+      node.value = value;
+    } else if (typeof node.innerHTML !== 'undefined') {
       node.innerHTML = value;
     }
   }
@@ -139,8 +142,6 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
 
     obj.modelName  = obj.modelName  || modelName;
     obj._('fjsNodes', obj._('fjsNodes') || []);
-    obj._('fjsNodes').push(node);
-    node.fjsObject = obj;
 
     if (node.hasAttribute(ATTR.json)) {
       obj.extend(JSON.parse(node.getAttribute(ATTR.json)));
@@ -194,8 +195,6 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     var key = convertCamelCase(node.getAttribute(ATTR.key)),
         val = this._(getValueFromNode)(node);
 
-    node.fjsObject = obj;
-    obj._('fjsNodes').push(node);
     obj[key] = val;
   }
 
@@ -228,10 +227,17 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     var nodes = FlatJS.Helpers.getAllElementsWithAttribute(ATTR.key, this.obj);
 
     for (var i = 0; i < nodes.length; i++) {
-      var node  = nodes[i],
-          model = this.findResourceFromNode(node) || this.fjsData;
+      var node  = nodes[i];
 
       if (node) {
+        var model = this.findResourceFromNode(node) || this.fjsData;
+
+        if (model._('fjsNodes').indexOf(node) === -1) {
+          model._('fjsNodes').push(node);
+        }
+
+        node.fjsObject = node.fjsObject || this.fjsData;
+
         var key = convertCamelCase(node.getAttribute(ATTR.key));
         model.watch(key, this._(syncMVKeyOnObjectChange));
       }
