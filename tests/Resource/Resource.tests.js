@@ -13,7 +13,10 @@ QUnit.asyncTest("FlatJS.Resource construction, setter, watch, and unwatch functi
   // adds an object with an ID to ensure
   // object X does some work
   var y = new FlatJS.Resource({
-    id: 1
+    id: 1,
+    nest: {
+      val: 'heh'
+    }
   });
   var x      = new FlatJS.Resource();
 
@@ -30,7 +33,13 @@ QUnit.asyncTest("FlatJS.Resource construction, setter, watch, and unwatch functi
     QUnit.ok(true, "Pushing an object triggers the callback");
     QUnit.deepEqual(val, [2,3,5], "FlatJS.Resource.prototype.push function works as expected");
     QUnit.deepEqual(oldVal, [2,3], "Old value retained on push");
-    QUnit.start();
+  }
+
+  function getNestedValueCallback(name, oldVal, val, obj) {
+    QUnit.ok(true, "Nested values can be set and trigger callbacks");
+    QUnit.equal(val, 'heyo', "Nested value changed in callback");
+    QUnit.deepEqual(obj.nest, { val: 'heyo' }, "Nested object changed on object");
+    QUnit.start();    
   }
 
   x.watch('g', watchCallback);
@@ -57,6 +66,10 @@ QUnit.asyncTest("FlatJS.Resource construction, setter, watch, and unwatch functi
   x.watch('numArray', watchNumArrayCallback);
 
   x.push('numArray', 5);
+
+  y.watch('nest.val', getNestedValueCallback);
+
+  y.set('nest.val', 'heyo');
 });
 
 QUnit.test("FlatJS.Resource static query functions", function(assert) {
