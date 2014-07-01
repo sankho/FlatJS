@@ -4,14 +4,13 @@
   FlatTodo.TodoHandler = FlatJS.Component.extend(function() {
     var api = {
       initializer: function() {
-        this._('$newTodoInput', $('#new-todo'));
-        this._('$todoList', $('#todo-list'));
-        this._('$newTodoInput').focus();
+        this.$obj = $(this.obj);
+        this.$obj.find('#new-todo').focus();
       },
 
       bindUI: function() {
-        this._('$newTodoInput').on('keyup', this._(addNewTodoOnEnter));
-        this._('$todoList').find('.destroy').on('click', this._(destroyTodoItem));
+        this.$obj.on('click', '.destroy', this._(destroyTodoItem));
+        this.$obj.on('keyup', '#new-todo', this._(addNewTodoOnEnter));
       }
     }
 
