@@ -251,11 +251,10 @@ __MVMockData.startFifthTests = function() {
     APP.Person.find(2).delete();
 
     QUnit.equal($mock.find('.first h2').length, 0, "Deleting model object also removes references in dom");
-    QUnit.equal($mock.find('.first [data-json-obj="you"]').length, 0, "Deleting model object also removes references in dom");
-    QUnit.equal($mock.find('.first [data-mv-model="APP.Person"][data-mv-id="2"]').length, 0, "Deleting model object also removes references in dom");
+    QUnit.equal($mock.find('.first [fjs-obj="you"]').length, 0, "Deleting model object also removes references in dom");
+    QUnit.equal($mock.find('.first [fjs-resource="APP.Person"][fjs-id="2"]').length, 0, "Deleting model object also removes references in dom");
 
     $mock.remove();
-
     // TODO: Figure out how to make the below work in a cross browser
     // manner. Also figure out if the functionality really matters -
     // maybe checking whether nodes exist or not on the obj.watch call
