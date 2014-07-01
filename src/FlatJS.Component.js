@@ -33,9 +33,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
 
     findResourceFromNode: function(node) {
       if (node.hasAttribute && node.hasAttribute(ATTR.resource) && node.hasAttribute(ATTR.id)) {
-        // ugly.
         var model = findFn(node.getAttribute(ATTR.resource));
-
         return model.find(node.getAttribute(ATTR.id));
       } else if (node === document) {
         return false;
