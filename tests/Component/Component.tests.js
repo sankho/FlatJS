@@ -204,13 +204,14 @@ __MVMockData.startFourthTests = function() {
     QUnit.equal(mvMod.fjsData.form.textarea, "Microphone check one two what is this", "Textarea values converted to JSON");
 
     mvMod.fjsData.set('form', {
-      input:       "Heyo",
       radio:       "test-radio-2",
       radioOff:    true,
       checkbox:    false,
       checkboxOff: true,
       textarea:    "The five foot assassin with the roughneck business"
     });
+
+    mvMod.fjsData.set('form.input', 'Heyo');
 
     QUnit.equal($mock.find('#text-input').val(), "Heyo", "Text input updated from JSON");
     QUnit.equal($('#radio').is(':checked'), false, "Selected radio field turned off via JSON");
@@ -223,9 +224,7 @@ __MVMockData.startFourthTests = function() {
     QUnit.equal(mvMod.fjsData.form.checkboxOff, 'test-checkbox-off', "Unselected checkbox text value imported via JSON.");
     QUnit.equal($mock.find('textarea').val(), "The five foot assassin with the roughneck business", "Textarea values converted to JSON");
 
-    mvMod.fjsData.set('form', {
-      checkbox:    "new value"
-    });
+    mvMod.fjsData.set('form.checkbox', "new value");
 
     QUnit.equal($('#checkbox').val(), "new value", "New value set onto checkbox");
     QUnit.ok($('#checkbox').is(':checked'), "Checkbox set on by setting a non false value");
