@@ -203,11 +203,13 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
 
   function syncNodeOnObjectChange(prop, oldVal, newVal, obj) {
     for (var i = 0; i < obj._('fjsNodes').length; i++) {
-      var node = obj._('fjsNodes')[i];
-
-      if (node && node.getAttribute(ATTR.key) && convertCamelCase(node.getAttribute(ATTR.key)) === prop) {
+      var node    = obj._('fjsNodes')[i],
+          lastKey = prop.split('.'),
+          lastKey = lastKey[lastKey.length - 1];
+          
+      if (node && node.getAttribute(ATTR.key) && convertCamelCase(node.getAttribute(ATTR.key)) === lastKey) {
         this._(setValueOnNode)(node, newVal); 
-      } else if (node && obj[prop].length && obj[prop].push && node.getAttribute(ATTR.array) && convertCamelCase(node.getAttribute(ATTR.array)) === prop) {
+      } else if (node && obj.get(prop).length && obj.get(prop).push && node.getAttribute(ATTR.array) && convertCamelCase(node.getAttribute(ATTR.array)) === lastKey) {
         this._(syncArrayOnObjectChange)(node, newVal, oldVal, obj);
       }
     }
@@ -320,6 +322,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
         node.fjsWatchSet = true;
 
         var key   = convertCamelCase(node.getAttribute(attr)),
+            str   = this._(createObjectReferenceString)(key, node),
             model = this.findResourceFromNode(node) || this.fjsData;
 
         if (model._('fjsNodes').indexOf(node) === -1) {
@@ -327,8 +330,20 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
         }
 
         node.fjsObject = node.fjsObject || model;
-        model.watch(key, this._(syncNodeOnObjectChange));
+        model.watch(str, this._(syncNodeOnObjectChange));
       }
+    }
+  }
+
+  function createObjectReferenceString(key, node) {
+    if (node.hasAttribute(ATTR.object)) {
+      key = node.getAttribute(ATTR.object) + '.' + key;
+    }
+
+    if (node.parentNode && node.parentNode !== this.obj) {
+      return this._(createObjectReferenceString)(key, node.parentNode);
+    } else {
+      return key;
     }
   }
 
