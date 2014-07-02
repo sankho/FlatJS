@@ -322,7 +322,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
         node.fjsWatchSet = true;
 
         var key   = convertCamelCase(node.getAttribute(attr)),
-            str   = this._(createObjectReferenceString)(key, node),
+            str   = node.parentNode && node.parentNode !== document ? this._(createObjectReferenceString)(key, node.parentNode) : key,
             model = this.findResourceFromNode(node) || this.fjsData;
 
         if (model._('fjsNodes').indexOf(node) === -1) {
@@ -337,10 +337,10 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
 
   function createObjectReferenceString(key, node) {
     if (node.hasAttribute(ATTR.object)) {
-      key = node.getAttribute(ATTR.object) + '.' + key;
+      key = convertCamelCase(node.getAttribute(ATTR.object)) + '.' + key;
     }
 
-    if (node.parentNode && node.parentNode !== this.obj) {
+    if (node.parentNode && node.parentNode !== this.obj && node.parentNode !== document) {
       return this._(createObjectReferenceString)(key, node.parentNode);
     } else {
       return key;
