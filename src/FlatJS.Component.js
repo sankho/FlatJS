@@ -206,11 +206,13 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
       var node    = obj._('fjsNodes')[i],
           lastKey = prop.split('.'),
           lastKey = lastKey[lastKey.length - 1];
-          
+
       if (node && node.getAttribute(ATTR.key) && convertCamelCase(node.getAttribute(ATTR.key)) === lastKey) {
         this._(setValueOnNode)(node, newVal); 
-      } else if (node && obj.get(prop).length && obj.get(prop).push && node.getAttribute(ATTR.array) && convertCamelCase(node.getAttribute(ATTR.array)) === lastKey) {
+      } else if (node && obj.get(prop) && obj.get(prop).length && obj.get(prop).push && node.hasAttribute(ATTR.array) && convertCamelCase(node.getAttribute(ATTR.array)) === lastKey) {
         this._(syncArrayOnObjectChange)(node, newVal, oldVal, obj);
+      } else if (node && node.hasAttribute(ATTR.object) && convertCamelCase(node.getAttribute(ATTR.object)) === lastKey) {
+        this._(renderJSONOntoNode)(node, obj);
       }
     }
   }
@@ -310,6 +312,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     obj = obj || this.obj;
     this._(bindNodesByType)(ATTR.key, obj);
     this._(bindNodesByType)(ATTR.array, obj);
+    this._(bindNodesByType)(ATTR.object, obj);
   }
 
   function bindNodesByType(attr, obj) {
