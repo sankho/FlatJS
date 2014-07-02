@@ -85,7 +85,7 @@ __MVMockData.mockLoadedCallback = function() {
 }
 
 __MVMockData.startSecondTests = function() {
-  QUnit.test("FlatJS.Component - JSON Injection / Auto Template creation", function() {
+  QUnit.test("FlatJS.Component - JSON update syncing", function() {
     // reset everything
     $('#flat-mv-test-mock').remove();
     $('#mock-area').append(__MVMockData.HTML);
@@ -103,31 +103,18 @@ __MVMockData.startSecondTests = function() {
     var mvModOne = mockOne.fjsComponents ? mockOne.fjsComponents['FlatJS.Component'] : undefined,
         mvModTwo = mockTwo.fjsComponents ? mockTwo.fjsComponents['FlatJS.Component'] : undefined;
 
-    QUnit.ok(mvModOne.updateJSON, "FlatJS.Component.prototype.updateJSON exists");
-    QUnit.ok(mvModOne.renderFromJSON, "FlatJS.Component.prototype.renderFromJSON exists");
+    mvModOne.fjsData.set('header.title', "Todo List - Updated");
+    mvModOne.fjsData.set('people', [
+      {
+        personObj: APP.Person.find(2),
+        todos: [
+          APP.Todo.find(1)
+        ]
+      }
+    ]);
 
-    mvModOne.updateJSON({
-      header: {
-        title: "Todo List - Updated"
-      },
-      people: [
-        {
-          personObj: APP.Person.find(2),
-          todos: [
-            APP.Todo.find(1)
-          ]
-        }
-      ]
-    });
-
-    QUnit.equal(mvModOne.fjsData.header.title, "Todo List - Updated", "updateJSON extends the inner JSON object as expected");
-    QUnit.equal(mvModOne.fjsData.people[0].personObj.name, "Jane", "updateJSON extends the inner JSON object as expected");
-
-    QUnit.ok(mvModOne.fjsTmpl, "Template created from original markup");
-    QUnit.equal($(mvModOne.fjsTmpl).find('div div div .first-todo').length, 1, "Template markup is as expected");
-    QUnit.equal($(mvModOne.fjsTmpl).find('div div div .person').length, 1, "Template markup is as expected");
-
-    mvModOne.renderFromJSON();
+    QUnit.equal(mvModOne.fjsData.header.title, "Todo List - Updated", "Updating fjsData extends the inner JSON object as expected");
+    QUnit.equal(mvModOne.fjsData.people[0].personObj.name, "Jane", "Updating fjsData updates the inner JSON object as expected");
 
     QUnit.equal($mockOne.find('h1').text(), "Todo List - Updated", "Updating JSON object on model updates HTML in view");
     QUnit.equal($mockOne.find('.person:eq(0) a').text(), 'Jane', "Array of models imported & muted successfully w/ renderFromJson");
@@ -170,23 +157,14 @@ __MVMockData.startThirdTests = function() {
 
     QUnit.test("FlatJS.Component - JSON Injection / Auto Template creation on relational models", function() {
       // copy pasted from above set of tests, adjusting the object a bit
-      mvModOne.updateJSON({
-        header: {
-          title: "Todo List - Updated"
-        },
-        people: [
-          {
-            personObj: APP.Person.find(1)
-          }
-        ]
-      });
+      mvModOne.fjsData.set('header.title', "Todo List - Updated");
+      mvModOne.fjsData.set('people', [
+        {
+          personObj: APP.Person.find(1)
+        }
+      ]);
 
       QUnit.equal(mvModOne.fjsData.header.title, "Todo List - Updated", "updateJSON extends the inner JSON object as expected");
-
-      QUnit.ok(mvModOne.fjsTmpl, "Template created from original markup");
-      QUnit.ok($(mvModOne.fjsTmpl).find('.first-todo').length > 0, "Template markup is as expected");
-
-      mvModOne.renderFromJSON();
 
       QUnit.equal($mockOne.find('h1').text(), "Todo List - Updated", "Updating JSON object on model updates HTML in view");
       QUnit.equal($mockOne.find('.person:eq(0) a').text(), 'Bill', "Array of models imported & muted successfully w/ renderFromJson");
@@ -225,35 +203,28 @@ __MVMockData.startFourthTests = function() {
     QUnit.equal(mvMod.fjsData.form.checkboxOff, false, "Checkbox value converted to JSON");
     QUnit.equal(mvMod.fjsData.form.textarea, "Microphone check one two what is this", "Textarea values converted to JSON");
 
-    mvMod.updateJSON({
-      form: {
-        input:       "Heyo",
-        radio:       "test-radio-2",
-        radioOff:    true,
-        checkbox:    false,
-        checkboxOff: true,
-        textarea:    "The five foot assassin with the roughneck business"
-      }
+    mvMod.fjsData.set('form', {
+      radio:       "test-radio-2",
+      radioOff:    true,
+      checkbox:    false,
+      checkboxOff: true,
+      textarea:    "The five foot assassin with the roughneck business"
     });
-    mvMod.renderFromJSON();
+
+    mvMod.fjsData.set('form.input', 'Heyo');
 
     QUnit.equal($mock.find('#text-input').val(), "Heyo", "Text input updated from JSON");
     QUnit.equal($('#radio').is(':checked'), false, "Selected radio field turned off via JSON");
     QUnit.equal($('#radio-2').is(':checked'), true, "Radio field value changed via JSON");
     QUnit.equal($('#radio-off').is(':checked'), true, "Unselected radio field turned on via JSON");
-    console.log(mvMod.fjsData);
+    
     QUnit.equal(mvMod.fjsData.form.radioOff, 'test-radio-off', "Unselected radio field turned on via JSON, value is imported");
     QUnit.equal($('#checkbox').is(':checked'), false, "Selected checkbox turned off via JSON");
     QUnit.equal($('#checkbox-off').is(':checked'), true, "Unselected checkbox turned on via JSON");
     QUnit.equal(mvMod.fjsData.form.checkboxOff, 'test-checkbox-off', "Unselected checkbox text value imported via JSON.");
     QUnit.equal($mock.find('textarea').val(), "The five foot assassin with the roughneck business", "Textarea values converted to JSON");
 
-    mvMod.updateJSON({
-      form: {
-        checkbox:    "new value"
-      }
-    });
-    mvMod.renderFromJSON();
+    mvMod.fjsData.set('form.checkbox', "new value");
 
     QUnit.equal($('#checkbox').val(), "new value", "New value set onto checkbox");
     QUnit.ok($('#checkbox').is(':checked'), "Checkbox set on by setting a non false value");
@@ -279,11 +250,10 @@ __MVMockData.startFifthTests = function() {
     APP.Person.find(2).delete();
 
     QUnit.equal($mock.find('.first h2').length, 0, "Deleting model object also removes references in dom");
-    QUnit.equal($mock.find('.first [data-json-obj="you"]').length, 0, "Deleting model object also removes references in dom");
-    QUnit.equal($mock.find('.first [data-mv-model="APP.Person"][data-mv-id="2"]').length, 0, "Deleting model object also removes references in dom");
+    QUnit.equal($mock.find('.first [fjs-obj="you"]').length, 0, "Deleting model object also removes references in dom");
+    QUnit.equal($mock.find('.first [fjs-resource="APP.Person"][fjs-id="2"]').length, 0, "Deleting model object also removes references in dom");
 
     $mock.remove();
-
     // TODO: Figure out how to make the below work in a cross browser
     // manner. Also figure out if the functionality really matters -
     // maybe checking whether nodes exist or not on the obj.watch call

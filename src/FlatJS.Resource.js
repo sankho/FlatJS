@@ -4,6 +4,8 @@ FlatJS.Resource = (function() {
   var Resource = FlatJS.Classy.extend({
 
     init: function(initialObject) {
+      this._('fjsNodes', []);
+
       if (!this.id || (initialObject && !initialObject.id)) {
         this.id = this._(createTemporaryIdForObject)();
       }
@@ -11,9 +13,24 @@ FlatJS.Resource = (function() {
       this.extend(initialObject);
     },
 
+    get: function(prop, setter) {
+      prop    = prop.split('.');
+      var obj = this;
+
+      for (var i = 0; i < prop.length; i++) {
+        if (setter && i === (prop.length - 1)) {
+          obj[prop[i]] = setter;
+        }
+
+        obj = obj[prop[i]];
+      }
+
+      return obj;
+    },
+
     set: function(prop, val) {
-      var oldVal  = this[prop];
-      this[prop]  = val;
+      var oldVal = this.get(prop);
+      this.get(prop, val);
 
       if (this._('fjsCbs')) {
         var propCallbacks = this._('fjsCbs')[prop];
@@ -56,11 +73,23 @@ FlatJS.Resource = (function() {
       return Resource.objExtend(this, obj);
     },
 
-    push: function(prop, val) {
-      if (this[prop] && typeof this[prop].push === 'function' && typeof this[prop].slice === 'function') {
-        var arr = this[prop].slice();
+    push: function(propString, val) {
+      var prop = this.get(propString);
+      if (prop && typeof prop.push === 'function' && typeof prop.slice === 'function') {
+        var arr = prop.slice();
         arr.push(val);
-        this.set(prop, arr);
+        this.set(propString, arr);
+      }
+    },
+
+    delete: function() {
+      if (this._('fjsNodes')) {
+        for (n in this._('fjsNodes')) {
+          var node = this._('fjsNodes')[n];
+          if (node && node.parentNode) {
+            node.parentNode.removeChild(node);
+          }
+        }
       }
     }
 
