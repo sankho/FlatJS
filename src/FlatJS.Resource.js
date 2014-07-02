@@ -5,6 +5,7 @@ FlatJS.Resource = (function() {
 
     init: function(initialObject) {
       this._('fjsNodes', []);
+      this._('fjsCbs', {});
 
       if (!this.id || (initialObject && !initialObject.id)) {
         this.id = this._(createTemporaryIdForObject)();
@@ -34,7 +35,7 @@ FlatJS.Resource = (function() {
 
       if (this._('fjsCbs')) {
         var propCallbacks = this._('fjsCbs')[prop];
-
+        
         for (var cba in propCallbacks) {
           var cbs = propCallbacks[cba];
 
@@ -49,7 +50,7 @@ FlatJS.Resource = (function() {
     },
 
     watch: function(prop, handler) {
-      var callbacks            = this._('fjsCbs') || {};
+      var callbacks            = this._('fjsCbs');
       callbacks[prop]          = callbacks[prop] || {};
       callbacks[prop][handler] = callbacks[prop][handler] || [];
 
@@ -66,6 +67,8 @@ FlatJS.Resource = (function() {
         } else if (!handler) {
           delete callbacks[prop];
         }
+      } else {
+        this._('fjsCbs', {});
       }
     },
 
@@ -83,14 +86,16 @@ FlatJS.Resource = (function() {
     },
 
     delete: function() {
-      if (this._('fjsNodes')) {
-        for (n in this._('fjsNodes')) {
-          var node = this._('fjsNodes')[n];
-          if (node && node.parentNode) {
-            node.parentNode.removeChild(node);
-          }
+      for (n in this._('fjsNodes')) {
+        var node = this._('fjsNodes')[n];
+        if (node && node.parentNode) {
+          node.parentNode.removeChild(node);
         }
       }
+
+      this.set('fjsDelete', true);
+      var x = this.constructor.fjsObjects.splice(this, 1);
+      x = undefined;
     }
 
   });
