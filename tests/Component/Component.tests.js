@@ -252,6 +252,8 @@ __MVMockData.startFifthTests = function() {
     QUnit.equal($mock.find('.first h2').length, 0, "Deleting model object also removes references in dom");
     QUnit.equal($mock.find('.first [fjs-obj="you"]').length, 0, "Deleting model object also removes references in dom");
     QUnit.equal($mock.find('.first [fjs-resource="APP.Person"][fjs-id="2"]').length, 0, "Deleting model object also removes references in dom");
+    QUnit.equal(mvMod.fjsData.you, undefined, "Related object is removed from component's fjsData if model is removed");
+    QUnit.equal(mvMod.fjsData.people[1].personObj, undefined, "Related object is removed from component's fjsData if model is removed");
 
     $mock.remove();
     // TODO: Figure out how to make the below work in a cross browser
