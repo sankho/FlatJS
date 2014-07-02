@@ -114,7 +114,7 @@ __MVMockData.startSecondTests = function() {
     ]);
 
     QUnit.equal(mvModOne.fjsData.header.title, "Todo List - Updated", "Updating fjsData extends the inner JSON object as expected");
-    QUnit.equal(mvModOne.fjsData.people[0].personObj.name, "Jane", "Updating fjsData the inner JSON object as expected");
+    QUnit.equal(mvModOne.fjsData.people[0].personObj.name, "Jane", "Updating fjsData updates the inner JSON object as expected");
 
     QUnit.equal($mockOne.find('h1').text(), "Todo List - Updated", "Updating JSON object on model updates HTML in view");
     QUnit.equal($mockOne.find('.person:eq(0) a').text(), 'Jane', "Array of models imported & muted successfully w/ renderFromJson");
@@ -216,7 +216,7 @@ __MVMockData.startFourthTests = function() {
     QUnit.equal($('#radio').is(':checked'), false, "Selected radio field turned off via JSON");
     QUnit.equal($('#radio-2').is(':checked'), true, "Radio field value changed via JSON");
     QUnit.equal($('#radio-off').is(':checked'), true, "Unselected radio field turned on via JSON");
-    console.log(mvMod.fjsData);
+    
     QUnit.equal(mvMod.fjsData.form.radioOff, 'test-radio-off', "Unselected radio field turned on via JSON, value is imported");
     QUnit.equal($('#checkbox').is(':checked'), false, "Selected checkbox turned off via JSON");
     QUnit.equal($('#checkbox-off').is(':checked'), true, "Unselected checkbox turned on via JSON");
