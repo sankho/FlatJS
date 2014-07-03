@@ -229,14 +229,14 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
 
   function renderJSONArrayOntoNode(arr, cnnr) {
     var children = cnnr.childNodes,
-        tmpl     = false,
+        tmpl     = cnnr.fjsTemplate,
         nodes    = [];
 
     for (var i = 0; i < children.length && !tmpl; i++) {
       var child = children[i];
 
       if (child.hasAttribute) {
-        tmpl = child.cloneNode(true);
+        tmpl = cnnr.fjsTemplate = child.cloneNode(true);
       }
     }
 
@@ -399,6 +399,8 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     for (var i = 0; i < children.length && !stop; i++) {
       var child = children[i];
       if (child && child.hasAttribute) {
+        cnnr.fjsTemplate = cnnr.fjsTemplate || child.cloneNode(true);
+
         if (child.hasAttribute(ATTR.resource)) {
           stop = true;
           this._(assembleJSON)(parentObj, children);
