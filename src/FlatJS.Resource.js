@@ -93,8 +93,9 @@ FlatJS.Resource = (function() {
         }
       }
 
+      var index = this.constructor.fjsObjects.indexOf(this);
+      this.constructor.fjsObjects.splice(index, 1);
       this.set('fjsDelete', true);
-      this.constructor.fjsObjects.splice(this, 1);
     }
 
   });
