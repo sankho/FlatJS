@@ -284,7 +284,9 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
       }
     } else if (child.hasAttribute(ATTR.object)) {
       key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute(ATTR.object));
-      this._(renderFromJSON)(child, parentObj[key]);
+      if (parentObj[key]) {
+        this._(renderFromJSON)(child, parentObj[key]);
+      }
     } else if (child.getAttribute(ATTR.resource)) {
       key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute(ATTR.resource));
       if (parentObj[key].id) {
