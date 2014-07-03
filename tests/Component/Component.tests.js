@@ -11,7 +11,7 @@ $.ajax({
   success: function(data) {
     __MVMockData.HTML = data;
     $('#mock-area').append(data);
-    __MVMockData.mockLoadedCallback()
+    __MVMockData.mockLoadedCallback();
   }
 
 })
@@ -254,6 +254,16 @@ __MVMockData.startFifthTests = function() {
     QUnit.equal($mock.find('.first [fjs-resource="APP.Person"][fjs-id="2"]').length, 0, "Deleting model object also removes references in dom");
     QUnit.equal(mvMod.fjsData.you, undefined, "Related object is removed from component's fjsData if model is removed");
     QUnit.equal(mvMod.fjsData.people[1].personObj, undefined, "Related object is removed from component's fjsData if model is removed");
+
+    mvMod.fjsData.push('people', {
+      personObj: APP.Person.find(1),
+      todos: [
+        APP.Person.find(1).todos
+      ]
+    });
+    APP.Person.find(1).delete();
+
+    QUnit.equal($mock.find('.first [fjs-resource="APP.Person"][fjs-id="1"]').length, 0, "Deleting model object also removes references in dom");
 
     $mock.remove();
     // TODO: Figure out how to make the below work in a cross browser
