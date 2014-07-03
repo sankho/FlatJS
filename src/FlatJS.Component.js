@@ -125,8 +125,9 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     }
   }
 
-  function findAndInitializeResources() {
-    var modelNodes = FlatJS.Helpers.getAllElementsWithAttribute(ATTR.resource, this.obj);
+  function findAndInitializeResources(obj) {
+    obj = obj || this.obj;
+    var modelNodes = FlatJS.Helpers.getAllElementsWithAttribute(ATTR.resource, obj);
 
     for (var i = 0; i < modelNodes.length; i++) {
       var node      = modelNodes[i];
@@ -138,17 +139,14 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
   function createModelObjectFromNode(node) {
     var id        = node.getAttribute(ATTR.id),
         modelName = convertCamelCase(node.getAttribute(ATTR.resource)),
-        model     = FlatJS.Helpers.findFunctionByString(
-                      modelName,
-                      window,
-                      FlatJS.Resource.extend({})
-                    ),
-        obj       = false;
-
-    obj = model.find(id) || new model({ id: id });
+        model     = FlatJS.Helpers.findFunctionByString(modelName, window, FlatJS.Resource.extend({})),
+        obj       = model.find(id) || new model({ id: id });
 
     obj.modelName  = obj.modelName  || modelName;
-    obj._('fjsNodes').push(node);
+
+    if (obj._('fjsNodes').indexOf(node) === -1) {
+      obj._('fjsNodes').push(node);
+    }
 
     if (node.hasAttribute(ATTR.json)) {
       obj.extend(JSON.parse(node.getAttribute(ATTR.json)));
@@ -224,6 +222,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
   function syncArrayOnObjectChange(node, newVal, oldVal, obj) {
     this._(renderJSONArrayOntoNode)(newVal, node);
     this._(bindNodes)(node);
+    this._(findAndInitializeResources)(node);
     this._(applyCSSChanges)();
   }
 
