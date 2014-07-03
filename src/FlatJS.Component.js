@@ -55,13 +55,17 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     var nodes = FlatJS.Helpers.getAllElementsWithAttribute(ATTR.class, this.obj);
 
     for (var i = 0; i < nodes.length; i++) {
-      this._(makeCSSChangeOnNode)(nodes[i]);
+      var node = nodes[i],
+          obj  = this.findResourceFromNode(node);
+        
+      if (obj) {
+        this._(makeCSSChangeOnNode)(node, obj);
+      }
     }
   }
 
-  function makeCSSChangeOnNode(node) {
-    var obj   = this.findResourceFromNode(node),
-        rules = JSON.parse(node.getAttribute(ATTR.class)),
+  function makeCSSChangeOnNode(node, obj) {
+    var rules = JSON.parse(node.getAttribute(ATTR.class)),
         rules = rules[0].push ? rules : [rules];
 
     for (var i = 0; i < rules.length; i++) {
@@ -121,8 +125,9 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     }
   }
 
-  function findAndInitializeResources() {
-    var modelNodes = FlatJS.Helpers.getAllElementsWithAttribute(ATTR.resource, this.obj);
+  function findAndInitializeResources(obj) {
+    obj = obj || this.obj;
+    var modelNodes = FlatJS.Helpers.getAllElementsWithAttribute(ATTR.resource, obj);
 
     for (var i = 0; i < modelNodes.length; i++) {
       var node      = modelNodes[i];
@@ -134,17 +139,14 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
   function createModelObjectFromNode(node) {
     var id        = node.getAttribute(ATTR.id),
         modelName = convertCamelCase(node.getAttribute(ATTR.resource)),
-        model     = FlatJS.Helpers.findFunctionByString(
-                      modelName,
-                      window,
-                      FlatJS.Resource.extend({})
-                    ),
-        obj       = false;
-
-    obj = model.find(id) || new model({ id: id });
+        model     = FlatJS.Helpers.findFunctionByString(modelName, window, FlatJS.Resource.extend({})),
+        obj       = model.find(id) || new model({ id: id });
 
     obj.modelName  = obj.modelName  || modelName;
-    obj._('fjsNodes').push(node);
+
+    if (obj._('fjsNodes').indexOf(node) === -1) {
+      obj._('fjsNodes').push(node);
+    }
 
     if (node.hasAttribute(ATTR.json)) {
       obj.extend(JSON.parse(node.getAttribute(ATTR.json)));
@@ -220,6 +222,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
   function syncArrayOnObjectChange(node, newVal, oldVal, obj) {
     this._(renderJSONArrayOntoNode)(newVal, node);
     this._(bindNodes)(node);
+    this._(findAndInitializeResources)(node);
     this._(applyCSSChanges)();
   }
 
@@ -240,12 +243,18 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     cnnr.innerHTML = '';
 
     for (var j = 0; j < arr.length; j++) {
-      var _tmpl = tmpl.cloneNode(true),
-          node  = this._(renderFromJSON)(_tmpl, arr[j], true);
-      if (arr[j].id) {
-        node.setAttribute(ATTR.id, arr[j].id);
+      var obj = arr[j];
+
+      if (obj) {
+        if (!obj.id || (obj.id && obj.constructor.find(obj.id))) {
+          var _tmpl = tmpl.cloneNode(true),
+              node  = this._(renderFromJSON)(_tmpl, obj, true);
+          if (obj.id) {
+            node.setAttribute(ATTR.id, obj.id);
+          }
+          cnnr.appendChild(node);
+        }
       }
-      cnnr.appendChild(node);
     }
   }
 
@@ -275,7 +284,9 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
       }
     } else if (child.hasAttribute(ATTR.object)) {
       key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute(ATTR.object));
-      this._(renderFromJSON)(child, parentObj[key]);
+      if (parentObj[key]) {
+        this._(renderFromJSON)(child, parentObj[key]);
+      }
     } else if (child.getAttribute(ATTR.resource)) {
       key = FlatJS.Helpers.convertDashedToCamelCase(child.getAttribute(ATTR.resource));
       if (parentObj[key].id) {
@@ -406,10 +417,18 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     if (isModel) {
       var modelClass = findFn(child.getAttribute(ATTR.resource)),
           obj        = modelClass ? modelClass.find(child.getAttribute(ATTR.id)) : false;
-      if (obj && parentIsArray) {
-        parentObj.push(obj);
-      } else if (obj) {
-        parentObj[key] = obj;
+
+      if (obj) {
+        if (parentIsArray) {
+          parentObj.push(obj);
+        } else {
+          parentObj[key] = obj;
+        }
+
+        //if (!obj._('fjsDeleteWatch')) {
+          //obj._('fjsDeleteWatch', true);
+          obj.watch('fjsDelete', this._(undefineModelReferenceOnDeletion));
+        //}
       }
     } else {
       this._(assembleJSONIfChildren)(child, parentObj, key, isObj);
@@ -423,6 +442,25 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
       }
 
       this._(assembleJSON)(parentObj, child.childNodes);
+    }
+  }
+
+  function undefineModelReferenceOnDeletion(prop, oldVal, val, obj) {
+    if (document.contains(this.obj)) {
+      this._(iterateThroughDataAndDeleteObject)(obj, this.fjsData);
+    } else {
+      obj.unwatch(prop, this._(undefineModelReferenceOnDeletion));
+    }
+  }
+
+  function iterateThroughDataAndDeleteObject(obj, data, superData) {
+    for (var n in data) {
+      if (data[n] === obj) {
+        data[n] = undefined;
+        delete data[n];
+      } else if (typeof data[n] === 'object') {
+        this._(iterateThroughDataAndDeleteObject)(obj, data[n], data);
+      }
     }
   }
 
