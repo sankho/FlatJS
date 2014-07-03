@@ -445,7 +445,11 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
   }
 
   function undefineModelReferenceOnDeletion(prop, oldVal, val, obj) {
-    this._(iterateThroughDataAndDeleteObject)(obj, this.fjsData);
+    if (document.contains(this.obj)) {
+      this._(iterateThroughDataAndDeleteObject)(obj, this.fjsData);
+    } else {
+      obj.unwatch(prop, this._(undefineModelReferenceOnDeletion));
+    }
   }
 
   function iterateThroughDataAndDeleteObject(obj, data, superData) {
