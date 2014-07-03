@@ -94,8 +94,7 @@ FlatJS.Resource = (function() {
       }
 
       this.set('fjsDelete', true);
-      var x = this.constructor.fjsObjects.splice(this, 1);
-      x = undefined;
+      this.constructor.fjsObjects = this.constructor.fjsObjects.splice(this, 1);
     }
 
   });
