@@ -230,6 +230,49 @@ __MVMockData.startFourthTests = function() {
     QUnit.ok($('#checkbox').is(':checked'), "Checkbox set on by setting a non false value");
 
     $mock.remove();
+  });
+
+
+  QUnit.test("FlatJS.Component - Testing 2 way binding on input types", function() {
+    $('#mock-area').append(__MVMockData.HTML3);
+
+    new FlatJS.Runner({
+      attr: 'data-js-mv-test-module'
+    });
+
+    var $mock    = $('#flat-mv-test-mock-3'),
+        mvMod    = $mock.get(0).fjsComponents['FlatJS.Component'];
+
+    var e     = jQuery.Event("keyup");
+    e.which   = 50;
+    e.keyCode = 50;
+    $('#text-input').val($('#text-input').val() + 'a');
+    $('#text-input').trigger(e);
+
+    QUnit.equal(mvMod.fjsData.form.input, "testa", "Internal JSON data object updated when text input is updated on keyup");
+
+    var e     = jQuery.Event("keyup");
+    e.which   = 50;
+    e.keyCode = 50;
+    $('#text-input').val($('#text-input').val() + 'a');
+    $('#text-input').trigger(e);
+    QUnit.equal(mvMod.fjsData.form.input, "testa", "Internal JSON data object updated when text input is updated on keyup");
+
+    $('#radio-2').trigger('click');
+    QUnit.equal(mvMod.fjsData.form.radio, "test-radio-2", "Internal JSON data object updated when radio button is updated on click");
+
+    $('#checkbox').trigger('click');
+    $('#checkbox-off').trigger('click');
+    QUnit.equal(mvMod.fjsData.form.checkbox, false, "Internal JSON data object updated when checkbox button is updated on click");
+    QUnit.equal(mvMod.fjsData.form.checkboxOff, "test-checkbox-off", "Internal JSON data object updated when checkbox button is updated on click");
+
+    var e     = jQuery.Event("keyup");
+    e.which   = 50;
+    e.keyCode = 50;
+    $mock.find('textarea').val($('#text-input').val() + 'a');
+    $mock.find('textarea').trigger(e);
+    QUnit.equal(mvMod.fjsData.form.textarea, "The five foot assassin with the roughneck businessa", "Internal JSON data object updated when textarea is updated on keyup");
+
     __MVMockData.startFifthTests();
   });
 }
