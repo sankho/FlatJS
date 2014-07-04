@@ -266,32 +266,6 @@ __MVMockData.startFifthTests = function() {
     QUnit.equal($mock.find('.first [fjs-resource="APP.Person"][fjs-id="1"]').length, 0, "Deleting model object also removes references in dom");
 
     $mock.remove();
-    // TODO: Figure out how to make the below work in a cross browser
-    // manner. Also figure out if the functionality really matters -
-    // maybe checking whether nodes exist or not on the obj.watch call
-    // set in Flat.MV somewhere will work.
-
-    //$('#mock-area').append(__MVMockData.HTML);
-
-    //new FlatJS.Runner({
-    //  attr: 'data-js-mv-test-module'
-    //});
-
-    //var $mock = $('#flat-mv-test-mock'),
-    //    mvMod = $mock.find('.first').get(0).fjsComponents['FlatJS.Component'];
-
-    //var nameNode   = $mock.find('.first h2').get(0),
-    //    personNode = $mock.find('.first .person:eq(1)').get(0),
-    //    person     = APP.Person.find(2);
-
-    //QUnit.ok(person._('FJSnodes').indexOf(nameNode) !== -1, "Initial name node exists within _('FJSnodes') array");
-    //QUnit.ok(person._('FJSnodes').indexOf(personNode) !== -1, "Initial person node exists within _('FJSnodes') array");
-
-    //nameNode.parentNode.removeChild(nameNode);
-    //personNode.parentNode.removeChild(personNode);
-
-    //QUnit.equal(person._('FJSnodes').indexOf(nameNode), -1, "DOM Node reference no longer exists within _('FJSnodes') array after being removed from document");
-    //QUnit.equal(person._('FJSnodes').indexOf(personNode), -1, "DOM Node reference no longer exists within _('FJSnodes') array after being removed from document");
   })
 
 }
