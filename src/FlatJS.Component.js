@@ -57,7 +57,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     for (var i = 0; i < nodes.length; i++) {
       var node = nodes[i],
           obj  = this.findResourceFromNode(node);
-        
+
       if (obj) {
         this._(makeCSSChangeOnNode)(node, obj);
       }
@@ -210,7 +210,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
           lastKey = lastKey[lastKey.length - 1];
 
       if (node && node.getAttribute(ATTR.key) && convertCamelCase(node.getAttribute(ATTR.key)) === lastKey) {
-        this._(setValueOnNode)(node, newVal); 
+        this._(setValueOnNode)(node, newVal);
       } else if (node && obj.get(prop) && obj.get(prop).length && obj.get(prop).push && node.hasAttribute(ATTR.array) && convertCamelCase(node.getAttribute(ATTR.array)) === lastKey) {
         this._(syncArrayOnObjectChange)(node, newVal, oldVal, obj);
       } else if (node && node.hasAttribute(ATTR.object) && convertCamelCase(node.getAttribute(ATTR.object)) === lastKey) {
@@ -345,8 +345,36 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
 
         node.fjsObject = node.fjsObject || model;
         model.watch(str, this._(syncNodeOnObjectChange));
+        if (this._(isNodeInput)(node)) {
+          this._(setupCallbacksForInputNodes)(node);
+        }
       }
     }
+  }
+
+  function setupCallbacksForInputNodes(node) {
+    var text = node.getAttribute('type'),
+        text = !text || text === 'text';
+
+    node.addEventListener(text ? 'keyup' : 'change', this._(inputChangeCallback));
+  }
+
+  function inputChangeCallback(e) {
+    var node  = e.currentTarget,
+        val   = this._(getValueFromNode)(node),
+        key   = convertCamelCase(node.getAttribute(ATTR.key)),
+        str   = node.parentNode && node.parentNode !== document ? this._(createObjectReferenceString)(key, node.parentNode) : key,
+        model = this.findResourceFromNode(node) || this.fjsData;
+
+    model.set(str, val);
+  }
+
+  function isNodeInput(node) {
+    var type   = node.tagName,
+    retVal = false,
+    types  = ['INPUT', 'TEXTAREA'];
+
+    return types.indexOf(type) !== -1;
   }
 
   function createObjectReferenceString(key, node) {
