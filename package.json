@@ -5,15 +5,13 @@
   "keywords"      : ["model", "view", "resource", "component", "server", "client", "browser"],
   "author"        : "Sankho Mallik <sankho.mallik@gmail.com>",
   "devDependencies": {
-    "phantomjs": "1.9.7-8",
-    "docker": "0.2.13",
-    "qunit": "1.14.0",
-    "jquery": "1.11.1"
+    "node-qunit-phantomjs": "0.2.1",
+    "docker": "0.2.13"
   },
   "scripts": {
-    "test": "phantomjs tests/index.html",
+    "tests": "node-qunit-phantomjs ./tests/index.html --verbose",
     "build": "uglifyjs ./src/FlatJS.Classy.js ./src/FlatJS.Runner.js ./src/FlatJS.Helpers.js ./src/FlatJS.Widget.js ./src/FlatJS.Dispatch.js ./src/FlatJS.Resource.js ./src/FlatJS.Component.js  --mangle -o flat-min.js",
-    "doc": "rm -rf ./docs && docker -o ./docs -i ./src"
+    "docs": "rm -rf ./docs && docker -o ./docs -i ./src"
   },
   "main"          : "flat-min.js",
   "version"       : "0.0.9",
