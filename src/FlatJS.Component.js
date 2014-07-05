@@ -57,7 +57,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     for (var i = 0; i < nodes.length; i++) {
       var node = nodes[i],
           obj  = this.findResourceFromNode(node);
-        
+
       if (obj) {
         this._(makeCSSChangeOnNode)(node, obj);
       }
@@ -94,7 +94,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
   function getValueFromNode(node) {
     var type = node.getAttribute('type');
 
-    if (node.innerHTML) {
+    if (node.innerHTML && !node.value) {
       return node.innerHTML;
     } else if (type == 'checkbox' || type == 'radio') {
       return node.checked ? node.value !== 'on' ? node.value : true : node.checked;
@@ -104,9 +104,10 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
   }
 
   function setValueOnNode(node, value) {
-    var type = node.getAttribute('type');
+    var type  = node.getAttribute('type'),
+        value = value !== undefined ? value : '';
 
-    if (type == 'checkbox' || type == 'radio') {
+    if (type == 'checkbox') {
       if (typeof value === 'boolean') {
         node.checked = value;
       } else if (typeof value === 'string') {
@@ -116,9 +117,15 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
         node.checked = value.selected;
         node.value   = value.value;
       }
-    } else if (type == 'text') {
-      node.value = value;
-    } else if (typeof node.value !== 'undefined') {
+    } else if (type == 'radio') {
+      if (typeof value === 'boolean') {
+        node.checked = value;
+      } else if (node.value == value) {
+        node.checked = true;
+      } else {
+        node.checked = false;
+      }
+    } else if (type == 'text' || (typeof node.value !== 'undefined')) {
       node.value = value;
     } else if (typeof node.innerHTML !== 'undefined') {
       node.innerHTML = value;
@@ -210,7 +217,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
           lastKey = lastKey[lastKey.length - 1];
 
       if (node && node.getAttribute(ATTR.key) && convertCamelCase(node.getAttribute(ATTR.key)) === lastKey) {
-        this._(setValueOnNode)(node, newVal); 
+        this._(setValueOnNode)(node, newVal);
       } else if (node && obj.get(prop) && obj.get(prop).length && obj.get(prop).push && node.hasAttribute(ATTR.array) && convertCamelCase(node.getAttribute(ATTR.array)) === lastKey) {
         this._(syncArrayOnObjectChange)(node, newVal, oldVal, obj);
       } else if (node && node.hasAttribute(ATTR.object) && convertCamelCase(node.getAttribute(ATTR.object)) === lastKey) {
@@ -229,14 +236,14 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
 
   function renderJSONArrayOntoNode(arr, cnnr) {
     var children = cnnr.childNodes,
-        tmpl     = false,
+        tmpl     = cnnr.fjsTemplate,
         nodes    = [];
 
     for (var i = 0; i < children.length && !tmpl; i++) {
       var child = children[i];
 
       if (child.hasAttribute) {
-        tmpl = child.cloneNode(true);
+        tmpl = cnnr.fjsTemplate = child.cloneNode(true);
       }
     }
 
@@ -345,8 +352,36 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
 
         node.fjsObject = node.fjsObject || model;
         model.watch(str, this._(syncNodeOnObjectChange));
+        if (this._(isNodeInput)(node)) {
+          this._(setupCallbacksForInputNodes)(node);
+        }
       }
     }
+  }
+
+  function setupCallbacksForInputNodes(node) {
+    var text = node.getAttribute('type'),
+        text = !text || text === 'text';
+
+    node.addEventListener(text ? 'keyup' : 'change', this._(inputChangeCallback));
+  }
+
+  function inputChangeCallback(e) {
+    var node  = e.currentTarget,
+        val   = this._(getValueFromNode)(node),
+        key   = convertCamelCase(node.getAttribute(ATTR.key)),
+        str   = node.parentNode && node.parentNode !== document ? this._(createObjectReferenceString)(key, node.parentNode) : key,
+        model = this.findResourceFromNode(node) || this.fjsData;
+
+    model.set(str, val);
+  }
+
+  function isNodeInput(node) {
+    var type   = node.tagName,
+    retVal = false,
+    types  = ['INPUT', 'TEXTAREA'];
+
+    return types.indexOf(type) !== -1;
   }
 
   function createObjectReferenceString(key, node) {
@@ -399,6 +434,8 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     for (var i = 0; i < children.length && !stop; i++) {
       var child = children[i];
       if (child && child.hasAttribute) {
+        cnnr.fjsTemplate = cnnr.fjsTemplate || child.cloneNode(true);
+
         if (child.hasAttribute(ATTR.resource)) {
           stop = true;
           this._(assembleJSON)(parentObj, children);
@@ -446,11 +483,11 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
   }
 
   function undefineModelReferenceOnDeletion(prop, oldVal, val, obj) {
-    if (document.contains(this.obj)) {
+    //if (document.contains(this.obj)) {
       this._(iterateThroughDataAndDeleteObject)(obj, this.fjsData);
-    } else {
-      obj.unwatch(prop, this._(undefineModelReferenceOnDeletion));
-    }
+    //} else {
+      //obj.unwatch(prop, this._(undefineModelReferenceOnDeletion));
+    //}
   }
 
   function iterateThroughDataAndDeleteObject(obj, data, superData) {

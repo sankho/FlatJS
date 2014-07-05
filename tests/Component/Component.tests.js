@@ -217,7 +217,7 @@ __MVMockData.startFourthTests = function() {
     QUnit.equal($('#radio').is(':checked'), false, "Selected radio field turned off via JSON");
     QUnit.equal($('#radio-2').is(':checked'), true, "Radio field value changed via JSON");
     QUnit.equal($('#radio-off').is(':checked'), true, "Unselected radio field turned on via JSON");
-    
+
     QUnit.equal(mvMod.fjsData.form.radioOff, 'test-radio-off', "Unselected radio field turned on via JSON, value is imported");
     QUnit.equal($('#checkbox').is(':checked'), false, "Selected checkbox turned off via JSON");
     QUnit.equal($('#checkbox-off').is(':checked'), true, "Unselected checkbox turned on via JSON");
@@ -230,6 +230,49 @@ __MVMockData.startFourthTests = function() {
     QUnit.ok($('#checkbox').is(':checked'), "Checkbox set on by setting a non false value");
 
     $mock.remove();
+  });
+
+
+  QUnit.test("FlatJS.Component - Testing 2 way binding on input types", function() {
+    $('#mock-area').append(__MVMockData.HTML3);
+
+    new FlatJS.Runner({
+      attr: 'data-js-mv-test-module'
+    });
+
+    var $mock    = $('#flat-mv-test-mock-3'),
+        mvMod    = $mock.get(0).fjsComponents['FlatJS.Component'];
+
+    var e     = jQuery.Event("keyup");
+    e.which   = 50;
+    e.keyCode = 50;
+    $('#text-input').val($('#text-input').val() + 'a');
+    $('#text-input').trigger(e);
+
+    QUnit.equal(mvMod.fjsData.form.input, "testa", "Internal JSON data object updated when text input is updated on keyup");
+
+    var e     = jQuery.Event("keyup");
+    e.which   = 50;
+    e.keyCode = 50;
+    $('#text-input').val($('#text-input').val() + 'a');
+    $('#text-input').trigger(e);
+    QUnit.equal(mvMod.fjsData.form.input, "testaa", "Internal JSON data object updated when text input is updated on keyup");
+
+    $('#radio-2').trigger('click');
+    QUnit.equal(mvMod.fjsData.form.radio, "test-radio-2", "Internal JSON data object updated when radio button is updated on click");
+
+    $('#checkbox').trigger('click');
+    $('#checkbox-off').trigger('click');
+    QUnit.equal(mvMod.fjsData.form.checkbox, false, "Internal JSON data object updated when checkbox button is updated on click");
+    QUnit.equal(mvMod.fjsData.form.checkboxOff, "test-checkbox-off", "Internal JSON data object updated when checkbox button is updated on click");
+
+    var e     = jQuery.Event("keyup");
+    e.which   = 50;
+    e.keyCode = 50;
+    $mock.find('textarea').val($('textarea').val() + 'a');
+    $mock.find('textarea').trigger(e);
+    QUnit.equal(mvMod.fjsData.form.textarea, "Microphone check one two what is thisa", "Internal JSON data object updated when textarea is updated on keyup");
+
     __MVMockData.startFifthTests();
   });
 }
@@ -266,32 +309,6 @@ __MVMockData.startFifthTests = function() {
     QUnit.equal($mock.find('.first [fjs-resource="APP.Person"][fjs-id="1"]').length, 0, "Deleting model object also removes references in dom");
 
     $mock.remove();
-    // TODO: Figure out how to make the below work in a cross browser
-    // manner. Also figure out if the functionality really matters -
-    // maybe checking whether nodes exist or not on the obj.watch call
-    // set in Flat.MV somewhere will work.
-
-    //$('#mock-area').append(__MVMockData.HTML);
-
-    //new FlatJS.Runner({
-    //  attr: 'data-js-mv-test-module'
-    //});
-
-    //var $mock = $('#flat-mv-test-mock'),
-    //    mvMod = $mock.find('.first').get(0).fjsComponents['FlatJS.Component'];
-
-    //var nameNode   = $mock.find('.first h2').get(0),
-    //    personNode = $mock.find('.first .person:eq(1)').get(0),
-    //    person     = APP.Person.find(2);
-
-    //QUnit.ok(person._('FJSnodes').indexOf(nameNode) !== -1, "Initial name node exists within _('FJSnodes') array");
-    //QUnit.ok(person._('FJSnodes').indexOf(personNode) !== -1, "Initial person node exists within _('FJSnodes') array");
-
-    //nameNode.parentNode.removeChild(nameNode);
-    //personNode.parentNode.removeChild(personNode);
-
-    //QUnit.equal(person._('FJSnodes').indexOf(nameNode), -1, "DOM Node reference no longer exists within _('FJSnodes') array after being removed from document");
-    //QUnit.equal(person._('FJSnodes').indexOf(personNode), -1, "DOM Node reference no longer exists within _('FJSnodes') array after being removed from document");
   })
 
 }

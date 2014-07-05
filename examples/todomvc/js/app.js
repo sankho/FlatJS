@@ -11,6 +11,25 @@
       bindUI: function() {
         this.$obj.on('click', '.destroy', this._(destroyTodoItem));
         this.$obj.on('keyup', '#new-todo', this._(addNewTodoOnEnter));
+        this.$obj.on('keyup', '#todo-list li .edit', this._(hideTextInputOnEnter));
+        this.$obj.on('blur', '#todo-list li .edit', this._(hideTextInput));
+        this.$obj.on('dblclick', '#todo-list li', this._(setItemToEditing));
+      }
+    }
+
+    function addNewTodoOnEnter(e) {
+      var keycode = (e.keyCode ? e.keyCode : e.which);
+
+      if (keycode == '13') {
+        var val = this.fjsData.newTodo;
+
+        var todo = new FlatTodo.Todo({
+          text: val,
+          completed: false
+        });
+
+        this.fjsData.set('newTodo', '');
+        this.fjsData.push('todosList', todo);
       }
     }
 
@@ -19,23 +38,20 @@
       todo.delete();
     }
 
-    function addNewTodoOnEnter(e) {
-      var keycode = (e.keyCode ? e.keyCode : e.which);
-
+    function hideTextInputOnEnter(e) {
+      var keycode = (e.keyCode ? e.keyCode : e.which)
       if (keycode == '13') {
-        // the below should work when two way binding is set up
-        //var val = this.fjsData.newTodo;
-        
-        var val = e.currentTarget.value;
-        this.fjsData.set('newTodo', '');
-
-        var todo = new FlatTodo.Todo({
-          text: val,
-          completed: false
-        });
-
-        this.fjsData.push('todosList', todo);
+        this._(hideTextInput)(e);
       }
+    }
+
+    function hideTextInput(e) {
+      $(e.currentTarget).parent().removeClass('editing');
+    }
+
+    function setItemToEditing(e) {
+      e.preventDefault();
+      $(e.currentTarget).addClass('editing').find('input').focus();
     }
 
     return api;
