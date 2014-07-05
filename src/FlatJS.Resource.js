@@ -19,7 +19,7 @@ FlatJS.Resource = (function() {
       var obj = this;
 
       for (var i = 0; i < prop.length; i++) {
-        if (setter && i === (prop.length - 1)) {
+        if (setter !== undefined && i === (prop.length - 1)) {
           obj[prop[i]] = setter;
         }
 
@@ -35,7 +35,7 @@ FlatJS.Resource = (function() {
 
       if (this._('fjsCbs')) {
         var propCallbacks = this._('fjsCbs')[prop];
-        
+
         for (var cba in propCallbacks) {
           var cbs = propCallbacks[cba];
 
