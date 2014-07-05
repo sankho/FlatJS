@@ -13,6 +13,7 @@ var FlatJS = FlatJS || {};
    *
    * Base Class definition used throughout FlatJS. Provides a OOP like class pattern based on John Resig's method.
    * See http://ejohn.org/blog/simple-javascript-inheritance.
+   * 
    * Extended to provide ways to call private member functions to retain the value of "this" throughout
    * your code, as well as a psuedo-private variable storage to save member variables without making them
    * visible via a console.log or similiar method. See FlatJS.Classy.prototype._ below.
@@ -120,7 +121,7 @@ var FlatJS = FlatJS || {};
   };
 
   /**
-   * ### FlatJS.Classy.prototype._(handlePrivateVariableStorage) 
+   * ### FlatJS.Classy.prototype._(handlePrivateVariableStorage)
    *
    * Private function handles the psuedo private variable storage method. Use like so: this._('privateVar', "oh, hello"), get like so this._('privateVar').replace('hello', 'goodbye') => "oh, goodbye". Stores values in static storage using "this" as reference key.
    *
