@@ -104,7 +104,8 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
   }
 
   function setValueOnNode(node, value) {
-    var type = node.getAttribute('type');
+    var type  = node.getAttribute('type'),
+        value = value !== undefined ? value : '';
 
     if (type == 'checkbox' || type == 'radio') {
       if (typeof value === 'boolean') {
@@ -365,7 +366,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
         key   = convertCamelCase(node.getAttribute(ATTR.key)),
         str   = node.parentNode && node.parentNode !== document ? this._(createObjectReferenceString)(key, node.parentNode) : key,
         model = this.findResourceFromNode(node) || this.fjsData;
-        
+
     model.set(str, val);
   }
 
