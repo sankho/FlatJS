@@ -107,7 +107,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     var type  = node.getAttribute('type'),
         value = value !== undefined ? value : '';
 
-    if (type == 'checkbox' || type == 'radio') {
+    if (type == 'checkbox') {
       if (typeof value === 'boolean') {
         node.checked = value;
       } else if (typeof value === 'string') {
@@ -117,9 +117,15 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
         node.checked = value.selected;
         node.value   = value.value;
       }
-    } else if (type == 'text') {
-      node.value = value;
-    } else if (typeof node.value !== 'undefined') {
+    } else if (type == 'radio') {
+      if (typeof value === 'boolean') {
+        node.checked = value;
+      } else if (node.value == value) {
+        node.checked = true;
+      } else {
+        node.checked = false;
+      }
+    } else if (type == 'text' || (typeof node.value !== 'undefined')) {
       node.value = value;
     } else if (typeof node.innerHTML !== 'undefined') {
       node.innerHTML = value;
