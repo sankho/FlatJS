@@ -273,6 +273,7 @@ __MVMockData.startFourthTests = function() {
     $mock.find('textarea').trigger(e);
     QUnit.equal(mvMod.fjsData.form.textarea, "Microphone check one two what is thisa", "Internal JSON data object updated when textarea is updated on keyup");
 
+    $mock.remove();
     __MVMockData.startFifthTests();
   });
 }
