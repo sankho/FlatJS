@@ -17,28 +17,6 @@
       }
     }
 
-    function hideTextInputOnEnter(e) {
-      var keycode = (e.keyCode ? e.keyCode : e.which)
-      if (keycode == '13') {
-        this._(hideTextInput)(e);
-      }
-    }
-
-    function hideTextInput(e) {
-      $(e.currentTarget).parent().removeClass('editing');
-    }
-
-    function setItemToEditing(e) {
-      e.preventDefault();
-
-      $(e.currentTarget).addClass('editing').find('input').focus();
-    }
-
-    function destroyTodoItem(e) {
-      var todo  = this.findResourceFromNode(e.currentTarget);
-      todo.delete();
-    }
-
     function addNewTodoOnEnter(e) {
       var keycode = (e.keyCode ? e.keyCode : e.which);
 
@@ -53,6 +31,27 @@
         this.fjsData.set('newTodo', '');
         this.fjsData.push('todosList', todo);
       }
+    }
+
+    function destroyTodoItem(e) {
+      var todo  = this.findResourceFromNode(e.currentTarget);
+      todo.delete();
+    }
+
+    function hideTextInputOnEnter(e) {
+      var keycode = (e.keyCode ? e.keyCode : e.which)
+      if (keycode == '13') {
+        this._(hideTextInput)(e);
+      }
+    }
+
+    function hideTextInput(e) {
+      $(e.currentTarget).parent().removeClass('editing');
+    }
+
+    function setItemToEditing(e) {
+      e.preventDefault();
+      $(e.currentTarget).addClass('editing').find('input').focus();
     }
 
     return api;
