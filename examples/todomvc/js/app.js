@@ -23,10 +23,7 @@
       var keycode = (e.keyCode ? e.keyCode : e.which);
 
       if (keycode == '13') {
-        // the below should work when two way binding is set up
-        //var val = this.fjsData.newTodo;
-        
-        var val = e.currentTarget.value;
+        var val = this.fjsData.newTodo;
         this.fjsData.set('newTodo', '');
 
         var todo = new FlatTodo.Todo({
