@@ -18,6 +18,18 @@
     </div>
     <div id="tree"></div>
     <div id="headings">
+      <div class="heading h1">
+        <a href="#flatjs.classy">FlatJS.Classy</a>
+      </div>
+      <div class="heading h2">
+        <a href="#flatjs.classy.prototype._">FlatJS.Classy.prototype._</a>
+      </div>
+      <div class="heading h2">
+        <a href="#flatjs.classy.extend">FlatJS.Classy.extend</a>
+      </div>
+      <div class="heading h3">
+        <a href="#handleprivatevariablestorage%20-%20private%20to%20flatjs.classy.prototype">handlePrivateVariableStorage - private to FlatJS.Classy.prototype</a>
+      </div>
     </div>
   </div>
   <div id="sidebar-toggle"></div>
@@ -35,39 +47,10 @@
 <div class="pilwrap">
   <a class="pilcrow" href="#section-1" id="section-1">&#182;</a>
 </div>
-
+<p>defines FlatJS just in case, opens an initial scope.</p>
         </td>
         <td class="code highlight"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">FlatJS</span> <span class="o">=</span> <span class="nx">FlatJS</span> <span class="o">||</span> <span class="p">{};</span>
-
-<span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Classy</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-
-  <span class="kd">var</span> <span class="nx">fnStore</span>  <span class="o">=</span> <span class="p">[],</span>
-      <span class="nx">varStore</span> <span class="o">=</span> <span class="p">[],</span>
-      <span class="nx">initializing</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-      <span class="nx">fnTest</span> <span class="o">=</span> <span class="sr">/xyz/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="nx">xyz</span><span class="p">;})</span> <span class="o">?</span> <span class="sr">/\b_super\b/</span> <span class="o">:</span> <span class="sr">/.*/</span><span class="p">;</span>
-
-  <span class="kd">function</span> <span class="nx">handlePrivateVariableStorage</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">varStore</span><span class="p">[</span><span class="k">this</span><span class="p">]</span> <span class="o">=</span> <span class="nx">varStore</span><span class="p">[</span><span class="k">this</span><span class="p">]</span> <span class="o">||</span> <span class="p">[];</span>
-    <span class="nx">store</span> <span class="o">=</span> <span class="nx">store</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">store</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">||</span> <span class="p">[];</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">varcnt</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">varcnt</span> <span class="o">||</span> <span class="nx">store</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-
-    <span class="nx">store</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">varcnt</span><span class="p">]</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">val</span> <span class="o">!==</span> <span class="s1">&#39;undefined&#39;</span> <span class="o">?</span> <span class="nx">val</span> <span class="o">:</span> <span class="nx">store</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">varcnt</span><span class="p">]</span> <span class="o">||</span> <span class="kc">null</span><span class="p">;</span>
-
-    <span class="k">return</span> <span class="nx">store</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">varcnt</span><span class="p">];</span>
-  <span class="p">}</span>
-
-  <span class="kd">function</span> <span class="nx">isFunctionAnonymous</span><span class="p">(</span><span class="nx">func</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">fName</span><span class="p">;</span>
-    <span class="kd">var</span> <span class="nx">inFunc</span> <span class="o">=</span> <span class="nx">func</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
-    <span class="kd">var</span> <span class="nx">rExp</span>   <span class="o">=</span> <span class="sr">/^function ([^\s]+) \(\)/</span><span class="p">;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">fName</span> <span class="o">=</span> <span class="nx">inFunc</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">rExp</span><span class="p">))</span> <span class="p">{</span>
-      <span class="nx">fName</span> <span class="o">=</span> <span class="nx">fName</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-    <span class="p">}</span>
-
-    <span class="k">return</span> <span class="nx">fName</span> <span class="o">===</span> <span class="kc">null</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="kd">function</span> <span class="nx">Classy</span><span class="p">()</span> <span class="p">{</span>
+<span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
 
 </pre></div>
@@ -78,12 +61,78 @@
 <div class="pilwrap">
   <a class="pilcrow" href="#section-2" id="section-2">&#182;</a>
 </div>
-<div class="dox">
-  <div class="summary"><p>Privacy is keen</p>
+<p>Some private static variables. Two arrays are used to store all private functions + psuedo private variables used by FlatJS.Classy.prototype._ (see below). Initializing and fnTest imported from John Resig - see comments below. </p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="kd">var</span> <span class="nx">fnStore</span>  <span class="o">=</span> <span class="p">[],</span>
+      <span class="nx">varStore</span> <span class="o">=</span> <span class="p">[],</span>
+      <span class="nx">initializing</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+      <span class="nx">fnTest</span> <span class="o">=</span> <span class="sr">/xyz/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="nx">xyz</span><span class="p">;})</span> <span class="o">?</span> <span class="sr">/\b_super\b/</span> <span class="o">:</span> <span class="sr">/.*/</span><span class="p">;</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs"><div class="dox">
+  <div class="summary">
+<div class="pilwrap" id="flatjs.classy">
+  <h1>
+    <a href="#flatjs.classy" name="flatjs.classy" class="pilcrow">&#182;</a>
+    FlatJS.Classy
+  </h1>
+</div>
+
   </div>
-  <div class="body">
+  <div class="body"><p>Base Class definition used throughout FlatJS. Provides a OOP like class pattern based on John Resig's method.
+See <a href='http://ejohn.org/blog/simple-javascript-inheritance'>http://ejohn.org/blog/simple-javascript-inheritance</a>.
+Extended to provide ways to call private member functions to retain the value of "this" throughout
+your code, as well as a psuedo-private variable storage to save member variables without making them
+visible via a console.log or similiar method. See FlatJS.Classy.prototype._ below.</p>
   </div>
   <div class="details">
+    <div class="dox_tag_title">public
+</div>
+
+
+<div class="highlight"><pre><code><span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;dox_tag_detail&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="err">/div&gt;</span>
+</code></pre></div>
+
+
+
+<p></div>
+</div></p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Classy</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs"><div class="dox">
+  <div class="summary">
+<div class="pilwrap" id="flatjs.classy.prototype._">
+  <h2>
+    <a href="#flatjs.classy.prototype._" name="flatjs.classy.prototype._" class="pilcrow">&#182;</a>
+    FlatJS.Classy.prototype._
+  </h2>
+</div>
+
+  </div>
+  <div class="body"><p>Privacy is keen</p>
+  </div>
+  <div class="details">
+    <div class="dox_tag_title">instanceOf</div>
+    <div class="dox_tag_detail">
+      <span class="dox_type">FlatJS.Classy</span>
+    </div>
+    <div class="dox_tag_title">API</div>
+    <div class="dox_tag_detail">
+      <span class="dox_type">public</span>
+    </div>
     <div class="dox_tag_title">Params</div>
     <div class="dox_tag_detail">
       <span class="dox_tag_name">fn</span>
@@ -102,81 +151,21 @@
         <td class="code highlight"><div class="highlight"><pre>
     <span class="k">this</span><span class="p">.</span><span class="nx">_</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span> <span class="p">{</span>
       <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">fn</span> <span class="o">===</span> <span class="s1">&#39;function&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">self</span>  <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
+            <span class="nx">store</span> <span class="o">=</span> <span class="nx">fnStore</span><span class="p">[</span><span class="nx">self</span><span class="p">]</span> <span class="o">=</span> <span class="nx">fnStore</span><span class="p">[</span><span class="nx">self</span><span class="p">]</span> <span class="o">||</span> <span class="p">[];</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">icnt</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">icnt</span> <span class="o">||</span> <span class="nx">store</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="nx">store</span>     <span class="o">=</span> <span class="nx">store</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">icnt</span><span class="p">]</span> <span class="o">=</span> <span class="nx">store</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">icnt</span><span class="p">]</span> <span class="o">||</span> <span class="p">[];</span>
 
-</pre></div>
-        </td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-3" id="section-3">&#182;</a>
-</div>
-<p>if (!isFunctionAnonymous(fn)) {</p>
-        </td>
-        <td class="code highlight"><div class="highlight"><pre>
-          <span class="kd">var</span> <span class="nx">self</span>  <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
-              <span class="nx">store</span> <span class="o">=</span> <span class="nx">fnStore</span><span class="p">[</span><span class="nx">self</span><span class="p">]</span> <span class="o">=</span> <span class="nx">fnStore</span><span class="p">[</span><span class="nx">self</span><span class="p">]</span> <span class="o">||</span> <span class="p">[];</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">icnt</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">icnt</span> <span class="o">||</span> <span class="nx">store</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-          <span class="nx">store</span>     <span class="o">=</span> <span class="nx">store</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">icnt</span><span class="p">]</span> <span class="o">=</span> <span class="nx">store</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">icnt</span><span class="p">]</span> <span class="o">||</span> <span class="p">[];</span>
-
-          <span class="kd">var</span> <span class="nx">finalVal</span> <span class="o">=</span> <span class="nx">store</span><span class="p">[</span><span class="nx">fn</span><span class="p">]</span> <span class="o">=</span> <span class="nx">store</span><span class="p">[</span><span class="nx">fn</span><span class="p">]</span> <span class="o">||</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-            <span class="nx">store</span><span class="p">[</span><span class="nx">fn</span><span class="p">][</span><span class="nx">self</span><span class="p">.</span><span class="nx">icnt</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-            <span class="k">return</span> <span class="nx">fn</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
-          <span class="p">}</span>
-
-</pre></div>
-        </td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-4" id="section-4">&#182;</a>
-</div>
-<p>console.log('not anonymous!!');
-} else {
-  console.log('anonymous!!');
-  var self = this;
-  return function() {
-    fn.apply(self, arguments);
-  }
-}</p>
-        </td>
-        <td class="code highlight"><div class="highlight"><pre>
+        <span class="kd">var</span> <span class="nx">finalVal</span> <span class="o">=</span> <span class="nx">store</span><span class="p">[</span><span class="nx">fn</span><span class="p">]</span> <span class="o">=</span> <span class="nx">store</span><span class="p">[</span><span class="nx">fn</span><span class="p">]</span> <span class="o">||</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+          <span class="nx">store</span><span class="p">[</span><span class="nx">fn</span><span class="p">][</span><span class="nx">self</span><span class="p">.</span><span class="nx">icnt</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+          <span class="k">return</span> <span class="nx">fn</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+        <span class="p">}</span>
       <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">finalVal</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">handlePrivateVariableStorage</span><span class="p">)(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">val</span><span class="p">);</span>
       <span class="p">}</span>
 
       <span class="k">return</span> <span class="nx">finalVal</span><span class="p">;</span>
-    <span class="p">},</span>
-
-    <span class="k">this</span><span class="p">.</span><span class="nx">later</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">when</span><span class="p">,</span> <span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">fn</span><span class="p">),</span> <span class="nx">when</span><span class="p">);</span>
     <span class="p">}</span>
-
-    <span class="k">this</span><span class="p">.</span><span class="nx">every</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">when</span><span class="p">,</span> <span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kd">var</span> <span class="nx">rt</span>  <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">fn</span><span class="p">),</span> <span class="nx">when</span><span class="p">),</span>
-          <span class="nx">obj</span> <span class="o">=</span> <span class="p">{};</span>
-
-      <span class="nx">obj</span><span class="p">.</span><span class="nx">stop</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">clearInterval</span><span class="p">(</span><span class="nx">rt</span><span class="p">);</span>
-      <span class="p">}</span>
-
-      <span class="nx">obj</span><span class="p">.</span><span class="nx">start</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">every</span><span class="p">(</span><span class="nx">when</span><span class="p">,</span> <span class="nx">fn</span><span class="p">);</span>
-      <span class="p">});</span>
-
-      <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="k">this</span><span class="p">.</span><span class="nx">rand</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">floor</span><span class="p">,</span> <span class="nx">ceil</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">ceil</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">ceil</span> <span class="o">=</span> <span class="nx">floor</span><span class="p">;</span>
-        <span class="nx">floor</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-      <span class="p">}</span>
-
-      <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="nx">ceil</span> <span class="o">-</span> <span class="nx">floor</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="nx">floor</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
 
 
 </pre></div>
@@ -187,93 +176,69 @@
 <div class="pilwrap">
   <a class="pilcrow" href="#section-5" id="section-5">&#182;</a>
 </div>
-<p>Create a new Class that inherits from this class</p>
+<p>end FlatJS.Classy scope</p>
         </td>
         <td class="code highlight"><div class="highlight"><pre>
-  <span class="nx">Classy</span><span class="p">.</span><span class="nx">extend</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">prop</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">}</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs"><div class="dox">
+  <div class="summary">
+<div class="pilwrap" id="flatjs.classy.extend">
+  <h2>
+    <a href="#flatjs.classy.extend" name="flatjs.classy.extend" class="pilcrow">&#182;</a>
+    FlatJS.Classy.extend
+  </h2>
+</div>
+
+  </div>
+  <div class="body"><p>Create a new Class that inherits from this class. Stolen from John Resig, see @link <a href='http://ejohn.org/blog/simple-javascript-inheritance/'>http://ejohn.org/blog/simple-javascript-inheritance/</a> for full comments on static Extend function.</p>
+  </div>
+  <div class="details">
+    <div class="dox_tag_title">API</div>
+    <div class="dox_tag_detail">
+      <span class="dox_type">public</span>
+    </div>
+    <div class="dox_tag_title">static</div>
+    <div class="dox_tag_detail">
+    </div>
+    <div class="dox_tag_title">Params</div>
+    <div class="dox_tag_detail">
+      <span class="dox_tag_name"></span>
+      <span>{Object||Function} prop Either an object or a static function which returns an object representing the public API of the new class to be created.</span>
+    </div>
+    <div class="dox_tag_title">Returns</div>
+    <div class="dox_tag_detail">
+      <span class="dox_tag_name"></span>
+      <span class="dox_type">Function</span>
+      <span>Returns the generated constructor.</span>
+    </div>
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Classy</span><span class="p">.</span><span class="nx">extend</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">prop</span><span class="p">)</span> <span class="p">{</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">prop</span> <span class="o">===</span> <span class="s1">&#39;function&#39;</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">prop</span> <span class="o">=</span> <span class="nx">prop</span><span class="p">();</span>
     <span class="p">}</span>
 
     <span class="kd">var</span> <span class="nx">_super</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
-
-
-</pre></div>
-        </td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-6" id="section-6">&#182;</a>
-</div>
-<p>Instantiate a base class (but only create the instance,
-don't run the init constructor)</p>
-        </td>
-        <td class="code highlight"><div class="highlight"><pre>
     <span class="nx">initializing</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
     <span class="kd">var</span> <span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="k">this</span><span class="p">();</span>
     <span class="nx">initializing</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
 
-
-</pre></div>
-        </td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-7" id="section-7">&#182;</a>
-</div>
-<p>Copy the properties over onto the new prototype</p>
-        </td>
-        <td class="code highlight"><div class="highlight"><pre>
     <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">name</span> <span class="k">in</span> <span class="nx">prop</span><span class="p">)</span> <span class="p">{</span>
-
-</pre></div>
-        </td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-8" id="section-8">&#182;</a>
-</div>
-<p>Check if we're overwriting an existing function</p>
-        </td>
-        <td class="code highlight"><div class="highlight"><pre>
       <span class="nx">prototype</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">prop</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span> <span class="o">&amp;&amp;</span>
         <span class="k">typeof</span> <span class="nx">_super</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">fnTest</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">prop</span><span class="p">[</span><span class="nx">name</span><span class="p">])</span> <span class="o">?</span>
         <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">fn</span><span class="p">){</span>
           <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">tmp</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_super</span><span class="p">;</span>
-
-
-</pre></div>
-        </td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-9" id="section-9">&#182;</a>
-</div>
-<p>Add a new ._super() method that is the same method
-but on the super-class</p>
-        </td>
-        <td class="code highlight"><div class="highlight"><pre>
             <span class="k">this</span><span class="p">.</span><span class="nx">_super</span> <span class="o">=</span> <span class="nx">_super</span><span class="p">[</span><span class="nx">name</span><span class="p">];</span>
-
-
-</pre></div>
-        </td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-10" id="section-10">&#182;</a>
-</div>
-<p>The method only need to be bound temporarily, so we
-remove it when we're done executing</p>
-        </td>
-        <td class="code highlight"><div class="highlight"><pre>
             <span class="kd">var</span> <span class="nx">ret</span> <span class="o">=</span> <span class="nx">fn</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
             <span class="k">this</span><span class="p">.</span><span class="nx">_super</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">;</span>
 
@@ -290,24 +255,12 @@ remove it when we're done executing</p>
       <tr>
         <td class="docs">
 <div class="pilwrap">
-  <a class="pilcrow" href="#section-11" id="section-11">&#182;</a>
+  <a class="pilcrow" href="#section-7" id="section-7">&#182;</a>
 </div>
-<p>The dummy class constructor</p>
+<p>creates a "class" to be returned</p>
         </td>
         <td class="code highlight"><div class="highlight"><pre>
     <span class="kd">function</span> <span class="nx">Class</span><span class="p">()</span> <span class="p">{</span>
-
-</pre></div>
-        </td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-12" id="section-12">&#182;</a>
-</div>
-<p>All construction is actually done in the init method</p>
-        </td>
-        <td class="code highlight"><div class="highlight"><pre>
       <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">initializing</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">init</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">init</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
       <span class="p">}</span>
@@ -319,9 +272,9 @@ remove it when we're done executing</p>
       <tr>
         <td class="docs">
 <div class="pilwrap">
-  <a class="pilcrow" href="#section-13" id="section-13">&#182;</a>
+  <a class="pilcrow" href="#section-8" id="section-8">&#182;</a>
 </div>
-<p>Add to objects array</p>
+<p>Add any instantiated children to static objects array</p>
         </td>
         <td class="code highlight"><div class="highlight"><pre>
       <span class="nx">Class</span><span class="p">.</span><span class="nx">fjsObjects</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
@@ -334,7 +287,7 @@ remove it when we're done executing</p>
       <tr>
         <td class="docs">
 <div class="pilwrap">
-  <a class="pilcrow" href="#section-14" id="section-14">&#182;</a>
+  <a class="pilcrow" href="#section-9" id="section-9">&#182;</a>
 </div>
 <p>Copy static functions</p>
         </td>
@@ -345,46 +298,10 @@ remove it when we're done executing</p>
       <span class="p">}</span>
     <span class="p">}</span>
 
-
-</pre></div>
-        </td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-15" id="section-15">&#182;</a>
-</div>
-<p>Populate our constructed prototype object</p>
-        </td>
-        <td class="code highlight"><div class="highlight"><pre>
     <span class="nx">Class</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">prototype</span><span class="p">;</span>
 
-
-</pre></div>
-        </td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-16" id="section-16">&#182;</a>
-</div>
-<p>Enforce the constructor to be what we expect</p>
-        </td>
-        <td class="code highlight"><div class="highlight"><pre>
     <span class="nx">Class</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">=</span> <span class="nx">Class</span><span class="p">;</span>
 
-
-</pre></div>
-        </td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-17" id="section-17">&#182;</a>
-</div>
-<p>And make this class extendable</p>
-        </td>
-        <td class="code highlight"><div class="highlight"><pre>
     <span class="nx">Class</span><span class="p">.</span><span class="nx">extend</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">callee</span><span class="p">;</span>
 
 
@@ -394,9 +311,9 @@ remove it when we're done executing</p>
       <tr>
         <td class="docs">
 <div class="pilwrap">
-  <a class="pilcrow" href="#section-18" id="section-18">&#182;</a>
+  <a class="pilcrow" href="#section-10" id="section-10">&#182;</a>
 </div>
-<p>Creates a static store for all created objects of Class</p>
+<p>Creates a static store for all created objects of Class, used whenever classes are instantiated (see two comments above)</p>
         </td>
         <td class="code highlight"><div class="highlight"><pre>
     <span class="nx">Class</span><span class="p">.</span><span class="nx">fjsObjects</span> <span class="o">=</span> <span class="p">[];</span>
@@ -404,8 +321,67 @@ remove it when we're done executing</p>
     <span class="k">return</span> <span class="nx">Class</span><span class="p">;</span>
   <span class="p">};</span>
 
-  <span class="k">return</span> <span class="nx">Classy</span><span class="p">;</span>
 
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs"><div class="dox">
+  <div class="summary">
+<div class="pilwrap" id="handleprivatevariablestorage%20-%20private%20to%20flatjs.classy.prototype">
+  <h3>
+    <a href="#handleprivatevariablestorage%20-%20private%20to%20flatjs.classy.prototype" name="handleprivatevariablestorage%20-%20private%20to%20flatjs.classy.prototype" class="pilcrow">&#182;</a>
+    handlePrivateVariableStorage - private to FlatJS.Classy.prototype
+  </h3>
+</div>
+
+  </div>
+  <div class="body"><p>Private function handles the psuedo private variable storage method. Use like so: this.<em>('privateVar', "oh, hello"), get like so this.</em>('privateVar').replace('hello', 'goodbye') => "oh, goodbye". Stores values in static storage using "this" as reference key.</p>
+  </div>
+  <div class="details">
+    <div class="dox_tag_title">API</div>
+    <div class="dox_tag_detail">
+      <span class="dox_type">private</span>
+    </div>
+    <div class="dox_tag_title">instanceOf</div>
+    <div class="dox_tag_detail">
+      <span class="dox_type">FlatJS.Classy</span>
+    </div>
+    <div class="dox_tag_title">Params</div>
+    <div class="dox_tag_detail">
+      <span class="dox_tag_name">key</span>
+      <span class="dox_type">String</span>
+    </div>
+    <div class="dox_tag_detail">
+      <span class="dox_tag_name">val
+</span>
+    </div>
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="kd">function</span> <span class="nx">handlePrivateVariableStorage</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">varStore</span><span class="p">[</span><span class="k">this</span><span class="p">]</span> <span class="o">=</span> <span class="nx">varStore</span><span class="p">[</span><span class="k">this</span><span class="p">]</span> <span class="o">||</span> <span class="p">[];</span>
+    <span class="nx">store</span> <span class="o">=</span> <span class="nx">store</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">store</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">||</span> <span class="p">[];</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">varcnt</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">varcnt</span> <span class="o">||</span> <span class="nx">store</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="nx">store</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">varcnt</span><span class="p">]</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">val</span> <span class="o">!==</span> <span class="s1">&#39;undefined&#39;</span> <span class="o">?</span> <span class="nx">val</span> <span class="o">:</span> <span class="nx">store</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">varcnt</span><span class="p">]</span> <span class="o">||</span> <span class="kc">null</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="nx">store</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">varcnt</span><span class="p">];</span>
+  <span class="p">}</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12">&#182;</a>
+</div>
+<p>end scope.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
 <span class="p">}());</span>
 </pre></div>
         </td>
