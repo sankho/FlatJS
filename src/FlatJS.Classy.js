@@ -26,8 +26,8 @@ var FlatJS = FlatJS || {};
      *
      * Privacy is keen
      *
-     * @instanceOf {FlatJS.Classy}
      * @public
+     * @function FlatJS.Classy#_
      * @param {Function|String} fn The function to be executed / variable name to be stored
      * @param {*} val Value of corresponding string in fn
      */
@@ -59,6 +59,7 @@ var FlatJS = FlatJS || {};
    *
    * @public
    * @static
+   * @function FlatJS.Classy.extend
    * @param  {Object||Function} prop Either an object or a static function which returns an object representing the public API of the new class to be created.
    * @return {Function} Returns the generated constructor.
    */
@@ -119,12 +120,12 @@ var FlatJS = FlatJS || {};
   };
 
   /**
-   * ### handlePrivateVariableStorage - private to FlatJS.Classy.prototype
+   * ### FlatJS.Classy.prototype._(handlePrivateVariableStorage) 
    *
    * Private function handles the psuedo private variable storage method. Use like so: this._('privateVar', "oh, hello"), get like so this._('privateVar').replace('hello', 'goodbye') => "oh, goodbye". Stores values in static storage using "this" as reference key.
    *
    * @private
-   * @instanceOf {FlatJS.Classy}
+   * @function FlatJS.Classy#handlePrivateVariableStorage
    * @param {String} key
    * @param val
    */
