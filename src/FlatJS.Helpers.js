@@ -12,7 +12,7 @@ var FlatJS = FlatJS || {};
 FlatJS.Helpers = {
 
   /**
-   * ## FlatJS.Helpers.conv
+   * ## FlatJS.Helpers.convertDashedToCamelCase
    *
    * Converts a string from having dashes between words to being camelCase.
    *
