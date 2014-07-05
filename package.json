@@ -1,0 +1,26 @@
+{
+  "name"          : "FlatJS",
+  "description"   : "Markup driven MV* JS Framework built with progressive enhancement & limited boilerplate code in mind.",
+  "url"           : "http://sankho.github.io/FlatJS",
+  "keywords"      : ["model", "view", "resource", "component", "server", "client", "browser"],
+  "author"        : "Sankho Mallik <sankho.mallik@gmail.com>",
+  "devDependencies": {
+    "phantomjs": "1.9.7-8",
+    "docco": "0.6.3",
+    "qunit": "1.14.0",
+    "jquery": "1.11.1"
+  },
+  "scripts": {
+    "test": "phantomjs tests/index.html",
+    "build": "uglifyjs ./src/FlatJS.Classy.js ./src/FlatJS.Runner.js ./src/FlatJS.Helpers.js ./src/FlatJS.Widget.js ./src/FlatJS.Dispatch.js ./src/FlatJS.Resource.js ./src/FlatJS.Component.js  --mangle --source-map ./config/flat-min.map -o flat-min.js",
+    "doc": "docco ./src/*.js && docco examples/todomvc/js/app.js",
+    "lint": "jsl -nofilelisting -nologo -conf docs/jsl.conf -process backbone.js"
+  },
+  "main"          : "flat-min.js",
+  "version"       : "0.0.9",
+  "license"       : "DWTFYWT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sankho/FlatJS.git"
+  }
+}
