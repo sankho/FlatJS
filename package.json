@@ -6,15 +6,14 @@
   "author"        : "Sankho Mallik <sankho.mallik@gmail.com>",
   "devDependencies": {
     "phantomjs": "1.9.7-8",
-    "docco": "0.6.3",
+    "docker": "0.2.13",
     "qunit": "1.14.0",
     "jquery": "1.11.1"
   },
   "scripts": {
     "test": "phantomjs tests/index.html",
     "build": "uglifyjs ./src/FlatJS.Classy.js ./src/FlatJS.Runner.js ./src/FlatJS.Helpers.js ./src/FlatJS.Widget.js ./src/FlatJS.Dispatch.js ./src/FlatJS.Resource.js ./src/FlatJS.Component.js  --mangle -o flat-min.js",
-    "doc": "docco ./src/*.js && docco examples/todomvc/js/app.js",
-    "lint": "jsl -nofilelisting -nologo -conf docs/jsl.conf -process backbone.js"
+    "doc": "rm -rf ./docs && docker -o ./docs -i ./src"
   },
   "main"          : "flat-min.js",
   "version"       : "0.0.9",
