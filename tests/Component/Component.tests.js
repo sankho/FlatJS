@@ -217,7 +217,7 @@ __MVMockData.startFourthTests = function() {
     QUnit.equal($('#radio').is(':checked'), false, "Selected radio field turned off via JSON");
     QUnit.equal($('#radio-2').is(':checked'), true, "Radio field value changed via JSON");
     QUnit.equal($('#radio-off').is(':checked'), true, "Unselected radio field turned on via JSON");
-    
+
     QUnit.equal(mvMod.fjsData.form.radioOff, 'test-radio-off', "Unselected radio field turned on via JSON, value is imported");
     QUnit.equal($('#checkbox').is(':checked'), false, "Selected checkbox turned off via JSON");
     QUnit.equal($('#checkbox-off').is(':checked'), true, "Unselected checkbox turned on via JSON");
@@ -256,7 +256,7 @@ __MVMockData.startFourthTests = function() {
     e.keyCode = 50;
     $('#text-input').val($('#text-input').val() + 'a');
     $('#text-input').trigger(e);
-    QUnit.equal(mvMod.fjsData.form.input, "testa", "Internal JSON data object updated when text input is updated on keyup");
+    QUnit.equal(mvMod.fjsData.form.input, "testaa", "Internal JSON data object updated when text input is updated on keyup");
 
     $('#radio-2').trigger('click');
     QUnit.equal(mvMod.fjsData.form.radio, "test-radio-2", "Internal JSON data object updated when radio button is updated on click");
@@ -269,9 +269,9 @@ __MVMockData.startFourthTests = function() {
     var e     = jQuery.Event("keyup");
     e.which   = 50;
     e.keyCode = 50;
-    $mock.find('textarea').val($('#text-input').val() + 'a');
+    $mock.find('textarea').val($('textarea').val() + 'a');
     $mock.find('textarea').trigger(e);
-    QUnit.equal(mvMod.fjsData.form.textarea, "The five foot assassin with the roughneck businessa", "Internal JSON data object updated when textarea is updated on keyup");
+    QUnit.equal(mvMod.fjsData.form.textarea, "Microphone check one two what is thisa", "Internal JSON data object updated when textarea is updated on keyup");
 
     __MVMockData.startFifthTests();
   });
