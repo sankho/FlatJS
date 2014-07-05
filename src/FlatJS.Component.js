@@ -361,9 +361,14 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
 
   function setupCallbacksForInputNodes(node) {
     var text = node.getAttribute('type'),
-        text = !text || text === 'text';
+        text = !text || text === 'text',
+        $    = typeof jQuery === 'function' ? jQuery : false;
 
-    node.addEventListener(text ? 'keyup' : 'change', this._(inputChangeCallback));
+    if ($) {
+      $(node).on(text ? 'keyup' : 'change', this._(inputChangeCallback));
+    } else {
+      node.addEventListener(text ? 'keyup' : 'change', this._(inputChangeCallback));
+    }
   }
 
   function inputChangeCallback(e) {
