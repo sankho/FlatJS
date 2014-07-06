@@ -18,6 +18,18 @@
     </div>
     <div id="tree"></div>
     <div id="headings">
+      <div class="heading h1">
+        <a href="#flatjs.dispatch">FlatJS.Dispatch</a>
+      </div>
+      <div class="heading h2">
+        <a href="#flatjs.dispatch.publish">FlatJS.Dispatch.publish</a>
+      </div>
+      <div class="heading h2">
+        <a href="#flatjs.dispatch.subscribe">FlatJS.Dispatch.subscribe</a>
+      </div>
+      <div class="heading h2">
+        <a href="#flatjs.dispatch.unsubscribe">FlatJS.Dispatch.unsubscribe</a>
+      </div>
     </div>
   </div>
   <div id="sidebar-toggle"></div>
@@ -25,46 +37,41 @@
 <table cellpadding="0" cellspacing="0">
   <tbody>
       <tr>
-        <td class="docs">
-          <h1>FlatJS.Dispatch.js</h1>
-        </td>
-        <td class="code highlight"></td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-1" id="section-1">&#182;</a>
+        <td class="docs"><div class="dox">
+  <div class="summary">
+<div class="pilwrap" id="flatjs.dispatch">
+  <h1>
+    <a href="#flatjs.dispatch" name="flatjs.dispatch" class="pilcrow">&#182;</a>
+    FlatJS.Dispatch
+  </h1>
 </div>
-<div class="dox">
-  <div class="summary"><p>taken from <a href='https://github.com/phiggins42/bloody-jquery-plugins/blob/master/pubsub.js'>https://github.com/phiggins42/bloody-jquery-plugins/blob/master/pubsub.js</a> </p>
+
   </div>
-  <div class="body">
+  <div class="body"><p>Object containing three public functions. Largely based on a pubsub implementation
+written by Peter Higgins, see <a href='https://github.com/phiggins42/bloody-jquery-plugins/blob/master/pubsub.js'>https://github.com/phiggins42/bloody-jquery-plugins/blob/master/pubsub.js</a></p>
+
+<p>Extended to store callbacks relative to the instance ("this") it is called under.
+Also extends FlatJS.Classy &amp; FlatJS.Widget patterns to add pubsub related methods to their prototypes.</p>
   </div>
+  <div class="details">
+    <div class="dox_tag_title">namespace</div>
+    <div class="dox_tag_detail">
+    </div>
+    <div class="dox_tag_title">public
 </div>
+
+
+<div class="highlight"><pre><code><span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;dox_tag_detail&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="err">/div&gt;</span>
+</code></pre></div>
+
+
+
+<p></div>
+</div></p>
         </td>
         <td class="code highlight"><div class="highlight"><pre><span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Dispatch</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
-  <span class="kd">var</span> <span class="nx">api</span>         <span class="o">=</span> <span class="p">{},</span>
-      <span class="nx">cache</span>       <span class="o">=</span> <span class="p">{};</span>
-
-  <span class="nx">api</span><span class="p">.</span><span class="nx">publish</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">topic</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">])</span> <span class="p">{</span>
-      <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">][</span><span class="nx">i</span><span class="p">])</span> <span class="p">{</span>
-          <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">][</span><span class="nx">i</span><span class="p">].</span><span class="nx">fn</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">args</span><span class="p">);</span>
-        <span class="p">}</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-
-  <span class="nx">api</span><span class="p">.</span><span class="nx">subscribe</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">topic</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">]){</span>
-      <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="p">}</span>
-    <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">].</span><span class="nx">push</span><span class="p">({</span>
-      <span class="nx">instance</span><span class="o">:</span> <span class="k">this</span><span class="p">,</span>
-      <span class="nx">fn</span><span class="o">:</span>       <span class="nx">callback</span>
-    <span class="p">});</span>
 
 </pre></div>
         </td>
@@ -74,10 +81,10 @@
 <div class="pilwrap">
   <a class="pilcrow" href="#section-2" id="section-2">&#182;</a>
 </div>
-<p>return [topic, callback]; // Array</p>
+<p>cache is the private static store of all callbacks</p>
         </td>
         <td class="code highlight"><div class="highlight"><pre>
-  <span class="p">};</span>
+  <span class="kd">var</span> <span class="nx">cache</span>       <span class="o">=</span> <span class="p">{};</span>
 
 
 </pre></div>
@@ -88,44 +95,204 @@
 <div class="pilwrap">
   <a class="pilcrow" href="#section-3" id="section-3">&#182;</a>
 </div>
-<p>TODO: Make shorter / separate into private functions.</p>
+<p>api is the public object returned at the end of the closure which represents FlatJS.Dispatch</p>
         </td>
         <td class="code highlight"><div class="highlight"><pre>
-  <span class="nx">api</span><span class="p">.</span><span class="nx">unsubscribe</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">topic</span><span class="p">,</span> <span class="nx">callback</span><span class="p">){</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">])</span> <span class="p">{</span>
-      <span class="k">if</span> <span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span>  <span class="nx">api</span>         <span class="o">=</span> <span class="p">{</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs"><div class="dox">
+  <div class="summary">
+<div class="pilwrap" id="flatjs.dispatch.publish">
+  <h2>
+    <a href="#flatjs.dispatch.publish" name="flatjs.dispatch.publish" class="pilcrow">&#182;</a>
+    FlatJS.Dispatch.publish
+  </h2>
+</div>
+
+  </div>
+  <div class="body"><p>Publish an event, all listeners be called with the current context
+used in an apply wrapper.</p>
+  </div>
+  <div class="details">
+    <div class="dox_tag_title">function</div>
+    <div class="dox_tag_detail">
+      <span>FlatJS.Dispatch.publish</span>
+    </div>
+    <div class="dox_tag_title">API</div>
+    <div class="dox_tag_detail">
+      <span class="dox_type">public</span>
+    </div>
+    <div class="dox_tag_title">Params</div>
+    <div class="dox_tag_detail">
+      <span class="dox_tag_name"></span>
+      <span>{String} topic The event to be published</span>
+    </div>
+    <div class="dox_tag_detail">
+      <span class="dox_tag_name"></span>
+      <span>{Array}  args  Array of arguments to be passed to all callback functions</span>
+    </div>
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+    <span class="nx">publish</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">topic</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">])</span> <span class="p">{</span>
         <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-          <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">][</span><span class="nx">i</span><span class="p">];</span>
-          <span class="k">if</span><span class="p">(</span><span class="nx">obj</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">fn</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">fn</span> <span class="o">===</span> <span class="nx">callback</span><span class="p">){</span>
-            <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">].</span><span class="nx">splice</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">][</span><span class="nx">i</span><span class="p">])</span> <span class="p">{</span>
+            <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">][</span><span class="nx">i</span><span class="p">].</span><span class="nx">fn</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">args</span><span class="p">);</span>
           <span class="p">}</span>
         <span class="p">}</span>
-      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="k">this</span> <span class="o">!==</span> <span class="nx">api</span><span class="p">)</span> <span class="p">{</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs"><div class="dox">
+  <div class="summary">
+<div class="pilwrap" id="flatjs.dispatch.subscribe">
+  <h2>
+    <a href="#flatjs.dispatch.subscribe" name="flatjs.dispatch.subscribe" class="pilcrow">&#182;</a>
+    FlatJS.Dispatch.subscribe
+  </h2>
+</div>
+
+  </div>
+  <div class="body"><p>Subscribes a callback function to an event to be published within the application.
+Instance and callback are stored in an object in the array.</p>
+  </div>
+  <div class="details">
+    <div class="dox_tag_title">function</div>
+    <div class="dox_tag_detail">
+      <span>FlatJS.Dispatch.subscribe</span>
+    </div>
+    <div class="dox_tag_title">API</div>
+    <div class="dox_tag_detail">
+      <span class="dox_type">public</span>
+    </div>
+    <div class="dox_tag_title">Params</div>
+    <div class="dox_tag_detail">
+      <span class="dox_tag_name"></span>
+      <span>{String} topic The event to be published</span>
+    </div>
+    <div class="dox_tag_detail">
+      <span class="dox_tag_name"></span>
+      <span>{Function} callback Callback function to be triggered when event occurs</span>
+    </div>
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+    <span class="nx">subscribe</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">topic</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">]){</span>
+        <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span>
+      <span class="p">}</span>
+      <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">].</span><span class="nx">push</span><span class="p">({</span>
+        <span class="nx">instance</span><span class="o">:</span> <span class="k">this</span><span class="p">,</span>
+        <span class="nx">fn</span><span class="o">:</span>       <span class="nx">callback</span>
+      <span class="p">});</span>
+    <span class="p">},</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs"><div class="dox">
+  <div class="summary">
+<div class="pilwrap" id="flatjs.dispatch.unsubscribe">
+  <h2>
+    <a href="#flatjs.dispatch.unsubscribe" name="flatjs.dispatch.unsubscribe" class="pilcrow">&#182;</a>
+    FlatJS.Dispatch.unsubscribe
+  </h2>
+</div>
+
+  </div>
+  <div class="body"><p>Unsubscribes callbacks from handlers. If no callback is passed, all callbacks
+of that topic are dropped. If no topic &amp;&amp; no callback are passed, all callbacks
+related to that object ("this") are dropped.</p>
+  </div>
+  <div class="details">
+    <div class="dox_tag_title">function</div>
+    <div class="dox_tag_detail">
+      <span>FlatJS.Dispatch.unsubscribe</span>
+    </div>
+    <div class="dox_tag_title">API</div>
+    <div class="dox_tag_detail">
+      <span class="dox_type">public</span>
+    </div>
+    <div class="dox_tag_title">Params</div>
+    <div class="dox_tag_detail">
+      <span class="dox_tag_name"></span>
+      <span>{String} topic The event to be published</span>
+    </div>
+    <div class="dox_tag_detail">
+      <span class="dox_tag_name"></span>
+      <span>{Function} callback Callback function to be unsubscribed</span>
+    </div>
+  </div>
+</div>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+    <span class="nx">unsubscribe</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">topic</span><span class="p">,</span> <span class="nx">callback</span><span class="p">){</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">])</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
           <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">][</span><span class="nx">i</span><span class="p">];</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">obj</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">instance</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">instance</span> <span class="o">===</span> <span class="k">this</span><span class="p">)</span> <span class="p">{</span>
-              <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">].</span><span class="nx">splice</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">obj</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">fn</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">fn</span> <span class="o">===</span> <span class="nx">callback</span><span class="p">){</span>
+              <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">].</span><span class="nx">splice</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
             <span class="p">}</span>
           <span class="p">}</span>
         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-          <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span>
+          <span class="k">if</span> <span class="p">(</span><span class="k">this</span> <span class="o">!==</span> <span class="nx">api</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+              <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">][</span><span class="nx">i</span><span class="p">];</span>
+              <span class="k">if</span> <span class="p">(</span><span class="nx">obj</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">instance</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">instance</span> <span class="o">===</span> <span class="k">this</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">].</span><span class="nx">splice</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+              <span class="p">}</span>
+            <span class="p">}</span>
+          <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">cache</span><span class="p">[</span><span class="nx">topic</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span>
+          <span class="p">}</span>
         <span class="p">}</span>
-      <span class="p">}</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">topic</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">callback</span> <span class="o">&amp;&amp;</span> <span class="k">this</span> <span class="o">!==</span> <span class="nx">api</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">topicKey</span> <span class="k">in</span> <span class="nx">cache</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">topic</span> <span class="o">=</span> <span class="nx">cache</span><span class="p">[</span><span class="nx">topicKey</span><span class="p">];</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">cb</span> <span class="k">in</span> <span class="nx">topic</span><span class="p">)</span> <span class="p">{</span>
-          <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nx">topic</span><span class="p">[</span><span class="nx">cb</span><span class="p">];</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">topic</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">callback</span> <span class="o">&amp;&amp;</span> <span class="k">this</span> <span class="o">!==</span> <span class="nx">api</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">topicKey</span> <span class="k">in</span> <span class="nx">cache</span><span class="p">)</span> <span class="p">{</span>
+          <span class="kd">var</span> <span class="nx">topic</span> <span class="o">=</span> <span class="nx">cache</span><span class="p">[</span><span class="nx">topicKey</span><span class="p">];</span>
+          <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">cb</span> <span class="k">in</span> <span class="nx">topic</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nx">topic</span><span class="p">[</span><span class="nx">cb</span><span class="p">];</span>
 
-          <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">fn</span> <span class="o">===</span> <span class="s1">&#39;function&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">instance</span> <span class="o">===</span> <span class="k">this</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">topic</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">fn</span> <span class="o">===</span> <span class="s1">&#39;function&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">instance</span> <span class="o">===</span> <span class="k">this</span><span class="p">)</span> <span class="p">{</span>
+              <span class="nx">topic</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+            <span class="p">}</span>
           <span class="p">}</span>
         <span class="p">}</span>
       <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">}</span>
 
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7">&#182;</a>
+</div>
+<p>checking to see if classy exists. not sure if this is really necessary, but maybe sometime down the road having
+a custom builder would be cool to not include modules you don't need.</p>
+
+<p>anyway, if it exists, some functions are added to the prototype of FlatJS.Classy to assist in instance based
+pubsubin'.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
   <span class="k">if</span> <span class="p">(</span><span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Classy</span><span class="p">)</span> <span class="p">{</span>
 
     <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Classy</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">publish</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">topic</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
@@ -135,7 +302,7 @@
     <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Classy</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">subscribe</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">topic</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">api</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">)(</span><span class="nx">topic</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
     <span class="p">}</span>
-    
+
     <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Classy</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">unsubscribe</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">topic</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">api</span><span class="p">.</span><span class="nx">unsubscribe</span><span class="p">)(</span><span class="nx">topic</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
     <span class="p">}</span>
@@ -144,7 +311,7 @@
   <span class="k">if</span> <span class="p">(</span><span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Widget</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Widget</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">destroy</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">unsubscribe</span><span class="p">();</span>
-    <span class="p">};</span>
+    <span class="p">}</span>
   <span class="p">}</span>
 
   <span class="k">return</span> <span class="nx">api</span><span class="p">;</span>
