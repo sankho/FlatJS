@@ -121,7 +121,7 @@ FlatJS.Classy = (function() {
   };
 
   /**
-   * ### FlatJS.Classy.prototype._(handlePrivateVariableStorage)
+   * ## FlatJS.Classy.prototype._(handlePrivateVariableStorage)
    *
    * Private function handles the psuedo private variable storage method. Use like so: this._('privateVar', "oh, hello"), get like so this._('privateVar').replace('hello', 'goodbye') => "oh, goodbye". Stores values in static storage using "this" as reference key.
    *
