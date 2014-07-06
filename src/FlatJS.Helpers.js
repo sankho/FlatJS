@@ -48,8 +48,8 @@ FlatJS.Helpers = {
    *
    * @static
    * @function FlatJS.Helpers.getAllElementsWithAttribute
-   * @param  {String} attribute DOM attribute to look for within nodes
-   * @param  {Object} node      DOM Object to traverse through
+   * @param {String} attribute DOM attribute to look for within nodes
+   * @param {Object} node      DOM Object to traverse through
    * @return {Array}            An array of all matching elements.
    */
   getAllElementsWithAttribute: function(attribute, node) {
@@ -79,8 +79,8 @@ FlatJS.Helpers = {
    * type checking, array splicing, and recursion.
    *
    * @static
-   * @param  {String / Array} c       Starts as a string, but can be an array representing the object being sought.
-   * @param  {Object} parent          The current namespace / context functions are being sought within.
+   * @param {String / Array} c       Starts as a string, but can be an array representing the object being sought.
+   * @param {Object} parent          The current namespace / context functions are being sought within.
    * @return {Function / Boolean}     Oughta return the function it's finding or false
    */
   findFunctionByString: function(c, parent, defaultValue) {

@@ -6,7 +6,7 @@
  * @class
  * @constructs
  * @public
- * @param  {Object} opts Extendable options
+ * @param {Object} opts Extendable options
  */
 FlatJS.Runner = function runner(opts) {
   opts = opts || {};
@@ -29,7 +29,7 @@ FlatJS.Runner = function runner(opts) {
    *
    * @function FlatJS.Runner#init
    * @public
-   * @param  {Object} _node DOM node to be inspected
+   * @param {Object} _node DOM node to be inspected
    */
   this.init = function(_node) {
     _node = _node || node;
@@ -49,7 +49,7 @@ FlatJS.Runner = function runner(opts) {
    *
    * @function FlatJS.Runner~moduleInit
    * @private
-   * @param  {Object} objNode DOM Object to be inspected.
+   * @param {Object} objNode DOM Object to be inspected.
    */
   function moduleInit(objNode) {
     var controllers = objNode.getAttribute(attr);
@@ -81,9 +81,9 @@ FlatJS.Runner = function runner(opts) {
    *
    * @function FlatJS.Runner~findAndCallModuleByString
    * @private
-   * @param  {Object} objNode         DOM object to attach method to after execution
-   * @param  {String} origName        Stores the name as it comes in for pointer purposes.
-   * @param  {Object} parent          The current namespace / context functions are being sought within.
+   * @param {Object} objNode         DOM object to attach method to after execution
+   * @param {String} origName        Stores the name as it comes in for pointer purposes.
+   * @param {Object} parent          The current namespace / context functions are being sought within.
    * @return {Object}                 Oughta return an object w/ the result of the executed method.
    */
   function findAndCallModuleByString(objNode, origName, parent) {
@@ -102,9 +102,9 @@ FlatJS.Runner = function runner(opts) {
    *
    * @function FlatJS.Runner~runMethodOnObj
    * @private
-   * @param  {Function} fn      Function to be called
-   * @param  {Object}   objNode DOM element to place return of function within
-   * @return {Object}           Should return whatever that function returns; assuming it's an object.
+   * @param {Function} fn      Function to be called
+   * @param {Object} objNode   DOM element to place return of function within
+   * @return {Object}          Should return whatever that function returns; assuming it's an object.
    */
   function runMethodOnObj(fn, objNode, name) {
     if (!objNode[objKey]) {

@@ -74,8 +74,8 @@ FlatJS.Resource = FlatJS.Classy.extend(function() {
      *
      * @public
      * @this FlatJS.Resource
-     * @param {[type]} prop [description]
-     * @param {[type]} val  [description]
+     * @param {String} prop
+     * @param val
      */
     set: function(prop, val) {
       var oldVal = this.get(prop);
@@ -254,7 +254,7 @@ FlatJS.Resource = FlatJS.Classy.extend(function() {
  *
  * @public
  * @static
- * @param  {Number} id                 ID of resource object in question.
+ * @param {Number} id                 ID of resource object in question.
  * @return {FlatJS.Resource||Boolean}  Returns false if nothing is found, or the resource object if it is found
  */
 FlatJS.Resource.find = function(id) {

@@ -61,7 +61,7 @@ FlatJS.Classy = (function() {
    * @public
    * @static
    * @function FlatJS.Classy.extend
-   * @param  {Object||Function} prop Either an object or a static function which returns an object representing the public API of the new class to be created.
+   * @param {Object||Function} prop Either an object or a static function which returns an object representing the public API of the new class to be created.
    * @return {Function} Returns the generated constructor.
    */
   Classy.extend = function(prop) {

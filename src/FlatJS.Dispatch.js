@@ -26,8 +26,8 @@ FlatJS.Dispatch = (function() {
      *
      * @function FlatJS.Dispatch.publish
      * @public
-     * @param  {String} topic The event to be published
-     * @param  {Array}  args  Array of arguments to be passed to all callback functions
+     * @param {String} topic The event to be published
+     * @param {Array} args   Array of arguments to be passed to all callback functions
      */
     publish: function(topic, args) {
       if (cache[topic]) {
@@ -47,8 +47,8 @@ FlatJS.Dispatch = (function() {
      *
      * @function FlatJS.Dispatch.subscribe
      * @public
-     * @param  {String} topic The event to be published
-     * @param  {Function} callback Callback function to be triggered when event occurs
+     * @param {String} topic The event to be published
+     * @param {Function} callback Callback function to be triggered when event occurs
      */
     subscribe: function(topic, callback) {
       if(!cache[topic]){
@@ -69,8 +69,8 @@ FlatJS.Dispatch = (function() {
      *
      * @function FlatJS.Dispatch.unsubscribe
      * @public
-     * @param  {String} topic The event to be published
-     * @param  {Function} callback Callback function to be unsubscribed
+     * @param {String} topic The event to be published
+     * @param {Function} callback Callback function to be unsubscribed
      */
     unsubscribe: function(topic, callback){
       if (cache[topic]) {
