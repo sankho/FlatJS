@@ -18,8 +18,6 @@
     </div>
     <div id="tree"></div>
     <div id="headings">
-<<<<<<< HEAD
-=======
       <div class="heading h1">
         <a href="#flatjs.runner">FlatJS.Runner</a>
       </div>
@@ -35,7 +33,6 @@
       <div class="heading h2">
         <a href="#flatjs.runner~runmethodonobj">FlatJS.Runner~runMethodOnObj</a>
       </div>
->>>>>>> master
     </div>
   </div>
   <div id="sidebar-toggle"></div>
@@ -43,40 +40,6 @@
 <table cellpadding="0" cellspacing="0">
   <tbody>
       <tr>
-<<<<<<< HEAD
-        <td class="docs">
-          <h1>FlatJS.Runner.js</h1>
-        </td>
-        <td class="code highlight"></td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-1" id="section-1">&#182;</a>
-</div>
-
-        </td>
-        <td class="code highlight"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">FlatJS</span> <span class="o">=</span> <span class="nx">FlatJS</span> <span class="o">||</span> <span class="p">{};</span>
-
-
-</pre></div>
-        </td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-2" id="section-2">&#182;</a>
-</div>
-<div class="dox">
-  <div class="summary"><p>Codez go here.</p>
-  </div>
-  <div class="body">
-  </div>
-  <div class="details">
-    <div class="dox_tag_title">module</div>
-    <div class="dox_tag_detail">
-      <span>ModuleRunner</span>
-=======
         <td class="docs"><div class="dox">
   <div class="summary">
 <div class="pilwrap" id="flatjs.runner">
@@ -105,15 +68,10 @@
       <span class="dox_tag_name">opts</span>
       <span class="dox_type">Object</span>
       <span>Extendable options</span>
->>>>>>> master
     </div>
   </div>
 </div>
         </td>
-<<<<<<< HEAD
-        <td class="code highlight"><div class="highlight"><pre>
-<span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Runner</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-=======
         <td class="code highlight"><div class="highlight"><pre><span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Runner</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">runner</span><span class="p">(</span><span class="nx">opts</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">opts</span> <span class="o">=</span> <span class="nx">opts</span> <span class="o">||</span> <span class="p">{};</span>
 
@@ -126,36 +84,12 @@
       <span class="nx">callFn</span>  <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">callFn</span>  <span class="o">||</span> <span class="kc">false</span><span class="p">;</span>
 
   <span class="kd">var</span> <span class="nx">getAllElementsWithAttribute</span> <span class="o">=</span> <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Helpers</span><span class="p">.</span><span class="nx">getAllElementsWithAttribute</span><span class="p">;</span>
->>>>>>> master
 
 
 </pre></div>
         </td>
       </tr>
       <tr>
-<<<<<<< HEAD
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-3" id="section-3">&#182;</a>
-</div>
-<div class="dox">
-  <div class="summary"><p>Function to be treated as prototype class, returned at bottom of closure.</p>
-  </div>
-  <div class="body">
-  </div>
-  <div class="details">
-    <div class="dox_tag_title">method</div>
-    <div class="dox_tag_detail">
-    </div>
-    <div class="dox_tag_title">API</div>
-    <div class="dox_tag_detail">
-      <span class="dox_type">private</span>
-    </div>
-    <div class="dox_tag_title">Params</div>
-    <div class="dox_tag_detail">
-      <span class="dox_tag_name"></span>
-      <span>{Object} opts Extendable options</span>
-=======
         <td class="docs"><div class="dox">
   <div class="summary">
 <div class="pilwrap" id="flatjs.runner%23init">
@@ -183,26 +117,11 @@ the loader on <divs> after ajax calls, JS manipulation, etc.</p>
       <span class="dox_tag_name">_node</span>
       <span class="dox_type">Object</span>
       <span>DOM node to be inspected</span>
->>>>>>> master
     </div>
   </div>
 </div>
         </td>
         <td class="code highlight"><div class="highlight"><pre>
-<<<<<<< HEAD
-  <span class="kd">function</span> <span class="nx">runner</span><span class="p">(</span><span class="nx">opts</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">opts</span> <span class="o">=</span> <span class="nx">opts</span> <span class="o">||</span> <span class="p">{};</span>
-
-    <span class="kd">var</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">context</span> <span class="o">||</span> <span class="nb">window</span><span class="p">,</span>
-        <span class="nx">node</span>    <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">node</span>    <span class="o">||</span> <span class="nb">document</span><span class="p">,</span>
-        <span class="nx">init</span>    <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">init</span> <span class="o">!==</span> <span class="kc">undefined</span> <span class="o">?</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">init</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nx">attr</span>    <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">attr</span>    <span class="o">||</span> <span class="s1">&#39;fjs-component&#39;</span><span class="p">,</span>
-        <span class="nx">objKey</span>  <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">objKey</span>  <span class="o">||</span> <span class="s1">&#39;fjsComponents&#39;</span><span class="p">,</span>
-        <span class="nx">findFn</span>  <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">findFn</span>  <span class="o">||</span> <span class="kd">function</span><span class="p">(</span><span class="nx">fn</span><span class="p">){</span><span class="nx">fn</span><span class="p">()},</span>
-        <span class="nx">callFn</span>  <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">callFn</span>  <span class="o">||</span> <span class="kc">false</span><span class="p">;</span>
-
-    <span class="kd">var</span> <span class="nx">getAllElementsWithAttribute</span> <span class="o">=</span> <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Helpers</span><span class="p">.</span><span class="nx">getAllElementsWithAttribute</span><span class="p">;</span>
-=======
   <span class="k">this</span><span class="p">.</span><span class="nx">init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_node</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">_node</span> <span class="o">=</span> <span class="nx">_node</span> <span class="o">||</span> <span class="nx">node</span><span class="p">;</span>
     <span class="kd">var</span> <span class="nx">elems</span>      <span class="o">=</span> <span class="nx">getAllElementsWithAttribute</span><span class="p">(</span><span class="nx">attr</span><span class="p">,</span> <span class="nx">_node</span><span class="p">),</span>
@@ -212,58 +131,12 @@ the loader on <divs> after ajax calls, JS manipulation, etc.</p>
       <span class="nx">moduleInit</span><span class="p">(</span><span class="nx">elems</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
     <span class="p">}</span>
   <span class="p">}</span>
->>>>>>> master
 
 
 </pre></div>
         </td>
       </tr>
       <tr>
-<<<<<<< HEAD
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-4" id="section-4">&#182;</a>
-</div>
-<div class="dox">
-  <div class="summary"><p>Inits the module runner on all children nodes - exposed as public so devs can run
-the loader on <divs> after ajax calls, JS manipulation, etc.</p>
-  </div>
-  <div class="body">
-  </div>
-  <div class="details">
-    <div class="dox_tag_title">Params</div>
-    <div class="dox_tag_detail">
-      <span class="dox_tag_name"></span>
-      <span>{Object} _node DOM node to be inspected</span>
-    </div>
-    <div class="dox_tag_title">API</div>
-    <div class="dox_tag_detail">
-      <span class="dox_type">public</span>
-    </div>
-    <div class="dox_tag_title">method
-</div>
-
-
-<div class="highlight"><pre><code><span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;dox_tag_detail&quot;</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="err">/div&gt;</span>
-</code></pre></div>
-
-
-
-<p></div>
-</div></p>
-        </td>
-        <td class="code highlight"><div class="highlight"><pre>
-    <span class="k">this</span><span class="p">.</span><span class="nx">init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_node</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">_node</span> <span class="o">=</span> <span class="nx">_node</span> <span class="o">||</span> <span class="nx">node</span><span class="p">;</span>
-      <span class="kd">var</span> <span class="nx">elems</span>      <span class="o">=</span> <span class="nx">getAllElementsWithAttribute</span><span class="p">(</span><span class="nx">attr</span><span class="p">,</span> <span class="nx">_node</span><span class="p">),</span>
-          <span class="nx">elemLength</span> <span class="o">=</span> <span class="nx">elems</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-
-      <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">elemLength</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">moduleInit</span><span class="p">(</span><span class="nx">elems</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-=======
         <td class="docs"><div class="dox">
   <div class="summary">
 <div class="pilwrap" id="flatjs.runner~moduleinit">
@@ -315,21 +188,12 @@ runs them as needed. Exposed publically for use after Ajax requests etc.</p>
       <span class="p">}())</span>
     <span class="p">}</span>
   <span class="p">}</span>
->>>>>>> master
 
 
 </pre></div>
         </td>
       </tr>
       <tr>
-<<<<<<< HEAD
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-5" id="section-5">&#182;</a>
-</div>
-<div class="dox">
-  <div class="summary"><p>Recursive search through an object - or window by default -
-=======
         <td class="docs"><div class="dox">
   <div class="summary">
 <div class="pilwrap" id="flatjs.runner~findandcallmodulebystring">
@@ -341,28 +205,10 @@ runs them as needed. Exposed publically for use after Ajax requests etc.</p>
 
   </div>
   <div class="body"><p>Recursive search through an object - or window by default -
->>>>>>> master
 looking for a function which matches the string being sought
 after. Accounts for object depth w/ string splitting by period,
 type checking, array splicing, and recursion.</p>
   </div>
-<<<<<<< HEAD
-  <div class="body">
-  </div>
-  <div class="details">
-    <div class="dox_tag_title">Params</div>
-    <div class="dox_tag_detail">
-      <span class="dox_tag_name"></span>
-      <span>{Object} objNode         DOM object to attach method to after execution</span>
-    </div>
-    <div class="dox_tag_detail">
-      <span class="dox_tag_name"></span>
-      <span>{String} origName        Stores the name as it comes in for pointer purposes.</span>
-    </div>
-    <div class="dox_tag_detail">
-      <span class="dox_tag_name"></span>
-      <span>{Object} parent          The current namespace / context functions are being sought within.</span>
-=======
   <div class="details">
     <div class="dox_tag_title">function</div>
     <div class="dox_tag_detail">
@@ -387,7 +233,6 @@ type checking, array splicing, and recursion.</p>
       <span class="dox_tag_name">parent</span>
       <span class="dox_type">Object</span>
       <span>The current namespace / context functions are being sought within.</span>
->>>>>>> master
     </div>
     <div class="dox_tag_title">Returns</div>
     <div class="dox_tag_detail">
@@ -399,31 +244,16 @@ type checking, array splicing, and recursion.</p>
 </div>
         </td>
         <td class="code highlight"><div class="highlight"><pre>
-<<<<<<< HEAD
-    <span class="kd">function</span> <span class="nx">findAndCallModuleByString</span><span class="p">(</span><span class="nx">objNode</span><span class="p">,</span> <span class="nx">origName</span><span class="p">,</span> <span class="nx">parent</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kd">var</span> <span class="nx">fn</span> <span class="o">=</span> <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Helpers</span><span class="p">.</span><span class="nx">findFunctionByString</span><span class="p">(</span><span class="nx">origName</span><span class="p">,</span> <span class="nx">parent</span><span class="p">);</span>
-      <span class="k">return</span> <span class="nx">runMethodOnObj</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">objNode</span><span class="p">,</span> <span class="nx">origName</span><span class="p">);</span>
-    <span class="p">}</span>
-=======
   <span class="kd">function</span> <span class="nx">findAndCallModuleByString</span><span class="p">(</span><span class="nx">objNode</span><span class="p">,</span> <span class="nx">origName</span><span class="p">,</span> <span class="nx">parent</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">fn</span> <span class="o">=</span> <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Helpers</span><span class="p">.</span><span class="nx">findFunctionByString</span><span class="p">(</span><span class="nx">origName</span><span class="p">,</span> <span class="nx">parent</span><span class="p">);</span>
     <span class="k">return</span> <span class="nx">runMethodOnObj</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">objNode</span><span class="p">,</span> <span class="nx">origName</span><span class="p">);</span>
   <span class="p">}</span>
->>>>>>> master
 
 
 </pre></div>
         </td>
       </tr>
       <tr>
-<<<<<<< HEAD
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-6" id="section-6">&#182;</a>
-</div>
-<div class="dox">
-  <div class="summary"><p>Private method takes a function, executes it using
-=======
         <td class="docs"><div class="dox">
   <div class="summary">
 <div class="pilwrap" id="flatjs.runner~runmethodonobj">
@@ -435,25 +265,11 @@ type checking, array splicing, and recursion.</p>
 
   </div>
   <div class="body"><p>Private method takes a function, executes it using
->>>>>>> master
 the new keyword (assuming the function is a prototype),
 and attaches the result to the supplied node's object as
 an array. Behavoir of how function is called can be extended
 by using the options (see above, callFn).</p>
   </div>
-<<<<<<< HEAD
-  <div class="body">
-  </div>
-  <div class="details">
-    <div class="dox_tag_title">Params</div>
-    <div class="dox_tag_detail">
-      <span class="dox_tag_name"></span>
-      <span>{Function} fn      Function to be called</span>
-    </div>
-    <div class="dox_tag_detail">
-      <span class="dox_tag_name"></span>
-      <span>{Object}   objNode DOM element to place return of function within</span>
-=======
   <div class="details">
     <div class="dox_tag_title">function</div>
     <div class="dox_tag_detail">
@@ -473,7 +289,6 @@ by using the options (see above, callFn).</p>
       <span class="dox_tag_name">objNode</span>
       <span class="dox_type">Object</span>
       <span>DOM element to place return of function within</span>
->>>>>>> master
     </div>
     <div class="dox_tag_title">Returns</div>
     <div class="dox_tag_detail">
@@ -481,35 +296,10 @@ by using the options (see above, callFn).</p>
       <span class="dox_type">Object</span>
       <span>Should return whatever that function returns; assuming it's an object.</span>
     </div>
-<<<<<<< HEAD
-    <div class="dox_tag_detail">
-      <span class="dox_tag_name"></span>
-      <span class="dox_type">String</span>
-      <span>name    String used to identify function w/ namespaces</span>
-    </div>
-=======
->>>>>>> master
   </div>
 </div>
         </td>
         <td class="code highlight"><div class="highlight"><pre>
-<<<<<<< HEAD
-    <span class="kd">function</span> <span class="nx">runMethodOnObj</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">objNode</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">objNode</span><span class="p">[</span><span class="nx">objKey</span><span class="p">])</span> <span class="p">{</span>
-        <span class="nx">objNode</span><span class="p">[</span><span class="nx">objKey</span><span class="p">]</span> <span class="o">=</span> <span class="p">{};</span>
-      <span class="p">}</span>
-
-      <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">callFn</span> <span class="o">===</span> <span class="s1">&#39;function&#39;</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nx">callFn</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">objNode</span><span class="p">);</span>
-      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">objNode</span><span class="p">);</span>
-      <span class="p">}</span>
-
-      <span class="nx">objNode</span><span class="p">[</span><span class="nx">objKey</span><span class="p">][</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">;</span>
-      <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
-    <span class="p">}</span>
-
-=======
   <span class="kd">function</span> <span class="nx">runMethodOnObj</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">objNode</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">objNode</span><span class="p">[</span><span class="nx">objKey</span><span class="p">])</span> <span class="p">{</span>
       <span class="nx">objNode</span><span class="p">[</span><span class="nx">objKey</span><span class="p">]</span> <span class="o">=</span> <span class="p">{};</span>
@@ -525,7 +315,6 @@ by using the options (see above, callFn).</p>
     <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
   <span class="p">}</span>
 
->>>>>>> master
 
 </pre></div>
         </td>
@@ -533,58 +322,6 @@ by using the options (see above, callFn).</p>
       <tr>
         <td class="docs">
 <div class="pilwrap">
-<<<<<<< HEAD
-  <a class="pilcrow" href="#section-7" id="section-7">&#182;</a>
-</div>
-<div class="dox">
-  <div class="summary"><p>Looks at a single node, checks it for any attached JS modules, and
-runs them as needed. Exposed publically for use after Ajax requests etc.</p>
-  </div>
-  <div class="body">
-  </div>
-  <div class="details">
-    <div class="dox_tag_title">API</div>
-    <div class="dox_tag_detail">
-      <span class="dox_type">public</span>
-    </div>
-    <div class="dox_tag_title">Params</div>
-    <div class="dox_tag_detail">
-      <span class="dox_tag_name"></span>
-      <span>{Object} objNode DOM Object to be inspected.</span>
-    </div>
-  </div>
-</div>
-        </td>
-        <td class="code highlight"><div class="highlight"><pre>
-    <span class="k">this</span><span class="p">.</span><span class="nx">moduleInit</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">objNode</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kd">var</span> <span class="nx">controllers</span> <span class="o">=</span> <span class="nx">objNode</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="nx">attr</span><span class="p">);</span>
-
-      <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">controllers</span> <span class="o">!==</span> <span class="s1">&#39;string&#39;</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span><span class="p">;</span>
-      <span class="p">}</span>
-      <span class="nx">controllers</span>  <span class="o">=</span> <span class="nx">controllers</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">);</span>
-      <span class="kd">var</span> <span class="nx">conCount</span> <span class="o">=</span> <span class="nx">controllers</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-      <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">conCount</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-          <span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">controllers</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
-          <span class="kd">var</span> <span class="nx">camel</span> <span class="o">=</span> <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Helpers</span><span class="p">.</span><span class="nx">convertDashedToCamelCase</span><span class="p">(</span><span class="nx">c</span><span class="p">);</span>
-
-          <span class="nx">findFn</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-            <span class="nx">findAndCallModuleByString</span><span class="p">(</span><span class="nx">objNode</span><span class="p">,</span> <span class="nx">camel</span><span class="p">,</span> <span class="nx">context</span><span class="p">);</span>
-          <span class="p">},</span> <span class="nx">objNode</span><span class="p">,</span> <span class="nx">c</span><span class="p">);</span>
-        <span class="p">}())</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="nx">init</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-
-  <span class="k">return</span> <span class="nx">runner</span><span class="p">;</span>
-
-<span class="p">}());</span>
-=======
   <a class="pilcrow" href="#section-6" id="section-6">&#182;</a>
 </div>
 <p>if opts.init is not passed as false, runs init on entire document on object construction</p>
@@ -594,7 +331,6 @@ runs them as needed. Exposed publically for use after Ajax requests etc.</p>
     <span class="k">this</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
   <span class="p">}</span>
 <span class="p">}</span>
->>>>>>> master
 </pre></div>
         </td>
       </tr>

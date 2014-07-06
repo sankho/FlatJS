@@ -3,7 +3,9 @@ body {
   font-size: 15px;
   line-height: 22px;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  word-wrap: break-word;
+  }
 
 p, h1, h2, h3, h4, h5, h6 {
   margin: 0 0 15px 0; }
@@ -372,5 +374,3 @@ body .highlight .vc { color: #19177C } /* Name.Variable.Class */
 body .highlight .vg { color: #19177C } /* Name.Variable.Global */
 body .highlight .vi { color: #19177C } /* Name.Variable.Instance */
 body .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
-
-  
