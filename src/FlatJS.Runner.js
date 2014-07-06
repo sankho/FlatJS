@@ -1,7 +1,7 @@
 /**
  * # FlatJS.Runner
  *
- * Go tell run that.
+ * Go run tell that.
  *
  * @class
  * @constructs
