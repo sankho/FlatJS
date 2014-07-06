@@ -1,6 +1,16 @@
-// defines FlatJS just in case, opens an initial scope.
-var FlatJS = FlatJS || {};
-(function() {
+/**
+ * # FlatJS.Classy
+ *
+ * Base Class definition used throughout FlatJS. Provides a OOP like class pattern based on John Resig's method.
+ * See http://ejohn.org/blog/simple-javascript-inheritance.
+ *
+ * Extended to provide ways to call private member functions to retain the value of "this" throughout
+ * your code, as well as a psuedo-private variable storage to save member variables without making them
+ * visible via a console.log or similiar method. See FlatJS.Classy.prototype._ below.
+ *
+ * @public
+ */
+FlatJS.Classy = (function() {
 
   // Some private static variables. Two arrays are used to store all private functions + psuedo private variables used by FlatJS.Classy.prototype._ (see below). Initializing and fnTest imported from John Resig - see comments below.
   var fnStore  = [],
@@ -8,19 +18,9 @@ var FlatJS = FlatJS || {};
       initializing = false;
       fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
 
-  /**
-   * # FlatJS.Classy
-   *
-   * Base Class definition used throughout FlatJS. Provides a OOP like class pattern based on John Resig's method.
-   * See http://ejohn.org/blog/simple-javascript-inheritance.
-   * 
-   * Extended to provide ways to call private member functions to retain the value of "this" throughout
-   * your code, as well as a psuedo-private variable storage to save member variables without making them
-   * visible via a console.log or similiar method. See FlatJS.Classy.prototype._ below.
-   *
-   * @public
-   */
-  FlatJS.Classy = function () {
+  // begin definition of the constructor function reprsenting FlatJS.Classy
+  // return at the bottom of this closure.
+  var Classy = function () {
 
     /**
      * ## FlatJS.Classy.prototype._
@@ -64,7 +64,7 @@ var FlatJS = FlatJS || {};
    * @param  {Object||Function} prop Either an object or a static function which returns an object representing the public API of the new class to be created.
    * @return {Function} Returns the generated constructor.
    */
-  FlatJS.Classy.extend = function(prop) {
+  Classy.extend = function(prop) {
 
     if (typeof prop === 'function') {
       prop = prop();
@@ -140,5 +140,6 @@ var FlatJS = FlatJS || {};
     return store[this.varcnt];
   }
 
-// end scope.
+  // end scope, return object representing class.
+  return Classy
 }());

@@ -40,24 +40,6 @@
 <table cellpadding="0" cellspacing="0">
   <tbody>
       <tr>
-        <td class="docs">
-          <h1>FlatJS.Runner.js</h1>
-        </td>
-        <td class="code highlight"></td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-1" id="section-1">&#182;</a>
-</div>
-<p>definining FlatJS variable at the start just in case.</p>
-        </td>
-        <td class="code highlight"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">FlatJS</span> <span class="o">=</span> <span class="nx">FlatJS</span> <span class="o">||</span> <span class="p">{};</span>
-
-</pre></div>
-        </td>
-      </tr>
-      <tr>
         <td class="docs"><div class="dox">
   <div class="summary">
 <div class="pilwrap" id="flatjs.runner">
@@ -89,8 +71,7 @@
   </div>
 </div>
         </td>
-        <td class="code highlight"><div class="highlight"><pre>
-<span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Runner</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">runner</span><span class="p">(</span><span class="nx">opts</span><span class="p">)</span> <span class="p">{</span>
+        <td class="code highlight"><div class="highlight"><pre><span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Runner</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">runner</span><span class="p">(</span><span class="nx">opts</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">opts</span> <span class="o">=</span> <span class="nx">opts</span> <span class="o">||</span> <span class="p">{};</span>
 
   <span class="kd">var</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">context</span> <span class="o">||</span> <span class="nb">window</span><span class="p">,</span>
@@ -333,7 +314,7 @@ by using the options (see above, callFn).</p>
       <tr>
         <td class="docs">
 <div class="pilwrap">
-  <a class="pilcrow" href="#section-7" id="section-7">&#182;</a>
+  <a class="pilcrow" href="#section-6" id="section-6">&#182;</a>
 </div>
 <p>if opts.init is not passed as false, runs init on entire document on object construction</p>
         </td>

@@ -1,12 +1,10 @@
-var FlatJS = FlatJS || {};
-
 FlatJS.Widget = (function() {
 
   var Widget = FlatJS.Classy.extend({
 
     init: function(obj) {
       this.obj = obj;
-      
+
       if (this.renderOnInit !== false && typeof this.render === 'function') {
         this.render();
       }

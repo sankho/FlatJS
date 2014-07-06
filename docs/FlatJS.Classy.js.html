@@ -37,43 +37,6 @@
 <table cellpadding="0" cellspacing="0">
   <tbody>
       <tr>
-        <td class="docs">
-          <h1>FlatJS.Classy.js</h1>
-        </td>
-        <td class="code highlight"></td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-1" id="section-1">&#182;</a>
-</div>
-<p>defines FlatJS just in case, opens an initial scope.</p>
-        </td>
-        <td class="code highlight"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">FlatJS</span> <span class="o">=</span> <span class="nx">FlatJS</span> <span class="o">||</span> <span class="p">{};</span>
-<span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-
-
-</pre></div>
-        </td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-2" id="section-2">&#182;</a>
-</div>
-<p>Some private static variables. Two arrays are used to store all private functions + psuedo private variables used by FlatJS.Classy.prototype._ (see below). Initializing and fnTest imported from John Resig - see comments below.</p>
-        </td>
-        <td class="code highlight"><div class="highlight"><pre>
-  <span class="kd">var</span> <span class="nx">fnStore</span>  <span class="o">=</span> <span class="p">[],</span>
-      <span class="nx">varStore</span> <span class="o">=</span> <span class="p">[],</span>
-      <span class="nx">initializing</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-      <span class="nx">fnTest</span> <span class="o">=</span> <span class="sr">/xyz/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="nx">xyz</span><span class="p">;})</span> <span class="o">?</span> <span class="sr">/\b_super\b/</span> <span class="o">:</span> <span class="sr">/.*/</span><span class="p">;</span>
-
-
-</pre></div>
-        </td>
-      </tr>
-      <tr>
         <td class="docs"><div class="dox">
   <div class="summary">
 <div class="pilwrap" id="flatjs.classy">
@@ -105,8 +68,39 @@ visible via a console.log or similiar method. See FlatJS.Classy.prototype._ belo
 <p></div>
 </div></p>
         </td>
+        <td class="code highlight"><div class="highlight"><pre><span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Classy</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2">&#182;</a>
+</div>
+<p>Some private static variables. Two arrays are used to store all private functions + psuedo private variables used by FlatJS.Classy.prototype._ (see below). Initializing and fnTest imported from John Resig - see comments below.</p>
+        </td>
         <td class="code highlight"><div class="highlight"><pre>
-  <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Classy</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">fnStore</span>  <span class="o">=</span> <span class="p">[],</span>
+      <span class="nx">varStore</span> <span class="o">=</span> <span class="p">[],</span>
+      <span class="nx">initializing</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+      <span class="nx">fnTest</span> <span class="o">=</span> <span class="sr">/xyz/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="nx">xyz</span><span class="p">;})</span> <span class="o">?</span> <span class="sr">/\b_super\b/</span> <span class="o">:</span> <span class="sr">/.*/</span><span class="p">;</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3">&#182;</a>
+</div>
+<p>begin definition of the constructor function reprsenting FlatJS.Classy
+return at the bottom of this closure.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="kd">var</span> <span class="nx">Classy</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 
 
 </pre></div>
@@ -226,7 +220,7 @@ visible via a console.log or similiar method. See FlatJS.Classy.prototype._ belo
 </div>
         </td>
         <td class="code highlight"><div class="highlight"><pre>
-  <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Classy</span><span class="p">.</span><span class="nx">extend</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">prop</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">Classy</span><span class="p">.</span><span class="nx">extend</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">prop</span><span class="p">)</span> <span class="p">{</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">prop</span> <span class="o">===</span> <span class="s1">&#39;function&#39;</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">prop</span> <span class="o">=</span> <span class="nx">prop</span><span class="p">();</span>
@@ -384,9 +378,10 @@ visible via a console.log or similiar method. See FlatJS.Classy.prototype._ belo
 <div class="pilwrap">
   <a class="pilcrow" href="#section-12" id="section-12">&#182;</a>
 </div>
-<p>end scope.</p>
+<p>end scope, return object representing class.</p>
         </td>
         <td class="code highlight"><div class="highlight"><pre>
+  <span class="k">return</span> <span class="nx">Classy</span>
 <span class="p">}());</span>
 </pre></div>
         </td>

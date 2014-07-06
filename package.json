@@ -10,7 +10,7 @@
   },
   "scripts": {
     "tests": "node-qunit-phantomjs ./tests/index.html --verbose",
-    "build": "uglifyjs ./src/FlatJS.Classy.js ./src/FlatJS.Runner.js ./src/FlatJS.Helpers.js ./src/FlatJS.Widget.js ./src/FlatJS.Dispatch.js ./src/FlatJS.Resource.js ./src/FlatJS.Component.js  --mangle -o flat-min.js",
+    "build": "uglifyjs ./src/FlatJS.js ./src/FlatJS.Classy.js ./src/FlatJS.Runner.js ./src/FlatJS.Helpers.js ./src/FlatJS.Widget.js ./src/FlatJS.Dispatch.js ./src/FlatJS.Resource.js ./src/FlatJS.Component.js  --mangle -o flat-min.js",
     "docs": "rm -rf ./docs && docker -o ./docs -w -i ./src"
   },
   "main"          : "flat-min.js",

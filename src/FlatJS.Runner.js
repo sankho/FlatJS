@@ -1,5 +1,3 @@
-// definining FlatJS variable at the start just in case.
-var FlatJS = FlatJS || {};
 /**
  * # FlatJS.Runner
  *

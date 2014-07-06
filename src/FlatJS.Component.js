@@ -1,5 +1,3 @@
-var FlatJS = FlatJS || {};
-
 FlatJS.Component = FlatJS.Widget.extend(function() {
 
   var ATTR = {
