@@ -45,14 +45,14 @@
 
       </div>
 
-      <script src="../src/FlatJS.ModuleRunner.js"></script>
-      
+      <script src="../flat-min.js"></script>
+
       <h3>Code</h3>
       <pre class="prettyprint"><script class="code">// application namespace
 var NS = {};
 
 // an example module. accepts a single argument as node.
-NS.exampleModule = function(node) { 
+NS.exampleModule = function(node) {
 
   // change the innerHTML as a test.
   node.innerHTML = 'Code Injection';
@@ -61,7 +61,7 @@ NS.exampleModule = function(node) {
   var string = 'if returned this object will be attached to the node';
 
   // adds a "getString" function to the object node created by the instantiated
-  // object when the moduleRunner will call "new NS.exampleModule" 
+  // object when the moduleRunner will call "new NS.exampleModule"
   this.getString = function() {
     return string;
   }
@@ -70,8 +70,10 @@ NS.exampleModule = function(node) {
   return this;
 }
 
-NS.runner = new FlatJS.ModuleRunner({
-  init: false   // see other options in docs
+NS.runner = new FlatJS.Runner({
+  init:   false,            // see other options in docs
+  objKey: 'jsModules',      // sets key value for array of returned objects on the node
+  attr:   'data-js-module'  // sets attr to search DOM for
 });
 
 // pass other DOM nodes to NS.runner.init later
