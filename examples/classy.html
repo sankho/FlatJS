@@ -43,23 +43,36 @@
 
       </div>
 
-      <script src="../src/FlatJS.Classy.js"></script>
-      
+      <script src="../flat-min.js"></script>
+
       <h3>Code</h3>
       <pre class="prettyprint"><script class="code">// application namespace
 var NS = {};
 
 // creates a class by using FlatJS.Classy.extend
-NS.exampleClass = FlatJS.Classy.extend({
+NS.exampleClass = FlatJS.Classy.extend(function() {
 
-  // acts as a constructor function for the class
-  init: function(introString) {
-    this.intro = introString;
-  },
+  // returns a public object for all public functions
+  var publicAPI = {
+    // acts as a constructor function for the class
+    init: function(introString) {
+      this.intro = introString;
+    },
 
-  getChorus: function() {
+    getChorus: function() {
+      // uses ._ to call a method in the scope privately with "this"
+      // basically a .apply wrapper; useful to maintain object state for jQuery callbacks etc
+      return this._(privateGetChorus)();
+    }
+  }
+
+  function privateGetChorus() {
+    // notice that "this" can be relied upon to maintain identity
+    // so long as private functions are called using the this._ wrapper
     return this.intro + ', Are Watching You';
   }
+
+  return publicAPI
 
 });
 
@@ -74,7 +87,7 @@ NS.exampleChild = NS.exampleClass.extend({
   // overrides parent getChorus function
   getChorus: function() {
     // access parent version of function, uses apply to call
-    var str = this.getChorus._super.apply(this);
+    var str = this._super();
 
     // adds the rest of the chorus.
     return str = str + ', They See Your Every Move';
