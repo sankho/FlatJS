@@ -52,14 +52,21 @@ var NS = {};
 // creates a class by using FlatJS.Classy.extend
 NS.exampleClass = FlatJS.Classy.extend(function() {
 
+  var PRIVATE_STATIC_VAR_EXAMPLE = false;
+
   // returns a public object for all public functions
   var publicAPI = {
+
     // acts as a constructor function for the class
     init: function(introString) {
-      this.intro = introString;
+
+      // psuedo private instance variable storage - psuedo because you can technically access
+      // values publically through ._([key]), but you need to supply a stored key value
+      this._('intro', introString);
     },
 
     getChorus: function() {
+
       // uses ._ to call a method in the scope privately with "this"
       // basically a .apply wrapper; useful to maintain object state for jQuery callbacks etc
       return this._(privateGetChorus)();
@@ -67,9 +74,10 @@ NS.exampleClass = FlatJS.Classy.extend(function() {
   }
 
   function privateGetChorus() {
+
     // notice that "this" can be relied upon to maintain identity
     // so long as private functions are called using the this._ wrapper
-    return this.intro + ', Are Watching You';
+    return this._('intro') + ', Are Watching You';
   }
 
   return publicAPI
@@ -86,6 +94,7 @@ NS.exampleChild = NS.exampleClass.extend({
 
   // overrides parent getChorus function
   getChorus: function() {
+
     // access parent version of function, uses apply to call
     var str = this._super();
 
@@ -95,8 +104,13 @@ NS.exampleChild = NS.exampleClass.extend({
 
 });
 
+// example of how to make a static public function
+NS.exampleChild.staticCreate = function(string) {
+  return new NS.exampleChild(string);
+}
+
 // calls the child function with the same initial argument
-var y = new NS.exampleChild('Private Eyes');
+var y = NS.exampleChild.staticCreate('Private Eyes');
 
 console.log('y.getChorus() -->', y.getChorus());
       </script>
