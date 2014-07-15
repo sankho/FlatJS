@@ -19,7 +19,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
       this._(internalInitializer)();
       this._(findAndInitializeResources)();
       this._(assembleJSON)();
-      this._(applyCSSChanges)();
+      this._(applyCSSChanges)(true);
       this._(bindNodes)();
       this._(syncBindedNodes)();
       this.initializer();
@@ -49,20 +49,18 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     this.fjsData = this.fjsData || new FlatJS.Resource();
   }
 
-  function applyCSSChanges() {
+  function applyCSSChanges(applyNodeValueToObj) {
     var nodes = FlatJS.Helpers.getAllElementsWithAttribute(ATTR.class, this.obj);
 
     for (var i = 0; i < nodes.length; i++) {
       var node = nodes[i],
-          obj  = this.findResourceFromNode(node);
+          obj  = this.findResourceFromNode(node) || this.fjsData;
 
-      if (obj) {
-        this._(makeCSSChangeOnNode)(node, obj);
-      }
+      this._(makeCSSChangeOnNode)(node, obj, applyNodeValueToObj);
     }
   }
 
-  function makeCSSChangeOnNode(node, obj) {
+  function makeCSSChangeOnNode(node, obj, applyNodeValueToObj) {
     var rules = JSON.parse(node.getAttribute(ATTR.class)),
         rules = rules[0].push ? rules : [rules];
 
@@ -74,17 +72,26 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
           secondary = rule[3],
           match     = obj[prop] == val;
 
-      if (match) {
-        if (node.className.indexOf(className) === -1) {
-          node.className = node.className + ' ' + className + ' ';
-        }
-        node.className = node.className.replace(secondary, '');
-      } else if (!match) {
-        node.className = node.className.replace(className, '');
-        node.className = node.className.replace(secondary, '');
-        if (secondary && node.className.indexOf(secondary) === -1) {
-          node.className = node.className + ' ' + secondary + ' ';
-        }
+      if (applyNodeValueToObj && node.className.indexOf(className) !== -1) {
+        console.log('happening');
+        obj.set(prop, val);
+      }
+
+      this._(processCSSRuleOnNode)(node, match, className, secondary);
+    }
+  }
+
+  function processCSSRuleOnNode(node, match, className, secondary) {
+    if (match) {
+      if (node.className.indexOf(className) === -1) {
+        node.className = node.className + ' ' + className + ' ';
+      }
+      node.className = node.className.replace(secondary, '');
+    } else if (!match) {
+      node.className = node.className.replace(className, '');
+      node.className = node.className.replace(secondary, '');
+      if (secondary && node.className.indexOf(secondary) === -1) {
+        node.className = node.className + ' ' + secondary + ' ';
       }
     }
   }
