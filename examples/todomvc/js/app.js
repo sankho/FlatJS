@@ -71,9 +71,6 @@
     return api;
   });
 
-  // 7.) using callFn to define this.obj as a jQuery object was bad news because FlatJS.MV
-  // is expecting this.obj to be a node. Need to a: think of better private namespace and
-  // b: store the node within this namespace.
   FlatTodo.runner = new FlatJS.Runner({
     context: FlatTodo
   });
