@@ -40,7 +40,7 @@ __MVMockData.mockLoadedCallback = function() {
   QUnit.test("FlatJS.Component tests - DOM loaded model generation & JSON data assembly from markup", function() {
     QUnit.equal(typeof APP.Todo, 'function', "APP.Todo model references should be automatically generated");
     QUnit.equal(typeof APP.Person, 'function', "APP.Person model references should be automatically generated");
-    QUnit.equal(APP.Todo.fjsObjects.length, 3, "APP.Todo.fjsObjects has 3 todos in it");
+    QUnit.equal(APP.Todo.fjsObjects.length, 4, "APP.Todo.fjsObjects has 4 todos in it");
     QUnit.equal(APP.Person.fjsObjects.length, 2, "APP.Person.fjsObjects has 2 people in it");
     QUnit.equal(APP.Person.fjsObjects[0].name, "Jane", "APP.Person.fjsObjects[0] has correct data on name")
     QUnit.equal(APP.Todo.fjsObjects[0].title, "Get Laundry", "APP.Todo.fjsObjects[0] has correct data on title")
@@ -63,7 +63,11 @@ __MVMockData.mockLoadedCallback = function() {
   QUnit.test('FlatJS.Component - CSS Classes are added on attribute check', function() {
     QUnit.ok($mock.find('.first-todo:eq(0)').hasClass('completed'), 'Classes added if array passed to attribute defining a key value match and a class name.');
     QUnit.ok($moc2.find('li:eq(0)').hasClass('not-completed'), 'Default / secondary classes added if array passed to attribute defining a key value non match and a class name corrseponding to that lack of match. Words.');
+    QUnit.ok(APP.Todo.find(31).completed, "Model set by fjs-class statement + class existence");
     QUnit.ok($moc2.find('li:eq(1)').hasClass('not-completed') && $moc2.find('li:eq(1)').hasClass('whatever'), 'Multiple class assertions successfully made on object if double sided array passed.');
+
+    APP.Todo.find(31).set('completed', true);
+    QUnit.ok($('[fjs-id="31"]').hasClass('completed'), "fjs-class attributes are bound to resource object changes");
   });
 
   QUnit.test("FlatJS.Component - Changing model objects should update HTML", function() {
