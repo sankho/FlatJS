@@ -2,12 +2,20 @@
   'use strict';
 
   FlatTodo.Todo = FlatJS.Resource.extend({})
+
   FlatTodo.Todo.clearAllCompleted = function() {
     for (var i = 0; i < this.fjsObjects.length; i++) {
       if (this.fjsObjects[i].completed) {
         this.fjsObjects[i].delete();
       }
     }
+  }
+
+  FlatTodo.Todo.create = function(text, completed) {
+    return new FlatTodo.Todo({
+      text:      text,
+      completed: !!completed
+    });
   }
 
   FlatTodo.TodoHandler = FlatJS.Component.extend(function() {
@@ -35,15 +43,11 @@
       var keycode = (e.keyCode ? e.keyCode : e.which);
 
       if (keycode == '13') {
-        var val = this.fjsData.newTodo;
+        var val  = this.fjsData.newTodo,
+            todo = FlatTodo.Todo.create(val);
 
-        var todo = new FlatTodo.Todo({
-          text: val,
-          completed: false
-        });
-
-        this.fjsData.set('newTodo', '');
         this.fjsData.push('todosList', todo);
+        this.fjsData.set('newTodo', '');
       }
     }
 
