@@ -65,6 +65,9 @@ __MVMockData.mockLoadedCallback = function() {
     QUnit.ok($moc2.find('li:eq(0)').hasClass('not-completed'), 'Default / secondary classes added if array passed to attribute defining a key value non match and a class name corrseponding to that lack of match. Words.');
     QUnit.ok(APP.Todo.find(31).completed, "Model set by fjs-class statement + class existence");
     QUnit.ok($moc2.find('li:eq(1)').hasClass('not-completed') && $moc2.find('li:eq(1)').hasClass('whatever'), 'Multiple class assertions successfully made on object if double sided array passed.');
+
+    APP.Todo.find(31).set('completed', true);
+    QUnit.ok($('[fjs-id="31"]').hasClass('completed'), "fjs-class attributes are bound to resource object changes");
   });
 
   QUnit.test("FlatJS.Component - Changing model objects should update HTML", function() {
