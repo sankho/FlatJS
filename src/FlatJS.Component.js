@@ -73,7 +73,6 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
           match     = obj[prop] == val;
 
       if (applyNodeValueToObj && node.className.indexOf(className) !== -1) {
-        console.log('happening');
         obj.set(prop, val);
       }
 
