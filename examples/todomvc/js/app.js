@@ -1,6 +1,23 @@
 (function (window) {
   'use strict';
 
+  FlatTodo.Todo = FlatJS.Resource.extend({})
+
+  FlatTodo.Todo.clearAllCompleted = function() {
+    for (var i = 0; i < this.fjsObjects.length; i++) {
+      if (this.fjsObjects[i].completed) {
+        this.fjsObjects[i].delete();
+      }
+    }
+  }
+
+  FlatTodo.Todo.create = function(text, completed) {
+    return new FlatTodo.Todo({
+      text:      text,
+      completed: !!completed
+    });
+  }
+
   FlatTodo.TodoHandler = FlatJS.Component.extend(function() {
     var api = {
       initializer: function() {
@@ -14,22 +31,23 @@
         this.$obj.on('keyup', '#todo-list li .edit', this._(hideTextInputOnEnter));
         this.$obj.on('blur', '#todo-list li .edit', this._(hideTextInput));
         this.$obj.on('dblclick', '#todo-list li', this._(setItemToEditing));
+        this.$obj.on('click', '#clear-completed', this._(clearAllCompleted));
       }
+    }
+
+    function clearAllCompleted(e) {
+      FlatTodo.Todo.clearAllCompleted();
     }
 
     function addNewTodoOnEnter(e) {
       var keycode = (e.keyCode ? e.keyCode : e.which);
 
       if (keycode == '13') {
-        var val = this.fjsData.newTodo;
+        var val  = this.fjsData.newTodo,
+            todo = FlatTodo.Todo.create(val);
 
-        var todo = new FlatTodo.Todo({
-          text: val,
-          completed: false
-        });
-
-        this.fjsData.set('newTodo', '');
         this.fjsData.push('todosList', todo);
+        this.fjsData.set('newTodo', '');
       }
     }
 
@@ -57,9 +75,6 @@
     return api;
   });
 
-  // 7.) using callFn to define this.obj as a jQuery object was bad news because FlatJS.MV
-  // is expecting this.obj to be a node. Need to a: think of better private namespace and
-  // b: store the node within this namespace.
   FlatTodo.runner = new FlatJS.Runner({
     context: FlatTodo
   });
