@@ -32,11 +32,9 @@
         this.$obj.on('blur', '#todo-list li .edit', this._(hideTextInput));
         this.$obj.on('dblclick', '#todo-list li', this._(setItemToEditing));
         this.$obj.on('click', '#clear-completed', this._(clearAllCompleted));
-      }
-    }
 
-    function clearAllCompleted(e) {
-      FlatTodo.Todo.clearAllCompleted();
+        this.fjsData.watch('toggleAll', this._(toggleAll));
+      }
     }
 
     function addNewTodoOnEnter(e) {
@@ -70,6 +68,16 @@
     function setItemToEditing(e) {
       e.preventDefault();
       $(e.currentTarget).addClass('editing').find('input').focus();
+    }
+
+    function clearAllCompleted(e) {
+      FlatTodo.Todo.clearAllCompleted();
+    }
+
+    function toggleAll(prop, oldVal, newVal, obj) {
+      $(FlatTodo.Todo.fjsObjects).each(function(i, obj) {
+        obj.set('completed', newVal);
+      });
     }
 
     return api;
