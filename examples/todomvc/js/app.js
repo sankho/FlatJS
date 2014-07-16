@@ -1,6 +1,15 @@
 (function (window) {
   'use strict';
 
+  FlatTodo.Todo = FlatJS.Resource.extend({})
+  FlatTodo.Todo.clearAllCompleted = function() {
+    for (var i = 0; i < this.fjsObjects.length; i++) {
+      if (this.fjsObjects[i].completed) {
+        this.fjsObjects[i].delete();
+      }
+    }
+  }
+
   FlatTodo.TodoHandler = FlatJS.Component.extend(function() {
     var api = {
       initializer: function() {
@@ -14,7 +23,12 @@
         this.$obj.on('keyup', '#todo-list li .edit', this._(hideTextInputOnEnter));
         this.$obj.on('blur', '#todo-list li .edit', this._(hideTextInput));
         this.$obj.on('dblclick', '#todo-list li', this._(setItemToEditing));
+        this.$obj.on('click', '#clear-completed', this._(clearAllCompleted));
       }
+    }
+
+    function clearAllCompleted(e) {
+      FlatTodo.Todo.clearAllCompleted();
     }
 
     function addNewTodoOnEnter(e) {
