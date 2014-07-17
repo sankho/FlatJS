@@ -78,7 +78,8 @@ APP.exampleComponent = FlatJS.Component.extend(function() {
       // this.obj === document.getElementById(container)
       var clearBtn = this.obj.getElementById('clear');
 
-      // note this._() wrapper on callback maintains "this" in private FNs & event callback
+      // note this._() wrapper on callback maintains "this"
+      // within private FNs & event listener callbacks
       clearBtn.addEventListener('click', this._(clearText));
     }
   }
