@@ -295,7 +295,7 @@ __MVMockData.startFifthTests = function() {
     var $mock = $('#flat-mv-test-mock'),
         mvMod = $mock.find('.first').get(0).fjsComponents['FlatJS.Component'];
 
-    APP.Person.find(2).delete();
+    APP.Person.find(2).remove();
 
     QUnit.equal($mock.find('.first h2').length, 0, "Deleting model object also removes references in dom");
     QUnit.equal($mock.find('.first [fjs-obj="you"]').length, 0, "Deleting model object also removes references in dom");
@@ -309,7 +309,7 @@ __MVMockData.startFifthTests = function() {
         APP.Person.find(1).todos
       ]
     });
-    APP.Person.find(1).delete();
+    APP.Person.find(1).remove();
 
     QUnit.equal($mock.find('.first [fjs-resource="APP.Person"][fjs-id="1"]').length, 0, "Deleting model object also removes references in dom");
 
