@@ -4,15 +4,13 @@
 
 ## Another JS Framework? Really?
 
-In 2014, it seems you have to be using a JS Framework, and in theory, this isn't a bad thing. In practice, this can often mean more work, and usually means re-arranging traditional server side approaches to web application development in the name of a framework.
-
 I wanted to make a JS Framework that would help me write less code, provide conventions and abstractions I could always make use of, but not necessarily force me to change the way I think about web applications from the server side. And, I wanted it to organize my code in a fashion similiar to the popular MV* frameworks out there.
 
 ## What does it do?
 
-### MV* + Two Way Bindings + Progressive Enhancement
+### MV* + Two Way Bindings + Progressive Enhancement = Cleaner JS, less SEO Stress
 
-FlatJS Components (the "V" or view in MV) read your markup and infers a data model based on the values in your markup on DOM ready, all while creating dependable two way bindings. This means your server side can generate code in a template fashion as normal, and you can still manipulate the markup in a fashion related to the data model setup at the start via JS.
+FlatJS Components (the "V" or view in MV) read your markup and infers a data model based on the values in your markup on DOM ready, all while creating dependable two way bindings. This means your server side can generate markup as normal, and you can still manipulate the markup as a template related to the data model setup at the start via JS.
 
 Don't have SEO worries about your JS apps - just rely on your server side to print the correct markup given a URL. This allows you to have the power of JS templating + SEO, all without repeating your template markup.
 
