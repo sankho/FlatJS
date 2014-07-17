@@ -176,15 +176,14 @@ FlatJS.Resource = FlatJS.Classy.extend(function() {
     },
 
     /**
-     * ## FlatJS.Resource.prototype.delete
+     * ## FlatJS.Resource.prototype.remove
      *
-     * Deletes resource. Anyone listening to "fjsDelete" is executed at this point.
-     * Need to rename.
+     * Removes resource. Anyone listening to "fjsRemove" is executed at this point.
      *
      * @public
      * @this FlatJS.Resource
      */
-    delete: function() {
+    remove: function() {
       for (n in this._('fjsNodes')) {
         var node = this._('fjsNodes')[n];
         if (node && node.parentNode) {
@@ -194,7 +193,7 @@ FlatJS.Resource = FlatJS.Classy.extend(function() {
 
       var index = this.constructor.fjsObjects.indexOf(this);
       this.constructor.fjsObjects.splice(index, 1);
-      this.set('fjsDelete', true);
+      this.set('fjsRemove', true);
     }
 
     // end public api object

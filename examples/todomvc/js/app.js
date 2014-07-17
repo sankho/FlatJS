@@ -6,7 +6,7 @@
   FlatTodo.Todo.clearAllCompleted = function() {
     for (var i = 0; i < this.fjsObjects.length; i++) {
       if (this.fjsObjects[i].completed) {
-        this.fjsObjects[i].delete();
+        this.fjsObjects[i].remove();
       }
     }
   }
@@ -51,7 +51,7 @@
 
     function destroyTodoItem(e) {
       var todo  = this.findResourceFromNode(e.currentTarget);
-      todo.delete();
+      todo.remove();
     }
 
     function hideTextInputOnEnter(e) {

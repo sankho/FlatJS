@@ -497,10 +497,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
           parentObj[key] = obj;
         }
 
-        //if (!obj._('fjsDeleteWatch')) {
-          //obj._('fjsDeleteWatch', true);
-          obj.watch('fjsDelete', this._(undefineModelReferenceOnDeletion));
-        //}
+        obj.watch('fjsRemove', this._(undefineModelReferenceOnDeletion));
       }
     } else {
       this._(assembleJSONIfChildren)(child, parentObj, key, isObj);
