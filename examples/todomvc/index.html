@@ -3,22 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>Template • TodoMVC</title>
-    <!--<link rel="stylesheet" href="bower_components/todomvc-app-template/app-template.css">-->
-    <!-- Replace the above with this if you don't want to use Bower
     <link rel="stylesheet" href="app-template.css">
-    -->
-    <link rel="stylesheet" href="app-template.css">
-    <!-- CSS overrides - remove if you don't need it -->
-    <link rel="stylesheet" href="css/app.css">
-
-    <script>
-      // create a namespace for your app before the script runs.
-      // not required, but a good practice.
-      FlatTodo = {};
-    </script>
   </head>
   <body>
-    <section id="todoapp" fjs-component="TodoHandler">
+    <section id="todoapp" fjs-component="FlatTodo.TodoHandler">
       <header id="header">
         <h1>todos</h1>
         <input id="new-todo" placeholder="What needs to be done?" autofocus fjs-key="new-todo">
@@ -84,6 +72,16 @@
 
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 
+
+    <script>
+      // create a namespace for your app before any script runs.
+      // not required, but a good practice, even better before </head>
+      FlatTodo = {};
+    </script>
+
+    <!-- app files could of course be minified into one single file. -->
+    <script src="js/resources/Todo.js"></script>
+    <script src="js/components/TodoHandler.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>
