@@ -49,12 +49,12 @@ __widgetMockData.mockLoadedCallback = function() {
     QUnit.equal(x.renderUIed, true, "x.renderUI() fires on object construction");
     QUnit.equal(x.syncUIed, true, "x.syncUI() fires on object construction");
     QUnit.equal(x.bindUIed, true, "x.bindUI() fires on object construction");
-    QUnit.equal(x.obj, $mock.get(0), "x.obj is equal to the node passed on constructing x");
+    QUnit.equal(x.fjsRootNode, $mock.get(0), "x.fjsRootNode is equal to the node passed on constructing x");
 
     var y = new __widgetMockData.nonRenderingWidget($mock.get(0));
 
     QUnit.equal(y.initialized, undefined, "y should not render immediately");
-    QUnit.equal(y.obj, $mock.get(0), "y.obj is equal to the node passed on constructing y");
+    QUnit.equal(y.fjsRootNode, $mock.get(0), "y.fjsRootNode is equal to the node passed on constructing y");
 
     y.render();
 
