@@ -215,7 +215,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     obj[key] = val;
   }
 
-  function syncNodeOnObjectChange(prop, oldVal, newVal, obj) {
+  function syncNodeOnObjectChange(newVal, oldVal, prop, obj) {
     for (var i = 0; i < obj._('fjsNodes').length; i++) {
       var node    = obj._('fjsNodes')[i],
           lastKey = prop.split('.'),
@@ -514,7 +514,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     }
   }
 
-  function undefineModelReferenceOnDeletion(prop, oldVal, val, obj) {
+  function undefineModelReferenceOnDeletion(val, oldVal, prop, obj) {
     //if (document.contains(this.obj)) {
       this._(iterateThroughDataAndDeleteObject)(obj, this.fjsData);
     //} else {
