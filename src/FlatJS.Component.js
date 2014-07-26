@@ -22,10 +22,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
       this._(applyCSSChanges)(true);
       this._(bindNodes)();
       this._(syncBindedNodes)();
-      this.initializer();
-      this.renderUI();
-      this.syncUI();
-      this.bindUI();
+      this._super()
     },
 
     findResourceFromNode: function(node) {
