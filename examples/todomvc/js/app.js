@@ -21,7 +21,7 @@
   FlatTodo.TodoHandler = FlatJS.Component.extend(function() {
     var api = {
       initializer: function() {
-        this.$obj = $(this.obj);
+        this.$obj = $(this.fjsRootNode);
         this.$obj.find('#new-todo').focus();
       },
 
