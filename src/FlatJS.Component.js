@@ -342,23 +342,23 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     var nodes = FlatJS.Helpers.getAllElementsWithAttribute(attr, obj);
 
     for (var i = 0; i < nodes.length; i++) {
-      var node  = nodes[i];
-
+      var node  = nodes[i], 
+          model = this.findResourceFromNode(node) || this.fjsData;
+      
       if (node && !node.fjsWatchSet) {
         node.fjsWatchSet = true;
+        node.fjsObject   = node.fjsObject || model;
+        
+        if (model._('fjsNodes').indexOf(node) === -1) {
+          model._('fjsNodes').push(node);
+        }
 
         if (attr === ATTR.class) {
-          this._(bindClassNodes)(node);
+          this._(bindClassNodes)(node, model);
         } else {
-          var key   = convertCamelCase(node.getAttribute(attr)),
-              str   = node.parentNode && node.parentNode !== document ? this._(createObjectReferenceString)(key, node.parentNode) : key,
-              model = this.findResourceFromNode(node) || this.fjsData;
-
-          if (model._('fjsNodes').indexOf(node) === -1) {
-            model._('fjsNodes').push(node);
-          }
-
-          node.fjsObject = node.fjsObject || model;
+          var key = convertCamelCase(node.getAttribute(attr)),
+              str = node.parentNode && node.parentNode !== document ? this._(createObjectReferenceString)(key, node.parentNode) : key;
+          
           model.watch(str, this._(syncNodeOnObjectChange));
           if (this._(isNodeInput)(node)) {
             this._(setupCallbacksForInputNodes)(node);
@@ -368,19 +368,15 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     }
   }
 
-  function bindClassNodes(node) {
+  function bindClassNodes(node, obj) {
     var rules = JSON.parse(node.getAttribute(ATTR.class)),
-        rules = rules[0].push ? rules : [rules],
-        obj   = this.findResourceFromNode(node) || this.fjsData;
+        rules = rules[0].push ? rules : [rules];
 
     for (var i = 0; i < rules.length; i++) {
       var rule      = rules[i],
           prop      = rule[0],
-          val       = rule[1],
-          className = rule[2],
-          secondary = rule[3],
-          match     = obj[prop] == val,
-          str       = node.parentNode && node.parentNode !== document ? this._(createObjectReferenceString)(prop, node.parentNode) : prop;
+          str       = node.parentNode && node.parentNode !== document ? this._(createObjectReferenceString)(prop, node.parentNode) : prop,
+          str       = convertCamelCase(str);
 
       obj.watch(str, this._(syncNodeOnObjectChange))
     }
