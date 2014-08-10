@@ -27,7 +27,11 @@
         this.$obj.on('click', '#clear-completed', this._(clearAllCompleted));
 
         this.fjsData.watch('toggleAll', this._(toggleAll));
+<<<<<<< HEAD
         this.subscribe('todos-updated', this._(updateTodosList));
+=======
+        this.fjsData.watch('todosList', this._(updateTodosCount));
+>>>>>>> 71485be9f166e4fca71a52da46906d307fd8155f
       }
     }
 
@@ -77,12 +81,20 @@
       });
     }
 
+<<<<<<< HEAD
     function updateTodosList(todos) {
-      console.log(newVal)
       this.$obj.find('#todo-count strong').text(todos.length);
     }
 
+    return api;
+=======
+    function updateTodosCount(prop, oldVal, newVal, obj) {
+      console.log(newVal)
+      this.$obj.find('#todo-count strong').text(newVal.length - 1);
+    }
+
     return publicAPI;
+>>>>>>> 71485be9f166e4fca71a52da46906d307fd8155f
   });
 
 }(window));
