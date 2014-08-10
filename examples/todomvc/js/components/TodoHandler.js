@@ -14,7 +14,7 @@
       // in it's super class FlatJS.Widget
       initializer: function() {
         // adds a jQuery object for ease and focuses on our todo input.
-        this.$obj = $(this.obj);
+        this.$obj = $(this.fjsRootNode);
         this.$obj.find('#new-todo').focus();
       },
 
@@ -45,8 +45,8 @@
 
     function destroyTodoItem(e) {
       var todo  = this.findResourceFromNode(e.currentTarget);
-      this.fjsData.set('todosList', this.fjsData.todosList);
       todo.remove();
+      this.assembleFjsData();
       this.publish('todos-updated', [this.fjsData.todosList])
     }
 

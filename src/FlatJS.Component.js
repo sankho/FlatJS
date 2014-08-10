@@ -25,6 +25,8 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
       this._super()
     },
 
+    assembleFjsData: assembleJSON,
+
     findResourceFromNode: function(node) {
       if (node.hasAttribute && node.hasAttribute(ATTR.resource) && node.hasAttribute(ATTR.id)) {
         var model = findFn(node.getAttribute(ATTR.resource));
