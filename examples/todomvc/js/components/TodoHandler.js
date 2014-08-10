@@ -1,9 +1,19 @@
 (function (window) {
   'use strict';
 
+  // declare our new component by extending the base class.
+  // An object can be passed, of a function which returns an object.
   FlatTodo.TodoHandler = FlatJS.Component.extend(function() {
-    var api = {
+    
+    // this object represents your class's public API. it must
+    // be returned at the bottom of your function definition.
+    var publicAPI = {
+
+      // initializer is run whenever a Component is instantated using
+      // the new operator. The component execution pattern is outlined 
+      // in it's super class FlatJS.Widget
       initializer: function() {
+        // adds a jQuery object for ease and focuses on our todo input.
         this.$obj = $(this.obj);
         this.$obj.find('#new-todo').focus();
       },
@@ -17,6 +27,7 @@
         this.$obj.on('click', '#clear-completed', this._(clearAllCompleted));
 
         this.fjsData.watch('toggleAll', this._(toggleAll));
+        this.fjsData.watch('todosList', this._(updateTodosCount));
       }
     }
 
@@ -34,6 +45,7 @@
 
     function destroyTodoItem(e) {
       var todo  = this.findResourceFromNode(e.currentTarget);
+      this.fjsData.set('todosList', this.fjsData.todosList);
       todo.remove();
     }
 
@@ -55,6 +67,7 @@
 
     function clearAllCompleted(e) {
       FlatTodo.Todo.clearAllCompleted();
+      this.fjsData.set('todosList', this.fjsData.todosList);
     }
 
     function toggleAll(prop, oldVal, newVal, obj) {
@@ -63,7 +76,12 @@
       });
     }
 
-    return api;
+    function updateTodosCount(prop, oldVal, newVal, obj) {
+      console.log(newVal)
+      this.$obj.find('#todo-count strong').text(newVal.length - 1);
+    }
+
+    return publicAPI;
   });
 
 }(window));
