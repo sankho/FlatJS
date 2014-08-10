@@ -78,7 +78,6 @@
     }
 
     function updateTodosList(todos) {
-      console.log(newVal)
       this.$obj.find('#todo-count strong').text(todos.length);
     }
 

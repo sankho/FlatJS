@@ -13,17 +13,16 @@
     }
 
     FlatJS.Dispatch.publish('todos-updated', [this.fjsObjects]);
-  }
+  };
 
   FlatTodo.Todo.create = function(text, completed) {
     var todo = new FlatTodo.Todo({
       text:      text,
       completed: !!completed
     });
-  };
 
     FlatJS.Dispatch.publish('todos-updated', [this.fjsObjects])
     return todo;
-  }
+  };
 
 }(window));
