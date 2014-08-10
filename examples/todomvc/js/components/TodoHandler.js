@@ -17,6 +17,7 @@
         this.$obj.on('click', '#clear-completed', this._(clearAllCompleted));
 
         this.fjsData.watch('toggleAll', this._(toggleAll));
+        this.subscribe('todos-updated', this._(updateTodosList));
       }
     }
 
@@ -35,6 +36,7 @@
     function destroyTodoItem(e) {
       var todo  = this.findResourceFromNode(e.currentTarget);
       todo.remove();
+      this.publish('todos-updated', [this.fjsData.todosList])
     }
 
     function hideTextInputOnEnter(e) {
@@ -61,6 +63,10 @@
       $(FlatTodo.Todo.fjsObjects).each(function(i, obj) {
         obj.set('completed', newVal);
       });
+    }
+
+    function updateTodosList(todos) {
+      this.$obj.find('#todo-count strong').text(todos.length);
     }
 
     return api;
