@@ -2,8 +2,8 @@ FlatJS.Widget = (function() {
 
   var Widget = FlatJS.Classy.extend({
 
-    init: function(obj) {
-      this.obj = obj;
+    init: function(node) {
+      this.fjsRootNode = node;
 
       if (this.renderOnInit !== false && typeof this.render === 'function') {
         this.render();
@@ -11,6 +11,12 @@ FlatJS.Widget = (function() {
     },
 
     render:      function() {
+      if (!this._('fjsHasRendered')) {
+        this._('fjsHasRendered', true);
+      } else {
+        this.unbindUI();
+      }
+
       this.initializer();
       this.renderUI();
       this.bindUI();
@@ -22,6 +28,8 @@ FlatJS.Widget = (function() {
     renderUI:    function() {},
 
     bindUI:      function() {},
+
+    unbindUI:    function() {},
 
     syncUI:      function() {}
 

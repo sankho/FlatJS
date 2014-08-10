@@ -20,7 +20,7 @@ FlatJS.Helpers = {
    */
   convertDashedToCamelCase: function(string) {
     if (string) {
-      string = string.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase() }).replace(/\s+/g, '');
+      string = string.replace(/-([a-z0-9])/g, function (g) { return g[1].toUpperCase() }).replace(/\s+/g, '');
     }
 
     return string;

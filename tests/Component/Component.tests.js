@@ -68,6 +68,15 @@ __MVMockData.mockLoadedCallback = function() {
 
     APP.Todo.find(31).set('completed', true);
     QUnit.ok($('[fjs-id="31"]').hasClass('completed'), "fjs-class attributes are bound to resource object changes");
+
+    QUnit.ok($mock.find('#root-class-swap').hasClass('false'), "fjs-class attribtues updates class HTML when given markup that isn't consistent with data model")
+    mvMod.fjsData.set('arbitraryRootKey', 'Not Valuable');
+    QUnit.ok($mock.find('#root-class-swap').hasClass('true'), "fjs-class attributes work when set to listen to objects on the root of fjsData variable");
+    
+    mvMod.fjsData.set('header.arbitraryTopTitle2', 'Hey Hey');
+    QUnit.equal($mock.find('h5:eq(1)').text(), 'Hey Hey', 'Dom elements bound to nested variables off root fjsData variable');
+    QUnit.ok($mock.find('#inner-item-class-swap').hasClass('true'), 'fjs-class attributes work when set to listen to objects nested within the root fjsData variable');
+
   });
 
   QUnit.test("FlatJS.Component - Changing model objects should update HTML", function() {
