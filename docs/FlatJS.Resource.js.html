@@ -6,7 +6,7 @@
   <link rel="stylesheet" media="all" href="doc-style.css" />
   <script src="doc-filelist.js"></script>
   <script>
-    var relativeDir = "", thisFile = "Users/sankho/Sites/FlatJS/src/FlatJS.Resource.js", defaultSidebar = true;
+    var relativeDir = "", thisFile = "Users/personal/Sites/FlatJS/src/FlatJS.Resource.js", defaultSidebar = true;
   </script>
   <script src="doc-script.js"></script>
 </head>
@@ -43,7 +43,7 @@
         <a href="#flatjs.resource.prototype.push">FlatJS.Resource.prototype.push</a>
       </div>
       <div class="heading h2">
-        <a href="#flatjs.resource.prototype.delete">FlatJS.Resource.prototype.delete</a>
+        <a href="#flatjs.resource.prototype.remove">FlatJS.Resource.prototype.remove</a>
       </div>
       <div class="heading h2">
         <a href="#flatjs.resource.prototype._(createtemporaryidforobject)">FlatJS.Resource.prototype._(createTemporaryIdForObject)</a>
@@ -486,16 +486,15 @@ of interpreting the prop string passed.</p>
       <tr>
         <td class="docs"><div class="dox">
   <div class="summary">
-<div class="pilwrap" id="flatjs.resource.prototype.delete">
+<div class="pilwrap" id="flatjs.resource.prototype.remove">
   <h2>
-    <a href="#flatjs.resource.prototype.delete" name="flatjs.resource.prototype.delete" class="pilcrow">&#182;</a>
-    FlatJS.Resource.prototype.delete
+    <a href="#flatjs.resource.prototype.remove" name="flatjs.resource.prototype.remove" class="pilcrow">&#182;</a>
+    FlatJS.Resource.prototype.remove
   </h2>
 </div>
 
   </div>
-  <div class="body"><p>Deletes resource. Anyone listening to "fjsDelete" is executed at this point.
-Need to rename.</p>
+  <div class="body"><p>Removes resource. Anyone listening to "fjsRemove" is executed at this point.</p>
   </div>
   <div class="details">
     <div class="dox_tag_title">API</div>
@@ -510,7 +509,7 @@ Need to rename.</p>
 </div>
         </td>
         <td class="code highlight"><div class="highlight"><pre>
-    <span class="k">delete</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">remove</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
       <span class="k">for</span> <span class="p">(</span><span class="nx">n</span> <span class="k">in</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="s1">&#39;fjsNodes&#39;</span><span class="p">))</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">node</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="s1">&#39;fjsNodes&#39;</span><span class="p">)[</span><span class="nx">n</span><span class="p">];</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">node</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">)</span> <span class="p">{</span>
@@ -520,7 +519,7 @@ Need to rename.</p>
 
       <span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">constructor</span><span class="p">.</span><span class="nx">fjsObjects</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">constructor</span><span class="p">.</span><span class="nx">fjsObjects</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;fjsDelete&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;fjsRemove&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
     <span class="p">}</span>
 
 
@@ -636,7 +635,7 @@ of the value change.</p>
       <span class="kd">var</span> <span class="nx">cb</span> <span class="o">=</span> <span class="nx">cbs</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
 
       <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">cb</span> <span class="o">==</span> <span class="s1">&#39;function&#39;</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">cb</span><span class="p">(</span><span class="nx">prop</span><span class="p">,</span> <span class="nx">oldVal</span><span class="p">,</span> <span class="nx">val</span><span class="p">,</span> <span class="nx">obj</span><span class="p">);</span>
+        <span class="nx">cb</span><span class="p">(</span><span class="nx">val</span><span class="p">,</span> <span class="nx">oldVal</span><span class="p">,</span> <span class="nx">prop</span><span class="p">,</span> <span class="nx">obj</span><span class="p">);</span>
       <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">}</span>
