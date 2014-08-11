@@ -6,7 +6,7 @@
   <link rel="stylesheet" media="all" href="doc-style.css" />
   <script src="doc-filelist.js"></script>
   <script>
-    var relativeDir = "", thisFile = "Users/sankho/Sites/FlatJS/src/FlatJS.Helpers.js", defaultSidebar = true;
+    var relativeDir = "", thisFile = "Users/personal/Sites/FlatJS/src/FlatJS.Helpers.js", defaultSidebar = true;
   </script>
   <script src="doc-script.js"></script>
 </head>
@@ -109,7 +109,7 @@
         <td class="code highlight"><div class="highlight"><pre>
   <span class="nx">convertDashedToCamelCase</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">string</span> <span class="o">=</span> <span class="nx">string</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/-([a-z])/g</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">g</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">g</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">toUpperCase</span><span class="p">()</span> <span class="p">}).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\s+/g</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+      <span class="nx">string</span> <span class="o">=</span> <span class="nx">string</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/-([a-z0-9])/g</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">g</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">g</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">toUpperCase</span><span class="p">()</span> <span class="p">}).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\s+/g</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="k">return</span> <span class="nx">string</span><span class="p">;</span>

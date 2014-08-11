@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TodoHandler.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../", thisFile = "Users/personal/Sites/FlatJS/examples/todomvc/js/components/TodoHandler.js", defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container"><div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+      <tr>
+        <td class="docs">
+          <h1>TodoHandler.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1">&#182;</a>
+</div>
+<p>declare our new component by extending the base class.
+An object can be passed, of a function which returns an object.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre><span class="nx">FlatTodo</span><span class="p">.</span><span class="nx">TodoHandler</span> <span class="o">=</span> <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Component</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2">&#182;</a>
+</div>
+<p>this object represents your class's public API. it must
+be returned at the bottom of your function definition.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="kd">var</span> <span class="nx">publicAPI</span> <span class="o">=</span> <span class="p">{</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3">&#182;</a>
+</div>
+<p>initializer is run whenever a Component is instantated using
+the new operator. The component execution pattern is outlined 
+in it's super class FlatJS.Widget</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+    <span class="nx">initializer</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4">&#182;</a>
+</div>
+<p>adds a jQuery object for ease and focuses on our todo input.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+      <span class="k">this</span><span class="p">.</span><span class="nx">$obj</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">fjsRootNode</span><span class="p">);</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">$obj</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;#new-todo&#39;</span><span class="p">).</span><span class="nx">focus</span><span class="p">();</span>
+    <span class="p">},</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5">&#182;</a>
+</div>
+<p>all event bindings &amp; internal app subscriptions (using a pubsub model)
+should be placed in this function which runs after intializer() above
+when the Component is initialized.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+    <span class="nx">bindUI</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6">&#182;</a>
+</div>
+<p>this._ wrapper is inherited from FlatJS.Classy, it wraps a function and returns
+a function where "this" will always be the instance of the class. As long as
+anonymous functions aren't used, "this" stays consistent throughout your file.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+      <span class="k">this</span><span class="p">.</span><span class="nx">$obj</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="s1">&#39;.destroy&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">destroyTodoItem</span><span class="p">));</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">$obj</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;keyup&#39;</span><span class="p">,</span> <span class="s1">&#39;#new-todo&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">addNewTodoOnEnter</span><span class="p">));</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">$obj</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;keyup&#39;</span><span class="p">,</span> <span class="s1">&#39;#todo-list li .edit&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">hideTextInputOnEnter</span><span class="p">));</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">$obj</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;blur&#39;</span><span class="p">,</span> <span class="s1">&#39;#todo-list li .edit&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">hideTextInput</span><span class="p">));</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">$obj</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;dblclick&#39;</span><span class="p">,</span> <span class="s1">&#39;#todo-list li&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">setItemToEditing</span><span class="p">));</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">$obj</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="s1">&#39;#clear-completed&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">clearAllCompleted</span><span class="p">));</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7">&#182;</a>
+</div>
+<p>the component's data model, fjsData, is an instance of FlatJS.Resource
+all it's elements are watchable, so this is how we "watch" to see if 
+the user toggled a checkbox. Just another way to do things.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+      <span class="k">this</span><span class="p">.</span><span class="nx">fjsData</span><span class="p">.</span><span class="nx">watch</span><span class="p">(</span><span class="s1">&#39;toggleAll&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">toggleAll</span><span class="p">));</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8">&#182;</a>
+</div>
+<p>subscribes to FlatJS's pubsub system (see FlatJS.Dispatch)
+using "this.subscribe" ensures that if the component is destroyed 
+by this.destroy(), subscriptions are destroyed with that component.
+Global subcribe &amp; publish methods can be accessed to the same pool
+via FlatJS.Dispatch (see /js/resources/todo.js for an example)</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+      <span class="k">this</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="s1">&#39;todos-updated&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">updateTodosCount</span><span class="p">));</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9">&#182;</a>
+</div>
+<p>private member function, used as an event callback for keyup events
+on the new todo input. If the key pressed is "enter" or "13", a new todo
+is created using the value of the input</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="kd">function</span> <span class="nx">addNewTodoOnEnter</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">keycode</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">?</span> <span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">which</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">keycode</span> <span class="o">==</span> <span class="s1">&#39;13&#39;</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10">&#182;</a>
+</div>
+<p>notice we're referencing "this," because the callback is wrapped in this._
+from within the public this.bindUI function.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+      <span class="kd">var</span> <span class="nx">val</span>  <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">fjsData</span><span class="p">.</span><span class="nx">newTodo</span><span class="p">,</span>
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11">&#182;</a>
+</div>
+<p>and we create the new todo using a static class helper
+method we've defined in js/resources/todo.js</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+          <span class="nx">todo</span> <span class="o">=</span> <span class="nx">FlatTodo</span><span class="p">.</span><span class="nx">Todo</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">val</span><span class="p">);</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12">&#182;</a>
+</div>
+<p>fjsData &amp; all FlatJS.Resources have "push" methods to push objects onto
+arrays and then simpler "set" methods to simply set values. Both trigger
+callbacks if any are set.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+      <span class="k">this</span><span class="p">.</span><span class="nx">fjsData</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s1">&#39;todosList&#39;</span><span class="p">,</span> <span class="nx">todo</span><span class="p">);</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">fjsData</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;newTodo&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13">&#182;</a>
+</div>
+<p>destroys the todo item in question. an event callback for clicks of .destroy</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="kd">function</span> <span class="nx">destroyTodoItem</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14">&#182;</a>
+</div>
+<p>note this.findResourceFromNode - it takes the node that triggered the event,
+and recursively searches within the markup for it's parent resource. Specifically,
+it's looking for a parent node with the attributes fjs-resource &amp; fjs-id to identify
+and load a single fjs resource.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+    <span class="kd">var</span> <span class="nx">todo</span>  <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">findResourceFromNode</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">);</span>
+    
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15">&#182;</a>
+</div>
+<p>FlatJS.Resource.prototype.remove removes the item &amp; any bound nodes from markup.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+    <span class="nx">todo</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16">&#182;</a>
+</div>
+<p>Since we changed the markup, we need to reload our component's model (this.fjsData)
+by calling this.assembleFjsData()</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+    <span class="k">this</span><span class="p">.</span><span class="nx">assembleFjsData</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">publish</span><span class="p">(</span><span class="s1">&#39;todos-updated&#39;</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">fjsData</span><span class="p">.</span><span class="nx">todosList</span><span class="p">]);</span>
+  <span class="p">}</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17">&#182;</a>
+</div>
+<p>if any "input.edit" nodes trigger a keyup, this watches it and hides the text input
+if the keypress is enter. No need to update the text value via JS as two way bindings
+does this for us - bot the input.edit and the label have fjs-key="text" set to them.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="kd">function</span> <span class="nx">hideTextInputOnEnter</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">keycode</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">?</span> <span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">which</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">keycode</span> <span class="o">==</span> <span class="s1">&#39;13&#39;</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">hideTextInput</span><span class="p">)(</span><span class="nx">e</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18">&#182;</a>
+</div>
+<p>Used to hide the text input.edit node within each item if the user clicks off of it or
+if enter is pressed (see above)</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="kd">function</span> <span class="nx">hideTextInput</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">).</span><span class="nx">parent</span><span class="p">().</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">&#39;editing&#39;</span><span class="p">);</span>
+  <span class="p">}</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19">&#182;</a>
+</div>
+<p>Triggered by double clicking a todo item. Swaps the editing class to on on the <li>
+and then focuses on the input</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="kd">function</span> <span class="nx">setItemToEditing</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+    <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;editing&#39;</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">focus</span><span class="p">();</span>
+  <span class="p">}</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20">&#182;</a>
+</div>
+<p>Uses a custom static method written on FlatTodo.Todo which removes all completed
+and also publishes 'todos-updated' </p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="kd">function</span> <span class="nx">clearAllCompleted</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">FlatTodo</span><span class="p">.</span><span class="nx">Todo</span><span class="p">.</span><span class="nx">clearAllCompleted</span><span class="p">();</span>
+  <span class="p">}</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21">&#182;</a>
+</div>
+<p>toggles all todo items to "on" - probably should be a static method on FlatTodo.Todo.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="kd">function</span> <span class="nx">toggleAll</span><span class="p">(</span><span class="nx">prop</span><span class="p">,</span> <span class="nx">oldVal</span><span class="p">,</span> <span class="nx">newVal</span><span class="p">,</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22">&#182;</a>
+</div>
+<p>notice that we're looking over something called "fjsObjects" on the FlatTodo.Todo resource
+statically - "fjsObjects" is a static array avialable on anything which is an extension of
+FlatJS.Classy (most things with FlatJS), and contains all created children of a given
+class.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+    <span class="nx">$</span><span class="p">(</span><span class="nx">FlatTodo</span><span class="p">.</span><span class="nx">Todo</span><span class="p">.</span><span class="nx">fjsObjects</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">obj</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;completed&#39;</span><span class="p">,</span> <span class="nx">newVal</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23">&#182;</a>
+</div>
+<p>A subscription to the FlatJS.Dispatch 'todos-updated' call which updates how many
+todos are left.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="kd">function</span> <span class="nx">updateTodosCount</span><span class="p">(</span><span class="nx">todos</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">$obj</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;#todo-count strong&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">todos</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+  <span class="p">}</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24">&#182;</a>
+</div>
+<p>return the publicAPI defined object above</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="k">return</span> <span class="nx">publicAPI</span><span class="p">;</span>
+<span class="p">});</span>
+</pre></div>
+        </td>
+      </tr>
+  </tbody>
+</table>
+  </div>
+</body>
+</html>

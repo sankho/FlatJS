@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Todo.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../", thisFile = "Users/personal/Sites/FlatJS/examples/todomvc/js/resources/Todo.js", defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container"><div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+      <tr>
+        <td class="docs">
+          <h1>Todo.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1">&#182;</a>
+</div>
+<p>Create our resource by extending FlatJS.Resource with an empty object.
+we could pass an object with a publicAPI for member functions
+if needed, but we only need public static functions (below)</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre><span class="nx">FlatTodo</span><span class="p">.</span><span class="nx">Todo</span> <span class="o">=</span> <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Resource</span><span class="p">.</span><span class="nx">extend</span><span class="p">({});</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2">&#182;</a>
+</div>
+<p>A static method on the class, where "this" refers to FlatTodo.Todo.
+This method in particular cycles through all created children and removes
+them if they are completed. fjsObjects is a static array on every Resource
+containing each of the children.</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+<span class="nx">FlatTodo</span><span class="p">.</span><span class="nx">Todo</span><span class="p">.</span><span class="nx">clearAllCompleted</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">fjsObjects</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">fjsObjects</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">completed</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">fjsObjects</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">remove</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3">&#182;</a>
+</div>
+<p>uses the Dispatch module to show todo items have been updated </p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Dispatch</span><span class="p">.</span><span class="nx">publish</span><span class="p">(</span><span class="s1">&#39;todos-updated&#39;</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">fjsObjects</span><span class="p">]);</span>
+<span class="p">};</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4">&#182;</a>
+</div>
+<p>Public static method to ease creation of a new todo object.
+Also uses the dispatch module to publish that todos have been updated</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+<span class="nx">FlatTodo</span><span class="p">.</span><span class="nx">Todo</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">completed</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">todo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FlatTodo</span><span class="p">.</span><span class="nx">Todo</span><span class="p">({</span>
+    <span class="nx">text</span><span class="o">:</span>      <span class="nx">text</span><span class="p">,</span>
+    <span class="nx">completed</span><span class="o">:</span> <span class="o">!!</span><span class="nx">completed</span>
+  <span class="p">});</span>
+
+  <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Dispatch</span><span class="p">.</span><span class="nx">publish</span><span class="p">(</span><span class="s1">&#39;todos-updated&#39;</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">fjsObjects</span><span class="p">])</span>
+  <span class="k">return</span> <span class="nx">todo</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+        </td>
+      </tr>
+  </tbody>
+</table>
+  </div>
+</body>
+</html>

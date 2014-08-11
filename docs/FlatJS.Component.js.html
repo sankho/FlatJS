@@ -6,7 +6,7 @@
   <link rel="stylesheet" media="all" href="doc-style.css" />
   <script src="doc-filelist.js"></script>
   <script>
-    var relativeDir = "", thisFile = "Users/sankho/Sites/FlatJS/src/FlatJS.Component.js", defaultSidebar = true;
+    var relativeDir = "", thisFile = "Users/personal/Sites/FlatJS/src/FlatJS.Component.js", defaultSidebar = true;
   </script>
   <script src="doc-script.js"></script>
 </head>
@@ -58,14 +58,13 @@
       <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">internalInitializer</span><span class="p">)();</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">findAndInitializeResources</span><span class="p">)();</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">assembleJSON</span><span class="p">)();</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">applyCSSChanges</span><span class="p">)();</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">applyCSSChanges</span><span class="p">)(</span><span class="kc">true</span><span class="p">);</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">bindNodes</span><span class="p">)();</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">syncBindedNodes</span><span class="p">)();</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">initializer</span><span class="p">();</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">renderUI</span><span class="p">();</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">syncUI</span><span class="p">();</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">bindUI</span><span class="p">();</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">_super</span><span class="p">()</span>
     <span class="p">},</span>
+
+    <span class="nx">assembleFjsData</span><span class="o">:</span> <span class="nx">assembleJSON</span><span class="p">,</span>
 
     <span class="nx">findResourceFromNode</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
       <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">hasAttribute</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">hasAttribute</span><span class="p">(</span><span class="nx">ATTR</span><span class="p">.</span><span class="nx">resource</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">hasAttribute</span><span class="p">(</span><span class="nx">ATTR</span><span class="p">.</span><span class="nx">id</span><span class="p">))</span> <span class="p">{</span>
@@ -88,20 +87,19 @@
     <span class="k">this</span><span class="p">.</span><span class="nx">fjsData</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">fjsData</span> <span class="o">||</span> <span class="k">new</span> <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Resource</span><span class="p">();</span>
   <span class="p">}</span>
 
-  <span class="kd">function</span> <span class="nx">applyCSSChanges</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">nodes</span> <span class="o">=</span> <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Helpers</span><span class="p">.</span><span class="nx">getAllElementsWithAttribute</span><span class="p">(</span><span class="nx">ATTR</span><span class="p">.</span><span class="kr">class</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">obj</span><span class="p">);</span>
+  <span class="kd">function</span> <span class="nx">applyCSSChanges</span><span class="p">(</span><span class="nx">applyNodeValueToObj</span><span class="p">,</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">obj</span> <span class="o">=</span> <span class="nx">obj</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">fjsRootNode</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">nodes</span> <span class="o">=</span> <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Helpers</span><span class="p">.</span><span class="nx">getAllElementsWithAttribute</span><span class="p">(</span><span class="nx">ATTR</span><span class="p">.</span><span class="kr">class</span><span class="p">,</span> <span class="nx">obj</span><span class="p">);</span>
 
     <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">nodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
       <span class="kd">var</span> <span class="nx">node</span> <span class="o">=</span> <span class="nx">nodes</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span>
-          <span class="nx">obj</span>  <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">findResourceFromNode</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
+          <span class="nx">_obj</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">findResourceFromNode</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">fjsData</span><span class="p">;</span>
 
-      <span class="k">if</span> <span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">makeCSSChangeOnNode</span><span class="p">)(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">obj</span><span class="p">);</span>
-      <span class="p">}</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">makeCSSChangeOnNode</span><span class="p">)(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">_obj</span><span class="p">,</span> <span class="nx">applyNodeValueToObj</span><span class="p">);</span>
     <span class="p">}</span>
   <span class="p">}</span>
 
-  <span class="kd">function</span> <span class="nx">makeCSSChangeOnNode</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">function</span> <span class="nx">makeCSSChangeOnNode</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">obj</span><span class="p">,</span> <span class="nx">applyNodeValueToObj</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">rules</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="nx">ATTR</span><span class="p">.</span><span class="kr">class</span><span class="p">)),</span>
         <span class="nx">rules</span> <span class="o">=</span> <span class="nx">rules</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">push</span> <span class="o">?</span> <span class="nx">rules</span> <span class="o">:</span> <span class="p">[</span><span class="nx">rules</span><span class="p">];</span>
 
@@ -113,17 +111,25 @@
           <span class="nx">secondary</span> <span class="o">=</span> <span class="nx">rule</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
           <span class="nx">match</span>     <span class="o">=</span> <span class="nx">obj</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">==</span> <span class="nx">val</span><span class="p">;</span>
 
-      <span class="k">if</span> <span class="p">(</span><span class="nx">match</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">className</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">className</span><span class="p">)</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-          <span class="nx">node</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">className</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nx">className</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="nx">node</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">className</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">secondary</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
-      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">match</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">node</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">className</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">className</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
-        <span class="nx">node</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">className</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">secondary</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">secondary</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">className</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">secondary</span><span class="p">)</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-          <span class="nx">node</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">className</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nx">secondary</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span><span class="p">;</span>
-        <span class="p">}</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">applyNodeValueToObj</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">className</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">className</span><span class="p">)</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">obj</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">prop</span><span class="p">,</span> <span class="nx">val</span><span class="p">);</span>
+      <span class="p">}</span>
+
+      <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">processCSSRuleOnNode</span><span class="p">)(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">match</span><span class="p">,</span> <span class="nx">className</span><span class="p">,</span> <span class="nx">secondary</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kd">function</span> <span class="nx">processCSSRuleOnNode</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">match</span><span class="p">,</span> <span class="nx">className</span><span class="p">,</span> <span class="nx">secondary</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">match</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">className</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">className</span><span class="p">)</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">node</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">className</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nx">className</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="nx">node</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">className</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">secondary</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">match</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">node</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">className</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">className</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+      <span class="nx">node</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">className</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">secondary</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">secondary</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">className</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">secondary</span><span class="p">)</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">node</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">className</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nx">secondary</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span><span class="p">;</span>
       <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">}</span>
@@ -170,7 +176,7 @@
   <span class="p">}</span>
 
   <span class="kd">function</span> <span class="nx">findAndInitializeResources</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">obj</span> <span class="o">=</span> <span class="nx">obj</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">obj</span><span class="p">;</span>
+    <span class="nx">obj</span> <span class="o">=</span> <span class="nx">obj</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">fjsRootNode</span><span class="p">;</span>
     <span class="kd">var</span> <span class="nx">modelNodes</span> <span class="o">=</span> <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Helpers</span><span class="p">.</span><span class="nx">getAllElementsWithAttribute</span><span class="p">(</span><span class="nx">ATTR</span><span class="p">.</span><span class="nx">resource</span><span class="p">,</span> <span class="nx">obj</span><span class="p">);</span>
 
     <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">modelNodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
@@ -247,7 +253,7 @@
     <span class="nx">obj</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">val</span><span class="p">;</span>
   <span class="p">}</span>
 
-  <span class="kd">function</span> <span class="nx">syncNodeOnObjectChange</span><span class="p">(</span><span class="nx">prop</span><span class="p">,</span> <span class="nx">oldVal</span><span class="p">,</span> <span class="nx">newVal</span><span class="p">,</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">function</span> <span class="nx">syncNodeOnObjectChange</span><span class="p">(</span><span class="nx">newVal</span><span class="p">,</span> <span class="nx">oldVal</span><span class="p">,</span> <span class="nx">prop</span><span class="p">,</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="s1">&#39;fjsNodes&#39;</span><span class="p">).</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
       <span class="kd">var</span> <span class="nx">node</span>    <span class="o">=</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="s1">&#39;fjsNodes&#39;</span><span class="p">)[</span><span class="nx">i</span><span class="p">],</span>
           <span class="nx">lastKey</span> <span class="o">=</span> <span class="nx">prop</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">),</span>
@@ -259,6 +265,8 @@
         <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">syncArrayOnObjectChange</span><span class="p">)(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">newVal</span><span class="p">,</span> <span class="nx">oldVal</span><span class="p">,</span> <span class="nx">obj</span><span class="p">);</span>
       <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">node</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">hasAttribute</span><span class="p">(</span><span class="nx">ATTR</span><span class="p">.</span><span class="nx">object</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">convertCamelCase</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="nx">ATTR</span><span class="p">.</span><span class="nx">object</span><span class="p">))</span> <span class="o">===</span> <span class="nx">lastKey</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">renderJSONOntoNode</span><span class="p">)(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">obj</span><span class="p">);</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">node</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">hasAttribute</span><span class="p">(</span><span class="nx">ATTR</span><span class="p">.</span><span class="kr">class</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">applyCSSChanges</span><span class="p">)(</span><span class="kc">false</span><span class="p">,</span> <span class="nx">node</span><span class="p">);</span>
       <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">}</span>
@@ -349,7 +357,7 @@
   <span class="p">}</span>
 
   <span class="kd">function</span> <span class="nx">syncBindedNodes</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">nodes</span> <span class="o">=</span> <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Helpers</span><span class="p">.</span><span class="nx">getAllElementsWithAttribute</span><span class="p">(</span><span class="nx">ATTR</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">obj</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">nodes</span> <span class="o">=</span> <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Helpers</span><span class="p">.</span><span class="nx">getAllElementsWithAttribute</span><span class="p">(</span><span class="nx">ATTR</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">fjsRootNode</span><span class="p">);</span>
 
     <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">nodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
       <span class="kd">var</span> <span class="nx">node</span> <span class="o">=</span> <span class="nx">nodes</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
@@ -364,35 +372,54 @@
   <span class="p">}</span>
 
   <span class="kd">function</span> <span class="nx">bindNodes</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">obj</span> <span class="o">=</span> <span class="nx">obj</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">obj</span><span class="p">;</span>
+    <span class="nx">obj</span> <span class="o">=</span> <span class="nx">obj</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">fjsRootNode</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">bindNodesByType</span><span class="p">)(</span><span class="nx">ATTR</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="nx">obj</span><span class="p">);</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">bindNodesByType</span><span class="p">)(</span><span class="nx">ATTR</span><span class="p">.</span><span class="nx">array</span><span class="p">,</span> <span class="nx">obj</span><span class="p">);</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">bindNodesByType</span><span class="p">)(</span><span class="nx">ATTR</span><span class="p">.</span><span class="nx">object</span><span class="p">,</span> <span class="nx">obj</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">bindNodesByType</span><span class="p">)(</span><span class="nx">ATTR</span><span class="p">.</span><span class="kr">class</span><span class="p">,</span> <span class="nx">obj</span><span class="p">);</span>
   <span class="p">}</span>
 
   <span class="kd">function</span> <span class="nx">bindNodesByType</span><span class="p">(</span><span class="nx">attr</span><span class="p">,</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">nodes</span> <span class="o">=</span> <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Helpers</span><span class="p">.</span><span class="nx">getAllElementsWithAttribute</span><span class="p">(</span><span class="nx">attr</span><span class="p">,</span> <span class="nx">obj</span><span class="p">);</span>
 
     <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">nodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kd">var</span> <span class="nx">node</span>  <span class="o">=</span> <span class="nx">nodes</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
-
+      <span class="kd">var</span> <span class="nx">node</span>  <span class="o">=</span> <span class="nx">nodes</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> 
+          <span class="nx">model</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">findResourceFromNode</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">fjsData</span><span class="p">;</span>
+      
       <span class="k">if</span> <span class="p">(</span><span class="nx">node</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">node</span><span class="p">.</span><span class="nx">fjsWatchSet</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">node</span><span class="p">.</span><span class="nx">fjsWatchSet</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-
-        <span class="kd">var</span> <span class="nx">key</span>   <span class="o">=</span> <span class="nx">convertCamelCase</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="nx">attr</span><span class="p">)),</span>
-            <span class="nx">str</span>   <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span> <span class="o">!==</span> <span class="nb">document</span> <span class="o">?</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">createObjectReferenceString</span><span class="p">)(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">)</span> <span class="o">:</span> <span class="nx">key</span><span class="p">,</span>
-            <span class="nx">model</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">findResourceFromNode</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">fjsData</span><span class="p">;</span>
-
+        <span class="nx">node</span><span class="p">.</span><span class="nx">fjsObject</span>   <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">fjsObject</span> <span class="o">||</span> <span class="nx">model</span><span class="p">;</span>
+        
         <span class="k">if</span> <span class="p">(</span><span class="nx">model</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="s1">&#39;fjsNodes&#39;</span><span class="p">).</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
           <span class="nx">model</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="s1">&#39;fjsNodes&#39;</span><span class="p">).</span><span class="nx">push</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
         <span class="p">}</span>
 
-        <span class="nx">node</span><span class="p">.</span><span class="nx">fjsObject</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">fjsObject</span> <span class="o">||</span> <span class="nx">model</span><span class="p">;</span>
-        <span class="nx">model</span><span class="p">.</span><span class="nx">watch</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">syncNodeOnObjectChange</span><span class="p">));</span>
-        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">isNodeInput</span><span class="p">)(</span><span class="nx">node</span><span class="p">))</span> <span class="p">{</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">setupCallbacksForInputNodes</span><span class="p">)(</span><span class="nx">node</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">attr</span> <span class="o">===</span> <span class="nx">ATTR</span><span class="p">.</span><span class="kr">class</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">bindClassNodes</span><span class="p">)(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">model</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+          <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="nx">convertCamelCase</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="nx">attr</span><span class="p">)),</span>
+              <span class="nx">str</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span> <span class="o">!==</span> <span class="nb">document</span> <span class="o">?</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">createObjectReferenceString</span><span class="p">)(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">)</span> <span class="o">:</span> <span class="nx">key</span><span class="p">;</span>
+          
+          <span class="nx">model</span><span class="p">.</span><span class="nx">watch</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">syncNodeOnObjectChange</span><span class="p">));</span>
+          <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">isNodeInput</span><span class="p">)(</span><span class="nx">node</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">setupCallbacksForInputNodes</span><span class="p">)(</span><span class="nx">node</span><span class="p">);</span>
+          <span class="p">}</span>
         <span class="p">}</span>
       <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kd">function</span> <span class="nx">bindClassNodes</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">rules</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="nx">ATTR</span><span class="p">.</span><span class="kr">class</span><span class="p">)),</span>
+        <span class="nx">rules</span> <span class="o">=</span> <span class="nx">rules</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">push</span> <span class="o">?</span> <span class="nx">rules</span> <span class="o">:</span> <span class="p">[</span><span class="nx">rules</span><span class="p">];</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">rules</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">rule</span>      <span class="o">=</span> <span class="nx">rules</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span>
+          <span class="nx">prop</span>      <span class="o">=</span> <span class="nx">rule</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+          <span class="nx">str</span>       <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span> <span class="o">!==</span> <span class="nb">document</span> <span class="o">?</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">createObjectReferenceString</span><span class="p">)(</span><span class="nx">prop</span><span class="p">,</span> <span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">)</span> <span class="o">:</span> <span class="nx">prop</span><span class="p">,</span>
+          <span class="nx">str</span>       <span class="o">=</span> <span class="nx">convertCamelCase</span><span class="p">(</span><span class="nx">str</span><span class="p">);</span>
+
+      <span class="nx">obj</span><span class="p">.</span><span class="nx">watch</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">syncNodeOnObjectChange</span><span class="p">))</span>
     <span class="p">}</span>
   <span class="p">}</span>
 
@@ -431,7 +458,7 @@
       <span class="nx">key</span> <span class="o">=</span> <span class="nx">convertCamelCase</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="nx">ATTR</span><span class="p">.</span><span class="nx">object</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="nx">key</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span> <span class="o">!==</span> <span class="k">this</span><span class="p">.</span><span class="nx">obj</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span> <span class="o">!==</span> <span class="nb">document</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span> <span class="o">!==</span> <span class="k">this</span><span class="p">.</span><span class="nx">fjsRootNode</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span> <span class="o">!==</span> <span class="nb">document</span><span class="p">)</span> <span class="p">{</span>
       <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">createObjectReferenceString</span><span class="p">)(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">);</span>
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
       <span class="k">return</span> <span class="nx">key</span><span class="p">;</span>
@@ -439,7 +466,7 @@
   <span class="p">}</span>
 
   <span class="kd">function</span> <span class="nx">assembleJSON</span><span class="p">(</span><span class="nx">parentObj</span><span class="p">,</span> <span class="nx">children</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">children</span>        <span class="o">=</span> <span class="nx">children</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">obj</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">;</span>
+    <span class="nx">children</span>        <span class="o">=</span> <span class="nx">children</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">fjsRootNode</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">;</span>
     <span class="nx">parentObj</span>       <span class="o">=</span> <span class="nx">parentObj</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">fjsData</span><span class="p">;</span>
 
     <span class="kd">var</span> <span class="nx">parentIsArray</span>   <span class="o">=</span> <span class="nx">FlatJS</span><span class="p">.</span><span class="nx">Helpers</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">parentObj</span><span class="p">);</span>
@@ -504,32 +531,7 @@
           <span class="nx">parentObj</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">;</span>
         <span class="p">}</span>
 
-
-</pre></div>
-        </td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-2" id="section-2">&#182;</a>
-</div>
-<p>if (!obj.<em>('fjsDeleteWatch')) {
-obj.</em>('fjsDeleteWatch', true);</p>
-        </td>
-        <td class="code highlight"><div class="highlight"><pre>
-          <span class="nx">obj</span><span class="p">.</span><span class="nx">watch</span><span class="p">(</span><span class="s1">&#39;fjsDelete&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">undefineModelReferenceOnDeletion</span><span class="p">));</span>
-
-</pre></div>
-        </td>
-      </tr>
-      <tr>
-        <td class="docs">
-<div class="pilwrap">
-  <a class="pilcrow" href="#section-3" id="section-3">&#182;</a>
-</div>
-<p>}</p>
-        </td>
-        <td class="code highlight"><div class="highlight"><pre>
+        <span class="nx">obj</span><span class="p">.</span><span class="nx">watch</span><span class="p">(</span><span class="s1">&#39;fjsRemove&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">undefineModelReferenceOnDeletion</span><span class="p">));</span>
       <span class="p">}</span>
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">assembleJSONIfChildren</span><span class="p">)(</span><span class="nx">child</span><span class="p">,</span> <span class="nx">parentObj</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">isObj</span><span class="p">);</span>
@@ -546,7 +548,7 @@ obj.</em>('fjsDeleteWatch', true);</p>
     <span class="p">}</span>
   <span class="p">}</span>
 
-  <span class="kd">function</span> <span class="nx">undefineModelReferenceOnDeletion</span><span class="p">(</span><span class="nx">prop</span><span class="p">,</span> <span class="nx">oldVal</span><span class="p">,</span> <span class="nx">val</span><span class="p">,</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">function</span> <span class="nx">undefineModelReferenceOnDeletion</span><span class="p">(</span><span class="nx">val</span><span class="p">,</span> <span class="nx">oldVal</span><span class="p">,</span> <span class="nx">prop</span><span class="p">,</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
 
 </pre></div>
         </td>
@@ -554,9 +556,9 @@ obj.</em>('fjsDeleteWatch', true);</p>
       <tr>
         <td class="docs">
 <div class="pilwrap">
-  <a class="pilcrow" href="#section-4" id="section-4">&#182;</a>
+  <a class="pilcrow" href="#section-2" id="section-2">&#182;</a>
 </div>
-<p>if (document.contains(this.obj)) {</p>
+<p>if (document.contains(this.fjsRootNode)) {</p>
         </td>
         <td class="code highlight"><div class="highlight"><pre>
       <span class="k">this</span><span class="p">.</span><span class="nx">_</span><span class="p">(</span><span class="nx">iterateThroughDataAndDeleteObject</span><span class="p">)(</span><span class="nx">obj</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">fjsData</span><span class="p">);</span>
@@ -567,7 +569,7 @@ obj.</em>('fjsDeleteWatch', true);</p>
       <tr>
         <td class="docs">
 <div class="pilwrap">
-  <a class="pilcrow" href="#section-5" id="section-5">&#182;</a>
+  <a class="pilcrow" href="#section-3" id="section-3">&#182;</a>
 </div>
 <p>} else {
 obj.unwatch(prop, this._(undefineModelReferenceOnDeletion));
