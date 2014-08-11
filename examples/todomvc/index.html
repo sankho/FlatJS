@@ -3,22 +3,15 @@
   <head>
     <meta charset="utf-8">
     <title>Template • TodoMVC</title>
-    <!--<link rel="stylesheet" href="bower_components/todomvc-app-template/app-template.css">-->
-    <!-- Replace the above with this if you don't want to use Bower
     <link rel="stylesheet" href="app-template.css">
-    -->
-    <link rel="stylesheet" href="app-template.css">
-    <!-- CSS overrides - remove if you don't need it -->
-    <link rel="stylesheet" href="css/app.css">
-
     <script>
-      // create a namespace for your app before the script runs.
-      // not required, but a good practice.
+      // declare your app's namespace, along with any
+      // relevant constants, at the top of the file
       FlatTodo = {};
     </script>
   </head>
   <body>
-    <section id="todoapp" fjs-component="TodoHandler">
+    <section id="todoapp" fjs-component="FlatTodo.TodoHandler">
       <header id="header">
         <h1>todos</h1>
         <input id="new-todo" placeholder="What needs to be done?" autofocus fjs-key="new-todo">
@@ -51,7 +44,7 @@
       <!-- This footer should hidden by default and shown when there are todos -->
       <footer id="footer">
         <!-- This should be `0 items left` by default -->
-        <span id="todo-count"><strong>0</strong> item left</span>
+        <span id="todo-count"><strong>2</strong> item left</span>
         <!-- Remove this if you don't implement routing
         <ul id="filters">
           <li>
@@ -80,10 +73,21 @@
     <script src="bower_components/todomvc-common/base.js"></script>
     -->
 
-    <script src="../../flat-min.js"></script>
+    <script src="../../src/FlatJS.js"></script>
+    <script src="../../src/FlatJS.Classy.js"></script>
+    <script src="../../src/FlatJS.Helpers.js"></script>
+    <script src="../../src/FlatJS.Dispatch.js"></script>
+    <script src="../../src/FlatJS.Resource.js"></script>
+    <script src="../../src/FlatJS.Runner.js"></script>
+    <script src="../../src/FlatJS.Widget.js"></script>
+    <script src="../../src/FlatJS.Component.js"></script>
 
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 
+
+    <!-- app files could of course be minified into one single file. -->
+    <script src="js/resources/Todo.js"></script>
+    <script src="js/components/TodoHandler.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>

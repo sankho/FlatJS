@@ -236,7 +236,7 @@ FlatJS.Resource = FlatJS.Classy.extend(function() {
       var cb = cbs[i];
 
       if (typeof cb == 'function') {
-        cb(prop, oldVal, val, obj);
+        cb(val, oldVal, prop, obj);
       }
     }
   }

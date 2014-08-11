@@ -1,0 +1,36 @@
+(function (window) {
+  'use strict';
+
+  // we could pass an object with a publicAPI for each todo
+  // if needed, but we only need public static functions (below)
+  FlatTodo.Todo = FlatJS.Resource.extend({});
+
+  FlatTodo.Todo.clearAllCompleted = function() {
+    for (var i = 0; i < this.fjsObjects.length; i++) {
+      if (this.fjsObjects[i].completed) {
+        this.fjsObjects[i].remove();
+      }
+    }
+<<<<<<< HEAD
+
+    FlatJS.Dispatch.publish('todos-updated', [this.fjsObjects]);
+  }
+=======
+  };
+>>>>>>> 71485be9f166e4fca71a52da46906d307fd8155f
+
+  FlatTodo.Todo.create = function(text, completed) {
+    var todo = new FlatTodo.Todo({
+      text:      text,
+      completed: !!completed
+    });
+<<<<<<< HEAD
+
+    FlatJS.Dispatch.publish('todos-updated', [this.fjsObjects])
+    return todo;
+  }
+=======
+  };
+>>>>>>> 71485be9f166e4fca71a52da46906d307fd8155f
+
+}(window));

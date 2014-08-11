@@ -18,15 +18,23 @@ Don't have SEO worries about your JS apps - just rely on your server side to pri
 
 Really. Check out the todomvc example.
 
+### OOP From the Ground Up
+
+Uses John Resig's JS Class method and adds syntactical sugar for private member methods within classes, giving you a clean API for your classes and allowing you to maintain the value of "this" throughout your code, even in event listener callbacks.
+
 ### Not All JS is MV* Oriented
 
-Chances are your application / website has some behavoir, maybe a lot, that doesn't require fancy MV** * type stuff. FlatJS features a few sane, simple ways to manage your javascript that may not require MV* type behaviors.
+Chances are your application / website has some behavior, maybe a lot, that doesn't require fancy MV** * type stuff. FlatJS features a few sane, simple ways to manage your javascript that may not require MV* type behaviors.
 
 ## What does it NOT do?
 
-### HTML5 Routing
+### Window.History Routing
 
 Routing's tough, weird, and often dependent on custom logic. So FlatJS isn't built with routing in mind, but works with any JS routers out there; just re-init your app's instance of FlatJS.Runner on updated DOM content.
+
+### Event Handling
+
+jQuery and other libraries are already good at this. FlatJS only suggests you place Component and Widget bindings within a public bindUI function,
 
 ### Dependency Injection
 

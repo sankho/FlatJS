@@ -22,11 +22,10 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
       this._(applyCSSChanges)(true);
       this._(bindNodes)();
       this._(syncBindedNodes)();
-      this.initializer();
-      this.renderUI();
-      this.syncUI();
-      this.bindUI();
+      this._super()
     },
+
+    assembleFjsData: assembleJSON,
 
     findResourceFromNode: function(node) {
       if (node.hasAttribute && node.hasAttribute(ATTR.resource) && node.hasAttribute(ATTR.id)) {
@@ -50,7 +49,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
   }
 
   function applyCSSChanges(applyNodeValueToObj, obj) {
-    obj = obj || this.obj;
+    obj = obj || this.fjsRootNode;
     var nodes = FlatJS.Helpers.getAllElementsWithAttribute(ATTR.class, obj);
 
     for (var i = 0; i < nodes.length; i++) {
@@ -138,7 +137,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
   }
 
   function findAndInitializeResources(obj) {
-    obj = obj || this.obj;
+    obj = obj || this.fjsRootNode;
     var modelNodes = FlatJS.Helpers.getAllElementsWithAttribute(ATTR.resource, obj);
 
     for (var i = 0; i < modelNodes.length; i++) {
@@ -215,7 +214,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     obj[key] = val;
   }
 
-  function syncNodeOnObjectChange(prop, oldVal, newVal, obj) {
+  function syncNodeOnObjectChange(newVal, oldVal, prop, obj) {
     for (var i = 0; i < obj._('fjsNodes').length; i++) {
       var node    = obj._('fjsNodes')[i],
           lastKey = prop.split('.'),
@@ -319,7 +318,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
   }
 
   function syncBindedNodes() {
-    var nodes = FlatJS.Helpers.getAllElementsWithAttribute(ATTR.key, this.obj);
+    var nodes = FlatJS.Helpers.getAllElementsWithAttribute(ATTR.key, this.fjsRootNode);
 
     for (var i = 0; i < nodes.length; i++) {
       var node = nodes[i];
@@ -334,7 +333,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
   }
 
   function bindNodes(obj) {
-    obj = obj || this.obj;
+    obj = obj || this.fjsRootNode;
     this._(bindNodesByType)(ATTR.key, obj);
     this._(bindNodesByType)(ATTR.array, obj);
     this._(bindNodesByType)(ATTR.object, obj);
@@ -345,23 +344,23 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     var nodes = FlatJS.Helpers.getAllElementsWithAttribute(attr, obj);
 
     for (var i = 0; i < nodes.length; i++) {
-      var node  = nodes[i];
-
+      var node  = nodes[i], 
+          model = this.findResourceFromNode(node) || this.fjsData;
+      
       if (node && !node.fjsWatchSet) {
         node.fjsWatchSet = true;
+        node.fjsObject   = node.fjsObject || model;
+        
+        if (model._('fjsNodes').indexOf(node) === -1) {
+          model._('fjsNodes').push(node);
+        }
 
         if (attr === ATTR.class) {
-          this._(bindClassNodes)(node);
+          this._(bindClassNodes)(node, model);
         } else {
-          var key   = convertCamelCase(node.getAttribute(attr)),
-              str   = node.parentNode && node.parentNode !== document ? this._(createObjectReferenceString)(key, node.parentNode) : key,
-              model = this.findResourceFromNode(node) || this.fjsData;
-
-          if (model._('fjsNodes').indexOf(node) === -1) {
-            model._('fjsNodes').push(node);
-          }
-
-          node.fjsObject = node.fjsObject || model;
+          var key = convertCamelCase(node.getAttribute(attr)),
+              str = node.parentNode && node.parentNode !== document ? this._(createObjectReferenceString)(key, node.parentNode) : key;
+          
           model.watch(str, this._(syncNodeOnObjectChange));
           if (this._(isNodeInput)(node)) {
             this._(setupCallbacksForInputNodes)(node);
@@ -371,19 +370,15 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     }
   }
 
-  function bindClassNodes(node) {
+  function bindClassNodes(node, obj) {
     var rules = JSON.parse(node.getAttribute(ATTR.class)),
-        rules = rules[0].push ? rules : [rules],
-        obj   = this.findResourceFromNode(node) || this.fjsData;
+        rules = rules[0].push ? rules : [rules];
 
     for (var i = 0; i < rules.length; i++) {
       var rule      = rules[i],
           prop      = rule[0],
-          val       = rule[1],
-          className = rule[2],
-          secondary = rule[3],
-          match     = obj[prop] == val,
-          str       = node.parentNode && node.parentNode !== document ? this._(createObjectReferenceString)(prop, node.parentNode) : prop;
+          str       = node.parentNode && node.parentNode !== document ? this._(createObjectReferenceString)(prop, node.parentNode) : prop,
+          str       = convertCamelCase(str);
 
       obj.watch(str, this._(syncNodeOnObjectChange))
     }
@@ -424,7 +419,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
       key = convertCamelCase(node.getAttribute(ATTR.object)) + '.' + key;
     }
 
-    if (node.parentNode && node.parentNode !== this.obj && node.parentNode !== document) {
+    if (node.parentNode && node.parentNode !== this.fjsRootNode && node.parentNode !== document) {
       return this._(createObjectReferenceString)(key, node.parentNode);
     } else {
       return key;
@@ -432,7 +427,7 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
   }
 
   function assembleJSON(parentObj, children) {
-    children        = children || this.obj.childNodes;
+    children        = children || this.fjsRootNode.childNodes;
     parentObj       = parentObj || this.fjsData;
 
     var parentIsArray   = FlatJS.Helpers.isArray(parentObj);
@@ -514,8 +509,8 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
     }
   }
 
-  function undefineModelReferenceOnDeletion(prop, oldVal, val, obj) {
-    //if (document.contains(this.obj)) {
+  function undefineModelReferenceOnDeletion(val, oldVal, prop, obj) {
+    //if (document.contains(this.fjsRootNode)) {
       this._(iterateThroughDataAndDeleteObject)(obj, this.fjsData);
     //} else {
       //obj.unwatch(prop, this._(undefineModelReferenceOnDeletion));

@@ -2,9 +2,14 @@
 
   <div class="first" data-js-mv-test-module="FlatJS.Component">
 
+    <div fjs-key="arbitrary-root-key">Valuable</div>
+    <div id="root-class-swap" class="true" fjs-class='["arbitrary-root-key", "Not Valuable", "true", "false"]'></div>
+
     <div fjs-obj="header">
       <h1 fjs-key="title">Todo List</h1>
       <h5 fjs-key="arbitrary-top-title">Hey now</h5>
+      <h5 fjs-key="arbitrary-top-title-2">Hey now</h5>
+      <div id="inner-item-class-swap" class="true" fjs-class='["arbitrary-top-title-2", "Hey Hey", "true", "false"]'></div>
     </div>
 
     <div fjs-obj="you" fjs-id="2" fjs-resource="APP.Person">
