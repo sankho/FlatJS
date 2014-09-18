@@ -10,8 +10,8 @@
   },
   "scripts": {
     "tests": "node-qunit-phantomjs ./tests/index.html --verbose",
-    "build": "uglifyjs ./src/FlatJS.js ./src/FlatJS.Classy.js ./src/FlatJS.Runner.js ./src/FlatJS.Helpers.js ./src/FlatJS.Widget.js ./src/FlatJS.Dispatch.js ./src/FlatJS.Resource.js ./src/FlatJS.Component.js  --mangle -o flat-min.js",
-    "docs": "rm -rf ./docs && docker -o ./docs -i ./src; docker -o ./docs/todomvc/ -i ./examples/todomvc/js/"
+    "build": "uglifyjs ./src/FlatJS.js ./src/FlatJS.Classy.js ./src/FlatJS.Runner.js ./src/FlatJS.Helpers.js ./src/FlatJS.Widget.js ./src/FlatJS.Dispatch.js ./src/FlatJS.Resource.js ./src/FlatJS.Component.js  --mangle -o flat-min.js; uglifyjs ./src/FlatJS.js ./src/FlatJS.Classy.js ./src/FlatJS.Runner.js ./src/FlatJS.Helpers.js ./src/FlatJS.Widget.js ./src/FlatJS.Dispatch.js ./src/FlatJS.Resource.js ./src/FlatJS.Component.js  --beautify -o flat.js",
+   "docs": "rm -rf ./docs && docker -o ./docs -i ./src; docker -o ./docs/todomvc/ -i ./examples/todomvc/js/"
   },
   "main"          : "flat-min.js",
   "version"       : "0.0.9",

@@ -259,6 +259,13 @@ FlatJS.Component = FlatJS.Widget.extend(function() {
       var obj = arr[j];
 
       if (obj) {
+
+        if (obj.id && !obj.constructor.find) {
+          var modelName = convertCamelCase(tmpl.getAttribute(ATTR.resource)),
+              model     = FlatJS.Helpers.findFunctionByString(modelName, window, FlatJS.Resource.extend({}));
+              obj       = new model({ id: obj.id });
+        }
+
         if (!obj.id || (obj.id && obj.constructor.find(obj.id))) {
           var _tmpl = tmpl.cloneNode(true),
               node  = this._(renderFromJSON)(_tmpl, obj, true);
