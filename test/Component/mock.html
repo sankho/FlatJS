@@ -1,0 +1,101 @@
+<div id="flat-mv-test-mock">
+
+  <div class="first" data-js-mv-test-module="FlatJS.Component">
+
+    <div fjs-key="arbitrary-root-key">Valuable</div>
+    <div id="root-class-swap" class="true" fjs-class='["arbitrary-root-key", "Not Valuable", "true", "false"]'></div>
+
+    <div fjs-obj="header">
+      <h1 fjs-key="title">Todo List</h1>
+      <h5 fjs-key="arbitrary-top-title">Hey now</h5>
+      <h5 fjs-key="arbitrary-top-title-2">Hey now</h5>
+      <div id="inner-item-class-swap" class="true" fjs-class='["arbitrary-top-title-2", "Hey Hey", "true", "false"]'></div>
+    </div>
+
+    <div fjs-obj="you" fjs-id="2" fjs-resource="APP.Person">
+      <div>
+        <div>
+          <h2 fjs-key="name"></h2>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div fjs-array="people">
+        <!-- actual data -->
+        <div>
+          <div fjs-obj="person-obj" fjs-id="1" fjs-resource="APP.Person" class="person">
+            <a fjs-key="name" href="#">Bill</a>
+          </div>
+          <ul fjs-array="todos">
+            <li class="first-todo" fjs-resource="APP.Todo" fjs-id="1" fjs-json='{ "arbitrary": "key values", "completed": true }' fjs-class='["completed", true, "completed"]'>
+              <span fjs-key="title">Get Laundry</span>
+            </li>
+            <li fjs-resource="APP.Todo" fjs-id="31" fjs-json='{ "arbitrary": "key values" }' fjs-class='["completed", true, "completed"]' class="completed">
+              <span fjs-key="title">Get Laundryz</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <div fjs-obj="personObj" fjs-id="2" fjs-resource="APP.Person" class="person">
+            <a fjs-key="name" href="#">Jane</a>
+          </div>
+          <ul fjs-array="todos">
+            <li>
+              <span fjs-key="title">Get Dinner</span>
+            </li>
+            <li>
+              <span fjs-key="title">Get Dinner</span>
+            </li>
+            <li>
+              <span fjs-key="title">Get Dinner</span>
+            </li>
+            <li>
+              <span fjs-key="title">Get Dinner</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="second" data-js-mv-test-module="FlatJS.Component">
+
+    <div fjs-obj="header">
+      <h1 fjs-key="title">Todo List</h1>
+    </div>
+
+    <div fjs-obj="you" fjs-id="1" fjs-resource="APP.Person" class="person">
+      <h2 fjs-key="name">fdsfsadfsa</h2>
+    </div>
+
+    <div>
+      <div fjs-array="people">
+        <!-- actual data -->
+        <div>
+          <div fjs-obj="personObj" fjs-id="2" fjs-resource="APP.Person" class="person">
+            <a fjs-key="name" href="#">Jane</a>
+          </div>
+          <ul fjs-array="todos">
+            <li class="first-todo" fjs-resource="APP.Todo" fjs-id="2" fjs-json='{ "completed": false }' fjs-class='["completed", true, "completed", "not-completed"]'>
+              <span fjs-key="title">Get Dinner</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <div fjs-id="1" fjs-resource="APP.Person" class="person">
+            <a fjs-key="name" href="#">Bill</a>
+          </div>
+          <ul fjs-array="todos">
+            <li fjs-resource="APP.Todo" fjs-id="3" fjs-json='{ "completed": false, "whatever": true }' fjs-class='[["completed", true, "completed", "not-completed"], ["whatever", true, "whatever"]]'>
+              <span fjs-key="title">Get Chicken</span>
+              <span fjs-key="something-extra">hey</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
