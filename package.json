@@ -1,23 +1,39 @@
 {
-  "name"          : "FlatJS",
-  "description"   : "Markup driven MV* JS Framework built with progressive enhancement & limited boilerplate code in mind.",
-  "url"           : "http://sankho.github.io/FlatJS",
-  "keywords"      : ["model", "view", "resource", "component", "server", "client", "browser"],
-  "author"        : "Sankho Mallik <sankho.mallik@gmail.com>",
+  "name": "FlatJS",
+  "description": "Markup driven MV* JS Framework built with progressive enhancement & limited boilerplate code in mind.",
+  "url": "http://sankho.github.io/FlatJS",
+  "keywords": [
+    "model",
+    "view",
+    "resource",
+    "component",
+    "server",
+    "client",
+    "browser"
+  ],
+  "author": "Sankho Mallik <sankho.mallik@gmail.com>",
   "devDependencies": {
     "node-qunit-phantomjs": "0.2.1",
     "docker": "0.2.13"
   },
   "scripts": {
+    "test": "mocha-phantomjs test/index.html",
     "tests": "node-qunit-phantomjs ./tests/index.html --verbose",
     "build": "uglifyjs ./src/FlatJS.js ./src/FlatJS.Classy.js ./src/FlatJS.Runner.js ./src/FlatJS.Helpers.js ./src/FlatJS.Widget.js ./src/FlatJS.Dispatch.js ./src/FlatJS.Resource.js ./src/FlatJS.Component.js  --mangle -o flat-min.js; uglifyjs ./src/FlatJS.js ./src/FlatJS.Classy.js ./src/FlatJS.Runner.js ./src/FlatJS.Helpers.js ./src/FlatJS.Widget.js ./src/FlatJS.Dispatch.js ./src/FlatJS.Resource.js ./src/FlatJS.Component.js  --beautify -o flat.js",
-   "docs": "rm -rf ./docs && docker -o ./docs -i ./src; docker -o ./docs/todomvc/ -i ./examples/todomvc/js/"
+    "docs": "rm -rf ./docs && docker -o ./docs -i ./src; docker -o ./docs/todomvc/ -i ./examples/todomvc/js/"
   },
-  "main"          : "flat-min.js",
-  "version"       : "0.0.9",
-  "license"       : "DWTFYWT",
+  "main": "flat-min.js",
+  "version": "0.0.9",
+  "license": "DWTFYWT",
   "repository": {
     "type": "git",
     "url": "https://github.com/sankho/FlatJS.git"
+  },
+  "dependencies": {
+    "chai": "^2.2.0",
+    "jquery": "^2.1.3",
+    "mocha": "^2.2.4",
+    "mocha-phantomjs": "^3.5.3",
+    "phantomjs": "^1.9.16"
   }
 }
