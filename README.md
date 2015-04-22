@@ -1,48 +1,5 @@
 [![Stories in Ready](https://badge.waffle.io/sankho/flatjs.png?label=ready&title=Ready)](https://waffle.io/sankho/flatjs)
 
-# Why FlatJS
-
-## Another JS Framework? Really?
-
-I wanted to make a JS Framework that would help me write less code, provide conventions and abstractions I could always make use of, but not necessarily force me to change the way I think about web applications from the server side. And, I wanted it to organize my code in a fashion similiar to the popular MV* frameworks out there.
-
-## What does it do?
-
-### MV* + Two Way Bindings + Progressive Enhancement = Cleaner JS, less SEO Stress
-
-FlatJS Components (the "V" or view in MV) read your markup and infers a data model based on the values in your markup on DOM ready, all while creating dependable two way bindings. This means your server side can generate markup as normal, and you can still manipulate the markup as a template related to the data model setup at the start via JS.
-
-Don't have SEO worries about your JS apps - just rely on your server side to print the correct markup given a URL. This allows you to have the power of JS templating + SEO, all without repeating your template markup.
-
-### Simple Syntax, Limited Boilerplate Code
-
-Really. Check out the todomvc example.
-
-### OOP From the Ground Up
-
-Uses John Resig's JS Class method and adds syntactical sugar for private member methods within classes, giving you a clean API for your classes and allowing you to maintain the value of "this" throughout your code, even in event listener callbacks.
-
-### Not All JS is MV* Oriented
-
-Chances are your application / website has some behavior, maybe a lot, that doesn't require fancy MV** * type stuff. FlatJS features a few sane, simple ways to manage your javascript that may not require MV* type behaviors.
-
-## What does it NOT do?
-
-### Window.History Routing
-
-Routing's tough, weird, and often dependent on custom logic. So FlatJS isn't built with routing in mind, but works with any JS routers out there; just re-init your app's instance of FlatJS.Runner on updated DOM content.
-
-### Event Handling
-
-jQuery and other libraries are already good at this. FlatJS only suggests you place Component and Widget bindings within a public bindUI function,
-
-### Dependency Injection
-
-FlatJS assumes you've added all relevant files to the browser before running. Works fine with either RequireJS or just a single minified file.
-
-
-
-
 # Getting Started
 
 ### Instantiate a runner and init your app
@@ -98,3 +55,43 @@ APP.exampleComponent = FlatJS.Component.extend(function() {
   return publicAPI;
 })
 ```
+
+# Why FlatJS
+
+## Another JS Framework? Really?
+
+I wanted to make a JS Framework that would help me write less code, provide conventions and abstractions I could always make use of, but not necessarily force me to change the way I think about web applications from the server side. And, I wanted it to organize my code in a fashion similiar to the popular MV* frameworks out there.
+
+## What does it do?
+
+### MV* + Two Way Bindings + Progressive Enhancement = Cleaner JS, less SEO Stress
+
+FlatJS Components (the "V" or view in MV) read your markup and infers a data model based on the values in your markup on DOM ready, all while creating dependable two way bindings. This means your server side can generate markup as normal, and you can still manipulate the markup as a template related to the data model setup at the start via JS.
+
+Don't have SEO worries about your JS apps - just rely on your server side to print the correct markup given a URL. This allows you to have the power of JS templating + SEO, all without repeating your template markup.
+
+### Simple Syntax, Limited Boilerplate Code
+
+Really. Check out the todomvc example.
+
+### OOP From the Ground Up
+
+Uses John Resig's JS Class method and adds syntactical sugar for private member methods within classes, giving you a clean API for your classes and allowing you to maintain the value of "this" throughout your code, even in event listener callbacks.
+
+### Not All JS is MV* Oriented
+
+Chances are your application / website has some behavior, maybe a lot, that doesn't require fancy MV** * type stuff. FlatJS features a few sane, simple ways to manage your javascript that may not require MV* type behaviors.
+
+## What does it NOT do?
+
+### Window.History Routing
+
+Routing's tough, weird, and often dependent on custom logic. So FlatJS isn't built with routing in mind, but works with any JS routers out there; just re-init your app's instance of FlatJS.Runner on updated DOM content.
+
+### Event Handling
+
+jQuery and other libraries are already good at this. FlatJS only suggests you place Component and Widget bindings within a public bindUI function,
+
+### Dependency Injection
+
+FlatJS assumes you've added all relevant files to the browser before running. Works fine with either RequireJS or just a single minified file.
